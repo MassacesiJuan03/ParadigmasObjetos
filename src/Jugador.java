@@ -1,31 +1,41 @@
-// Los comentarios que comienzan con "*" son dudas.
 
-public class Jugador{
-    //atributos de instancia
+// Los comentarios que comienzan con "*" son dudas.
+public class Jugador {
+    // Atributos de instancia
     int posicion;
-    char pieza;
+    String pieza;
     boolean enBancarrota;
-    int[] dadosAnteriores; //array de 1xn
+    int[] dadosAnteriores; // array de 1xn
     float dinero;
     boolean turno;
 
-    //Constructor
-    public Jugador(/*pasar los atributos de instancia*/){
-        //this.atributo = parámetro;
-    }
-    //Métodos
-    public void tirarDados(){
-        //calcular los dados de manera aleatoria
-        //Random random = new Random();
-        //int dado1 = 1 + random.nextInt(6);
-        //int dado2 = 1 + random.nextInt(6);
-        //faltaría insertarlos en la lista, ej: {(dado1,dado2),...}
-    }
-    public void elegirPieza(){
-        //Pedirle al usuario ingresar la pieza que quiera
-    }
-    public void comprar(){
-        //Darle la opción de comprar
+    public Jugador(String pieza) {
+        this.posicion = 0;
+        this.pieza = pieza;
+        this.enBancarrota = false;
+        this.dadosAnteriores = new int[0]; // Inicializar array vacío
+        this.dinero = 1500; // Monto inicial estándar en Monopoly
+        this.turno = false;
     }
 
+    // Métodos
+    public int[] tirarDados() {
+        int dado1 = (int) (Math.random() * 6) + 1;
+        int dado2 = (int) (Math.random() * 6) + 1;
+        int[] resultado = {dado1, dado2};
+        return resultado;
+    }
+
+    public void comprar() {
+        // Lógica para comprar propiedades
+    }
+
+    public void setPosicion(int nuevaPosicion) {
+        this.posicion = nuevaPosicion;
+    }
+
+    public void avanzar(){
+        this.posicion++;
+        // Implementar chequeo de paso por la casilla de salida
+    }
 }
