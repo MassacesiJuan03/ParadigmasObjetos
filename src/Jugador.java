@@ -8,6 +8,7 @@ public class Jugador {
     int[] dadosAnteriores; // array de 1xn
     float dinero;
     boolean turno;
+    boolean carcel;
 
     public Jugador(String pieza) {
         this.posicion = 0;
@@ -16,6 +17,7 @@ public class Jugador {
         this.dadosAnteriores = new int[0]; // Inicializar array vacío
         this.dinero = 1500; // Monto inicial estándar en Monopoly
         this.turno = false;
+        this.carcel = false;
     }
 
     // Métodos
@@ -37,5 +39,17 @@ public class Jugador {
     public void avanzar(){
         this.posicion++;
         // Implementar chequeo de paso por la casilla de salida
+    }
+
+    public void pagarRenta(int renta) {
+        this.dinero -= renta;
+    }
+
+    public void recibirDinero(int monto) {
+        this.dinero += monto;
+    }
+
+    public String getPieza() {
+        return pieza;
     }
 }
