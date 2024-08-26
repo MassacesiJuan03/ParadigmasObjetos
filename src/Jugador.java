@@ -25,7 +25,29 @@ public class Jugador {
         int dado1 = (int) (Math.random() * 6) + 1;
         int dado2 = (int) (Math.random() * 6) + 1;
         int[] resultado = {dado1, dado2};
+
+        // Agregar array de resultado en dadosAnteriores
+        int[] nuevosDadosAnteriores = new int[dadosAnteriores.length + 2];
+        for (int i = 0; i < dadosAnteriores.length; i++) {
+            nuevosDadosAnteriores[i] = dadosAnteriores[i];
+        }
+        nuevosDadosAnteriores[dadosAnteriores.length] = dado1;
+        nuevosDadosAnteriores[dadosAnteriores.length + 1] = dado2;
+        this.dadosAnteriores = nuevosDadosAnteriores;
+
         return resultado;
+    }
+
+    public void imprimirDadosAnteriores() {
+        if (dadosAnteriores.length == 0) {
+            System.out.println("No se han lanzado dados todavía.");
+            return;
+        }
+        System.out.print("Dados anteriores: ");
+        for (int i = 0; i < dadosAnteriores.length; i += 2) {
+            System.out.print("[" + dadosAnteriores[i] + ", " + dadosAnteriores[i + 1] + "] ");
+        }
+        System.out.println();
     }
 
     public void comprar() {

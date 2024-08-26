@@ -164,6 +164,9 @@ public class Tablero{
             String nombreCasilla = tablero.casillas[tablero.jugadorActual().posicion].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
 
+            System.out.println("Dados anteriores:");
+            tablero.jugadorActual().imprimirDadosAnteriores();
+
 
         
             // Actualizar el jugador actual para el siguiente turno
