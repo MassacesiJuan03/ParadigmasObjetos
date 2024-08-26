@@ -16,7 +16,15 @@ public class Tablero{
         this.casillas = new Casillas[CANTIDAD_DE_CASILLAS];
     }
 
-    private Casillas[] inicializarCasillas() {
+    private void crearCasillas(){
+        Casillas[] casillas = new Casillas[40];
+        for (int i = 0; i < casillas.length; i++) {
+            casillas[i] = new Casillas();
+        }
+        this.casillas = casillas;
+    }
+
+    private void especializarCasillas() {
         Casillas[] casillas = new Casillas[40];
     
         casillas[0] = new Adelante("Salida"); // Casilla de salida (GO)
@@ -68,7 +76,7 @@ public class Tablero{
         casillas[38] = new Impuestos("Impuesto de lujo"); // Impuesto de lujo
         casillas[39] = new Propiedades("El Muelle", 400, null, 50); // El Muelle
     
-        return casillas;
+        this.casillas = casillas;
     }
     
     
@@ -123,7 +131,8 @@ public class Tablero{
         Scanner scanner = new Scanner(System.in);
         Tablero tablero = new Tablero();
         tablero.empezarPartida(scanner);
-        tablero.inicializarCasillas();
+        tablero.crearCasillas();
+        tablero.especializarCasillas();
 
         // Iniciar el primer turno
         Jugador jugadorActual = tablero.jugadores[0];
