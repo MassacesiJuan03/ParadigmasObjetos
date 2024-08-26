@@ -13,13 +13,11 @@ class Propiedades extends Casillas{
     protected int renta;
 
     //Constructor
-    public Propiedades(String nombre, int costo, Jugador dueño, int renta, boolean esServicio, boolean esFerrocarril){
+    public Propiedades(String nombre, int costo, Jugador dueño, int renta){
         super(nombre);
-        {this.costo = costo;
+        this.costo = costo;
         this.dueño = dueño;
         this.renta = renta;
-        this.esFerrocarril = esFerrocarril;
-        this.esServicio = esServicio;}
     }
 
     //Métodos
@@ -96,6 +94,24 @@ class Carcel extends Casillas{
         super(nombre);
     }
 }
+
+class Servicio extends Propiedades{
+    public Servicio(String nombre, int costo, Jugador dueño, int renta){
+        super(nombre, costo, dueño, renta);
+    }
+
+    public void cobrarRenta(Jugador jugador){
+        //Calcular la renta basado en los dados
+    }
+
+}
+
+class Ferrocarril extends Propiedades{
+    public Ferrocarril(String nombre, int costo, Jugador dueño, int renta){
+        super(nombre, costo, dueño, renta);
+    }
+}
+
 
 public class Main {
     public static void main(String[] args) {
