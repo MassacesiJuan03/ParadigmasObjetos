@@ -1,9 +1,10 @@
+package Piezas;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class Piezas {
+public class Piezas {
     private List<String> piezasDisponibles;
 
     // Constructor
@@ -22,7 +23,7 @@ class Piezas {
 
     // Método para mostrar las piezas disponibles
     public void mostrarPiezas() {
-        System.out.println("Piezas disponibles:");
+        System.out.println("Piezas.Piezas disponibles:");
         for (int i = 0; i < piezasDisponibles.size(); i++) {
             System.out.println((i + 1) + ". " + piezasDisponibles.get(i));
         }

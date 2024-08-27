@@ -1,3 +1,5 @@
+package Casillas;
+
 public class Casillas{
     //atributo de instancia
     protected int nroDeCasilla;
@@ -10,6 +12,11 @@ public class Casillas{
     }
 
     public Casillas(){
+    }
+
+    //Métodos
+    public String getType() {
+        return null;
     }
 
     public String getNombre(){
