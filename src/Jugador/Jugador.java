@@ -77,7 +77,7 @@ public class Jugador {
     public void pagarRenta(double renta) {
         if (renta <= this.dinero){
             this.dinero -= renta;
-            System.out.println("Renta pagada con exito.");
+            System.out.println("Renta pagada con éxito.");
         }
     }
 

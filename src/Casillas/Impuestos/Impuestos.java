@@ -12,9 +12,14 @@ public class Impuestos extends Casillas {
     //Métodos
     public void pagarImpuesto(Jugador jugador){
         //Disminuir el dinero del jugador
-        double montoRenta = Math.max(200, jugador.dinero*0.10);
-        jugador.pagarRenta(montoRenta);
-        //*Incrementar el del banco
+        double montoImpuesto = Math.max(200, jugador.dinero*0.10);
+        if (montoImpuesto <= jugador.dinero){
+            jugador.dinero -= montoImpuesto;
+            System.out.println("Impuesto pagado!");
+        }
+        else{
+            System.out.println("Impuesto no pagado, dinero del jugador insuficiente");
+        }
     }
 
     @Override

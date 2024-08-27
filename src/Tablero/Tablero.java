@@ -177,17 +177,28 @@ public class Tablero{
                     Propiedades propiedad = (Propiedades) tablero.casillas[tablero.jugadorActual().posicion];
                     propiedad.ofrecerCompra(jugadorActual);
                     propiedad.cobrarRenta(jugadorActual);
+                    break;
                 case "Ferrocarril":
                     Ferrocarril ferrocarril = (Ferrocarril) tablero.casillas[tablero.jugadorActual().posicion];
+                    ferrocarril.ofrecerCompra(jugadorActual);
+                    ferrocarril.cobrarRenta(jugadorActual);
+                    break;
                 case "Servicio":
                     Servicio servicio = (Servicio) tablero.casillas[tablero.jugadorActual().posicion];
+                    break;
                 case "Impuestos":
                     Impuestos impuesto = (Impuestos) tablero.casillas[tablero.jugadorActual().posicion];
+                    impuesto.pagarImpuesto(jugadorActual);
+                    break;
                 case "Carcel":
                     Carcel carcel = (Carcel) tablero.casillas[tablero.jugadorActual().posicion];
-                case "Estacionamiento":
+                    jugadorActual.carcel = true;
+                    System.out.println("Usted está en la cárcel");
+                    carcel.cobrarMulta(jugadorActual);
+                    break;
                 case "ArcaOCasualidad":
-                case "Adelante":
+                    break;
+                case "Estacionamiento", "Adelante": break;//No hacen nada
             }
 
             System.out.println("Dados anteriores:");
