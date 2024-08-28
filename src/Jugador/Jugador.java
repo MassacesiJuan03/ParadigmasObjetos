@@ -1,14 +1,17 @@
+package Jugador;
+
+import Casillas.Adelante.Adelante;
 
 // Los comentarios que comienzan con "*" son dudas.
 public class Jugador {
     // Atributos de instancia
-    int posicion;
-    String pieza;
-    boolean enBancarrota;
-    int[] dadosAnteriores; // array de 1xn
-    float dinero;
-    boolean turno;
-    boolean carcel;
+    public int posicion;
+    public String pieza;
+    public boolean enBancarrota;
+    public int[] dadosAnteriores; // array de 1xn
+    public double dinero;
+    public boolean turno;
+    public boolean carcel;
 
     public Jugador(String pieza) {
         this.posicion = 0;
@@ -52,6 +55,7 @@ public class Jugador {
 
     public void comprar() {
         // Lógica para comprar propiedades
+
     }
 
     public void setPosicion(int nuevaPosicion) {
@@ -59,15 +63,25 @@ public class Jugador {
     }
 
     public void avanzar(){
-        this.posicion++;
         // Implementar chequeo de paso por la casilla de salida
+        Adelante adelante = new Adelante();
+        if (this.posicion == 39){
+            setPosicion(0);
+            adelante.darSueldo(this);
+        }
+        else{
+            this.posicion++;
+        }
     }
 
-    public void pagarRenta(int renta) {
-        this.dinero -= renta;
+    public void pagarRenta(double renta) {
+        if (renta <= this.dinero){
+            this.dinero -= renta;
+            System.out.println("Renta pagada con éxito.");
+        }
     }
 
-    public void recibirDinero(int monto) {
+    public void recibirDinero(double monto) {
         this.dinero += monto;
     }
 

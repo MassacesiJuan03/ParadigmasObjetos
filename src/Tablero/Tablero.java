@@ -1,4 +1,16 @@
-// Los comentarios que comienzan con "*" son dudas.
+package Tablero;// Los comentarios que comienzan con "*" son dudas.
+
+import Casillas.Adelante.Adelante;
+import Casillas.ArcaOCasualidad.ArcaOCasualidad;
+import Casillas.Carcel.Carcel;
+import Casillas.Casillas;
+import Casillas.Estacionamiento.Estacionamiento;
+import Casillas.Impuestos.Impuestos;
+import Casillas.Propiedades.Ferrocarril.Ferrocarril;
+import Casillas.Propiedades.Propiedades;
+import Casillas.Propiedades.Servicio.Servicio;
+import Jugador.Jugador;
+import Piezas.Piezas;
 
 import java.util.Scanner;
 
@@ -32,7 +44,7 @@ public class Tablero{
         casillas[2] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
         casillas[3] = new Propiedades("Avenida Báltica", 60, null, 4); // Avenida Báltica
         casillas[4] = new Impuestos("Impuesto sobre la renta"); // Impuesto sobre la renta
-        casillas[5] = new Ferrocarril("Ferrocarril Reading", 200, null, 25); // Ferrocarril Reading
+        casillas[5] = new Ferrocarril("Ferrocarril Reading", 200, null, 25); // Main.Ferrocarril Reading
         casillas[6] = new Propiedades("Avenida Oriental", 100, null, 6); // Avenida Oriental
         casillas[7] = new ArcaOCasualidad("Casualidad", false); // Casualidad
         casillas[8] = new Propiedades("Avenida Vermont", 100, null, 6); // Avenida Vermont
@@ -43,20 +55,20 @@ public class Tablero{
         casillas[12] = new Servicio("Compañía de Electricidad", 150, null, 0); // Compañía de Electricidad
         casillas[13] = new Propiedades("Avenida de los Estados", 140, null, 10); // Avenida de los Estados
         casillas[14] = new Propiedades("Avenida Virginia", 160, null, 12); // Avenida Virginia
-        casillas[15] = new Ferrocarril("Ferrocarril Pennsylvania", 200, null, 25); // Ferrocarril Pennsylvania
+        casillas[15] = new Ferrocarril("Ferrocarril Pennsylvania", 200, null, 25); // Main.Ferrocarril Pennsylvania
     
         casillas[16] = new Propiedades("Plaza San Jaime", 180, null, 14); // Plaza San Jaime
         casillas[17] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
         casillas[18] = new Propiedades("Avenida Tennessee", 180, null, 14); // Avenida Tennessee
         casillas[19] = new Propiedades("Avenida Nueva York", 200, null, 16); // Avenida Nueva York
     
-        casillas[20] = new Estacionamiento("Estacionamiento gratuito"); // Estacionamiento gratuito
+        casillas[20] = new Estacionamiento("Estacionamiento gratuito"); // Main.Estacionamiento gratuito
     
         casillas[21] = new Propiedades("Avenida Kentucky", 220, null, 18); // Avenida Kentucky
         casillas[22] = new ArcaOCasualidad("Casualidad", false); // Casualidad
         casillas[23] = new Propiedades("Avenida Indiana", 220, null, 18); // Avenida Indiana
         casillas[24] = new Propiedades("Avenida Illinois", 240, null, 20); // Avenida Illinois
-        casillas[25] = new Ferrocarril("Ferrocarril B&O", 200, null, 25); // Ferrocarril B&O
+        casillas[25] = new Ferrocarril("Ferrocarril B&O", 200, null, 25); // Main.Ferrocarril B&O
     
         casillas[26] = new Propiedades("Avenida Atlántico", 260, null, 22); // Avenida Atlántico
         casillas[27] = new Propiedades("Avenida Ventnor", 260, null, 22); // Avenida Ventnor
@@ -69,7 +81,7 @@ public class Tablero{
         casillas[32] = new Propiedades("Avenida Carolina del Norte", 300, null, 26); // Avenida Carolina del Norte
         casillas[33] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
         casillas[34] = new Propiedades("Avenida Pennsylvania", 320, null, 28); // Avenida Pennsylvania
-        casillas[35] = new Ferrocarril("Ferrocarril Short Line", 200, null, 25); // Ferrocarril Short Line
+        casillas[35] = new Ferrocarril("Ferrocarril Short Line", 200, null, 25); // Main.Ferrocarril Short Line
     
         casillas[36] = new ArcaOCasualidad("Casualidad", false); // Casualidad
         casillas[37] = new Propiedades("Plaza del Parque", 350, null, 35); // Plaza del Parque
@@ -78,8 +90,6 @@ public class Tablero{
     
         this.casillas = casillas;
     }
-    
-    
 
     public void empezarPartida(Scanner scanner) {
         System.out.print("Introduce la cantidad de jugadores: ");
@@ -92,9 +102,6 @@ public class Tablero{
             String piezaElegida = piezas.elegirPieza(scanner);
             jugadores[i] = new Jugador(piezaElegida);
         }
-
-        
-
     }
 
     public String siguienteTurno(Jugador jugadorAnterior) {
@@ -163,6 +170,36 @@ public class Tablero{
             System.out.println("Posición actual: " + tablero.jugadorActual().posicion);
             String nombreCasilla = tablero.casillas[tablero.jugadorActual().posicion].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
+
+            //Dependiendo la casilla realiza las operaciones correspondientes
+            switch (tablero.casillas[tablero.jugadorActual().posicion].getType()){
+                case "Propiedades":
+                    Propiedades propiedad = (Propiedades) tablero.casillas[tablero.jugadorActual().posicion];
+                    propiedad.ofrecerCompra(jugadorActual);
+                    propiedad.cobrarRenta(jugadorActual);
+                    break;
+                case "Ferrocarril":
+                    Ferrocarril ferrocarril = (Ferrocarril) tablero.casillas[tablero.jugadorActual().posicion];
+                    ferrocarril.ofrecerCompra(jugadorActual);
+                    ferrocarril.cobrarRenta(jugadorActual);
+                    break;
+                case "Servicio":
+                    Servicio servicio = (Servicio) tablero.casillas[tablero.jugadorActual().posicion];
+                    break;
+                case "Impuestos":
+                    Impuestos impuesto = (Impuestos) tablero.casillas[tablero.jugadorActual().posicion];
+                    impuesto.pagarImpuesto(jugadorActual);
+                    break;
+                case "Carcel":
+                    Carcel carcel = (Carcel) tablero.casillas[tablero.jugadorActual().posicion];
+                    jugadorActual.carcel = true;
+                    System.out.println("Usted está en la cárcel");
+                    carcel.cobrarMulta(jugadorActual);
+                    break;
+                case "ArcaOCasualidad":
+                    break;
+                case "Estacionamiento", "Adelante": break;//No hacen nada
+            }
 
             System.out.println("Dados anteriores:");
             tablero.jugadorActual().imprimirDadosAnteriores();
