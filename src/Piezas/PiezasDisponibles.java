@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Piezas {
+public class PiezasDisponibles {
     private List<String> piezasDisponibles;
 
     // Constructor
-    public Piezas() {
+    public PiezasDisponibles() {
         piezasDisponibles = new ArrayList<>();
         // Inicializar las piezas
         piezasDisponibles.add("Sombrero");

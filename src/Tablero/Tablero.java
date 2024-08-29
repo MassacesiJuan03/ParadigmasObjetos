@@ -10,7 +10,7 @@ import Casillas.Propiedades.Ferrocarril.Ferrocarril;
 import Casillas.Propiedades.Propiedades;
 import Casillas.Propiedades.Servicio.Servicio;
 import Jugador.Jugador;
-import Piezas.Piezas;
+import Piezas.PiezasDisponibles;
 
 import java.util.Scanner;
 
@@ -95,7 +95,7 @@ public class Tablero{
         System.out.print("Introduce la cantidad de jugadores: ");
         int cantidadDeJugadores = scanner.nextInt();
 
-        Piezas piezas = new Piezas();
+        PiezasDisponibles piezas = new PiezasDisponibles();
         jugadores = new Jugador[cantidadDeJugadores];
         for (int i = 0; i < cantidadDeJugadores; i++) {
             System.out.println("Jugador " + (i + 1) + ", elige tu pieza:");
@@ -153,6 +153,7 @@ public class Tablero{
         while (juegoEnCurso) {
             System.out.println("--------------------");
             System.out.println("Turno de " + tablero.siguienteTurno(jugadorActual));
+            System.out.println("Dinero actual: $" + jugadorActual.getDinero());
             System.out.println("Presiona Enter para tirar los dados");
             scanner.nextLine();
 

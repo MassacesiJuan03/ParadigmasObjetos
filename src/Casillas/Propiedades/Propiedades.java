@@ -23,7 +23,7 @@ public class Propiedades extends Casillas {
 
     //Métodos
     public void cobrarRenta(Jugador jugador){
-        if (this.dueño != jugador){
+        if (this.dueño != jugador && this.dueño != null){
             jugador.pagarRenta(this.renta);
             this.dueño.recibirDinero(this.renta);
         }

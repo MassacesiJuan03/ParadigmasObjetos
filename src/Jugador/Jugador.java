@@ -88,4 +88,7 @@ public class Jugador {
     public String getPieza() {
         return pieza;
     }
+    public double getDinero() {
+        return dinero;
+    }
 }
