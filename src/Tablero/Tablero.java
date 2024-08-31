@@ -1,5 +1,7 @@
 package Tablero;// Los comentarios que comienzan con "*" son dudas.
 
+import Carta.Carta;
+import Carta.CartaDinero;
 import Casillas.Adelante.Adelante;
 import Casillas.ArcaOCasualidad.ArcaOCasualidad;
 import Casillas.Carcel.Carcel;
@@ -209,6 +211,7 @@ public class Tablero{
         }
 
         // Define positions for drawing properties
+        int[] topRow = {0,1,2,3,4};
         int[] rightColumn = {5, 6, 7, 8, 9};
         int[] bottomRow = {10, 11, 12, 13, 14, 15};
         int[] leftColumn = { 16, 17, 18, 19, 0};
