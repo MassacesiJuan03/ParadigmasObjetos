@@ -80,9 +80,15 @@ public class Tablero{
         PiezasDisponibles piezas = new PiezasDisponibles();
         jugadores = new Jugador[cantidadDeJugadores];
         for (int i = 0; i < cantidadDeJugadores; i++) {
+            System.out.println("Jugador " + (i + 1) + ", elige tu nombre:");
+            String nombreJugador = scanner.next();
+
             System.out.println("Jugador " + (i + 1) + ", elige tu pieza:");
             String piezaElegida = piezas.elegirPieza(scanner);
+            
             jugadores[i] = new Jugador(piezaElegida);
+            jugadores[i].nombre = nombreJugador;
+            jugadores[i].posicion = casillas[0];
         }
     }
 
@@ -105,7 +111,7 @@ public class Tablero{
         }
 
         // Retornar la pieza del jugador cuyo turno es ahora
-        return jugadores[indiceSiguiente].pieza;
+        return jugadores[indiceSiguiente].nombre;
     }
     public Jugador jugadorActual() {
         for (Jugador jugador : jugadores) {
@@ -239,29 +245,40 @@ public class Tablero{
             System.out.println();
         }
     }
-
-    private String[] getJugadoresEnCasilla(int posicion) {
-        // Get all players in the given position
-        String[] playerSymbols = new String[4]; // Maximum 4 players in one cell
-        int index = 0;
-        for (Jugador jugador : jugadores) {
-            if (jugador.posicion == posicion) {
-                playerSymbols[index++] = jugador.pieza;
+    public void avanzar(Jugador jugadorActual) {
+        Casillas casillaActual = jugadorActual.posicion;
+        Casillas [] casillas = this.casillas;
+        int index = -1;
+        for (int i = 0; i < casillas.length; i++) {
+            if (casillas[i] == casillaActual) {
+                index = i;
+                break;
             }
         }
-        // Fill remaining spots with empty space
-        while (index < playerSymbols.length) {
-            playerSymbols[index++] = " ";
+        int nextIndex = (index + 1) % casillas.length;
+        jugadorActual.posicion = casillas[nextIndex];
+
+    }
+
+    // Implementar método getJugadoresEnCasilla
+    public String[] getJugadoresEnCasilla(int index) {
+        String[] jugadoresEnCasilla = new String[jugadores.length];
+        for (int i = 0; i < jugadores.length; i++) {
+            if (jugadores[i].posicion == casillas[index]) {
+                jugadoresEnCasilla[i] = jugadores[i].pieza;
+            } else {
+                jugadoresEnCasilla[i] = "";
+            }
         }
-        return playerSymbols;
+        return jugadoresEnCasilla;
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Tablero tablero = new Tablero();
-        tablero.empezarPartida(scanner);
         tablero.crearCasillas();
         tablero.especializarCasillas();
+        tablero.empezarPartida(scanner);
 
         Jugador jugadorActual = tablero.jugadores[0];
         jugadorActual.turno = true;
@@ -284,34 +301,33 @@ public class Tablero{
             System.out.println("Avanzas " + suma + " casillas");
 
             for (int i = 0; i < suma; i++) {
-                tablero.jugadorActual().avanzar();
+                tablero.avanzar(jugadorActual);
             }
 
-            System.out.println("Posición actual: " + tablero.jugadorActual().posicion);
-            String nombreCasilla = tablero.casillas[tablero.jugadorActual().posicion].getNombre();
+            String nombreCasilla = tablero.jugadorActual().posicion.getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
 
             //Dependiendo la casilla realiza las operaciones correspondientes
-            switch (tablero.casillas[tablero.jugadorActual().posicion].getType()){
+            switch (tablero.jugadorActual().posicion.getType()){
                 case "Propiedades":
-                    Propiedades propiedad = (Propiedades) tablero.casillas[tablero.jugadorActual().posicion];
+                    Propiedades propiedad = (Propiedades) tablero.jugadorActual().posicion;
                     propiedad.ofrecerCompra(jugadorActual);
                     propiedad.cobrarRenta(jugadorActual);
                     break;
                 case "Ferrocarril":
-                    Ferrocarril ferrocarril = (Ferrocarril) tablero.casillas[tablero.jugadorActual().posicion];
+                    Ferrocarril ferrocarril = (Ferrocarril) tablero.jugadorActual().posicion;
                     ferrocarril.ofrecerCompra(jugadorActual);
                     ferrocarril.cobrarRenta(jugadorActual);
                     break;
                 case "Servicio":
-                    Servicio servicio = (Servicio) tablero.casillas[tablero.jugadorActual().posicion];
+                    Servicio servicio = (Servicio) tablero.jugadorActual().posicion;
                     break;
                 case "Impuestos":
-                    Impuestos impuesto = (Impuestos) tablero.casillas[tablero.jugadorActual().posicion];
+                    Impuestos impuesto = (Impuestos)tablero.jugadorActual().posicion;
                     impuesto.pagarImpuesto(jugadorActual);
                     break;
                 case "Carcel":
-                    Carcel carcel = (Carcel) tablero.casillas[tablero.jugadorActual().posicion];
+                    Carcel carcel = (Carcel) tablero.jugadorActual().posicion;
                     jugadorActual.carcel = true;
                     System.out.println("Usted está en la cárcel");
                     carcel.cobrarMulta(jugadorActual);

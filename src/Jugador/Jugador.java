@@ -1,12 +1,14 @@
 package Jugador;
 
+import Casillas.Casillas;
 import Casillas.Adelante.Adelante;
 
 // Los comentarios que comienzan con "*" son dudas.
 public class Jugador {
     // Atributos de instancia
-    public int posicion;
+    public Casillas posicion;
     public String pieza;
+    public String nombre;
     public boolean enBancarrota;
     public int[] dadosAnteriores; // array de 1xn
     public double dinero;
@@ -14,7 +16,7 @@ public class Jugador {
     public boolean carcel;
 
     public Jugador(String pieza) {
-        this.posicion = 0;
+        this.posicion = null;
         this.pieza = pieza;
         this.enBancarrota = false;
         this.dadosAnteriores = new int[0]; // Inicializar array vacío
@@ -58,21 +60,6 @@ public class Jugador {
 
     }
 
-    public void setPosicion(int nuevaPosicion) {
-        this.posicion = nuevaPosicion;
-    }
-
-    public void avanzar(){
-        // Implementar chequeo de paso por la casilla de salida
-        Adelante adelante = new Adelante();
-        if (this.posicion == 39){
-            setPosicion(0);
-            adelante.darSueldo(this);
-        }
-        else{
-            this.posicion++;
-        }
-    }
 
     public void pagarRenta(double renta) {
         if (renta <= this.dinero){
