@@ -1,6 +1,6 @@
 package Casillas;
 
-public class Casillas{
+abstract public class Casillas{
     //atributo de instancia
     protected int nroDeCasilla;
 

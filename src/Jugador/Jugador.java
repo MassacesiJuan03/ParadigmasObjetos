@@ -1,7 +1,6 @@
 package Jugador;
 
 import Casillas.Casillas;
-import Casillas.Adelante.Adelante;
 
 // Los comentarios que comienzan con "*" son dudas.
 public class Jugador {

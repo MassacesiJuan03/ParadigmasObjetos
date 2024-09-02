@@ -31,7 +31,7 @@ public class Tablero{
     public Tablero() {
         this.casillas = new Casillas[CANTIDAD_DE_CASILLAS];
     }
-
+    /*
     private void crearCasillas(){
         Casillas[] casillas = new Casillas[CANTIDAD_DE_CASILLAS];
         for (int i = 0; i < casillas.length; i++) {
@@ -39,7 +39,7 @@ public class Tablero{
         }
         this.casillas = casillas;
     }
-
+    */
     private void especializarCasillas() {
         Casillas[] casillas = new Casillas[CANTIDAD_DE_CASILLAS];
 
@@ -307,6 +307,7 @@ public class Tablero{
             String nombreCasilla = tablero.jugadorActual().posicion.getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
 
+            /*
             //Dependiendo la casilla realiza las operaciones correspondientes
             switch (tablero.jugadorActual().posicion.getType()){
                 case "Propiedades":
@@ -334,8 +335,10 @@ public class Tablero{
                     break;
                 case "ArcaOCasualidad":
                     break;
-                case "Estacionamiento", "Adelante": break;//No hacen nada
+                case "Estacionamiento": break; //No hace nada
+                case "Adelante": break; //No hacen nada
             }
+            */
 
             System.out.println("Dados anteriores:");
             tablero.jugadorActual().imprimirDadosAnteriores();
