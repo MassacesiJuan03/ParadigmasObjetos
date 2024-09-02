@@ -62,5 +62,10 @@ public class Carcel extends Casillas {
     public String getType(){
         return "Carcel";
     }
+
+    //Método abstracto y polimorfico
+    public void accion(Jugador jugador){
+
+    }
 }
 

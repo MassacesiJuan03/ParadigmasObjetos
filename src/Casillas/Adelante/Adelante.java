@@ -5,14 +5,12 @@ import Jugador.Jugador;
 
 public class Adelante extends Casillas {
     //Constructores
-    public Adelante(){}
-
     public Adelante(String nombre){
         super(nombre);
     }
 
     //Métodos
-    public void darSueldo(Jugador jugador){
+    private void darSueldo(Jugador jugador){
         jugador.recibirDinero(200);
     }
 
@@ -21,4 +19,8 @@ public class Adelante extends Casillas {
         return "Adelante";
     }
 
+    //Método abstracto y polimorfico
+    public void accion(Jugador jugador){
+        darSueldo(jugador);
+    }
 }

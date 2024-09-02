@@ -58,23 +58,22 @@ public class Jugador {
         // Lógica para comprar propiedades
 
     }
-
-
     public void pagarRenta(double renta) {
         if (renta <= this.dinero){
             this.dinero -= renta;
             System.out.println("Renta pagada con éxito.");
         }
     }
-
     public void recibirDinero(double monto) {
         this.dinero += monto;
     }
-
     public String getPieza() {
         return pieza;
     }
     public double getDinero() {
         return dinero;
+    }
+    public Casillas getPosicion() {
+        return posicion;
     }
 }

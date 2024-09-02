@@ -10,8 +10,12 @@ public class Servicio extends Propiedades {
     }
 
     //Métodos
-    public void cobrarRenta(Jugador jugador){
+    private void cobrarRenta(Jugador jugador){
         //Calcular la renta basado en los dados
     }
 
+    //Método abstracto y polimorfico
+    public void accion(Jugador jugador){
+        cobrarRenta(jugador);
+    }
 }

@@ -6,6 +6,7 @@ import Jugador.Jugador;
 import java.util.Scanner;
 
 public class Propiedades extends Casillas {
+    Scanner scanner = new Scanner(System.in);
     //atributos de instancia
     protected boolean esServicio;
     protected boolean esFerrocarril;
@@ -22,15 +23,14 @@ public class Propiedades extends Casillas {
     }
 
     //Métodos
-    public void cobrarRenta(Jugador jugador){
+    private void cobrarRenta(Jugador jugador){
         if (this.dueño != jugador && this.dueño != null){
             jugador.pagarRenta(this.renta);
             this.dueño.recibirDinero(this.renta);
         }
 
     }
-    public void ofrecerCompra(Jugador jugador){
-        Scanner scanner = new Scanner(System.in);
+    private void ofrecerCompra(Jugador jugador){
         boolean flag = true;
         //Pedirle por consola al usuario si quiere comprar la propiedad.
         while (flag){
@@ -51,10 +51,17 @@ public class Propiedades extends Casillas {
                 System.out.println("Respuesta incorrecta, vuelva a intentar.");
             }
         }
+        scanner.close();
     }
 
     @Override
     public String getType(){
         return "Propiedades";
+    }
+
+    //Método abstracto y polimorfico
+    public void accion(Jugador jugador){
+        ofrecerCompra(jugador);
+        cobrarRenta(jugador);
     }
 }

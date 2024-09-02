@@ -273,10 +273,40 @@ public class Tablero{
         return jugadoresEnCasilla;
     }
 
+    // Método para realizar el casting
+    public void realizarCasteo(Jugador jugadorActual){
+        Casillas posicionCasilla = jugadorActual.getPosicion();
+
+        if (posicionCasilla instanceof Adelante){
+            Adelante tipoAdelante = (Adelante) posicionCasilla;
+            tipoAdelante.accion(jugadorActual);
+        }
+        else if (posicionCasilla instanceof Carcel){
+            Carcel tipoCarcel = (Carcel) posicionCasilla;
+            tipoCarcel.accion(jugadorActual);
+        }
+        else if(posicionCasilla instanceof Impuestos){
+            Impuestos tipoImpuestos = (Impuestos) posicionCasilla;
+            tipoImpuestos.accion(jugadorActual);
+        }
+        else if (posicionCasilla instanceof Propiedades){
+            Propiedades tipoPropiedades = (Propiedades) posicionCasilla;
+            tipoPropiedades.accion(jugadorActual);
+        }
+        else if (posicionCasilla instanceof Servicio){
+            Servicio tipoServicio = (Servicio) posicionCasilla;
+            tipoServicio.accion(jugadorActual);
+        }
+        else if (posicionCasilla instanceof ArcaOCasualidad){
+            ArcaOCasualidad tipoArcaOCasualidad = (ArcaOCasualidad) posicionCasilla;
+            tipoArcaOCasualidad.accion(jugadorActual);
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Tablero tablero = new Tablero();
-        tablero.crearCasillas();
+        //tablero.crearCasillas();
         tablero.especializarCasillas();
         tablero.empezarPartida(scanner);
 
@@ -306,6 +336,8 @@ public class Tablero{
 
             String nombreCasilla = tablero.jugadorActual().posicion.getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
+
+            tablero.realizarCasteo(jugadorActual);
 
             /*
             //Dependiendo la casilla realiza las operaciones correspondientes

@@ -10,7 +10,7 @@ public class Impuestos extends Casillas {
     }
 
     //Métodos
-    public void pagarImpuesto(Jugador jugador){
+    private void pagarImpuesto(Jugador jugador){
         //Disminuir el dinero del jugador
         double montoImpuesto = Math.max(200, jugador.dinero*0.10);
         if (montoImpuesto <= jugador.dinero){
@@ -25,5 +25,10 @@ public class Impuestos extends Casillas {
     @Override
     public String getType(){
         return "Impuestos";
+    }
+
+    //Método abstracto y polimorfico
+    public void accion(Jugador jugador){
+        pagarImpuesto(jugador);
     }
 }
