@@ -13,6 +13,7 @@ public class Jugador {
     public double dinero;
     public boolean turno;
     public boolean carcel;
+    public boolean tieneCartaSalidaDeCarcel;
 
     public Jugador(String pieza) {
         this.posicion = null;
@@ -58,6 +59,20 @@ public class Jugador {
             this.dinero -= renta;
             System.out.println("Renta pagada con éxito.");
         }
+    }
+    public void avanzar(Casillas[] casillas) {
+        Casillas casillaActual = this.posicion;
+        //Casillas [] casillas = casillas;
+        int index = -1;
+        for (int i = 0; i < casillas.length; i++) {
+            if (casillas[i] == casillaActual) {
+                index = i;
+                break;
+            }
+        }
+        int nextIndex = (index + 1) % casillas.length;
+        this.posicion = casillas[nextIndex];
+
     }
     public void recibirDinero(double monto) {
         this.dinero += monto;

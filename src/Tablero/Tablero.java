@@ -1,7 +1,5 @@
 package Tablero;// Los comentarios que comienzan con "*" son dudas.
 
-import Carta.Carta;
-import Carta.CartaDinero;
 import Casillas.Adelante.Adelante;
 import Casillas.ArcaOCasualidad.ArcaOCasualidad;
 import Casillas.Carcel.Carcel;
@@ -12,8 +10,6 @@ import Casillas.Propiedades.Propiedades;
 import Casillas.Propiedades.Servicio.Servicio;
 import Jugador.Jugador;
 import Piezas.PiezasDisponibles;
-
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Tablero{
@@ -245,20 +241,7 @@ public class Tablero{
             System.out.println();
         }
     }
-    public void avanzar(Jugador jugadorActual) {
-        Casillas casillaActual = jugadorActual.posicion;
-        Casillas [] casillas = this.casillas;
-        int index = -1;
-        for (int i = 0; i < casillas.length; i++) {
-            if (casillas[i] == casillaActual) {
-                index = i;
-                break;
-            }
-        }
-        int nextIndex = (index + 1) % casillas.length;
-        jugadorActual.posicion = casillas[nextIndex];
-
-    }
+    
 
     // Implementar método getJugadoresEnCasilla
     public String[] getJugadoresEnCasilla(int index) {
@@ -274,7 +257,7 @@ public class Tablero{
     }
 
     // Método para realizar el casting
-    public void realizarCasteo(Jugador jugadorActual){
+    public void realizarCasteo(Jugador jugadorActual, Casillas[] casillas){
         Casillas posicionCasilla = jugadorActual.getPosicion();
 
         if (posicionCasilla instanceof Adelante){
@@ -283,7 +266,9 @@ public class Tablero{
         }
         else if (posicionCasilla instanceof Carcel){
             Carcel tipoCarcel = (Carcel) posicionCasilla;
-            tipoCarcel.accion(jugadorActual);
+            if (!tipoCarcel.tirarDobles(jugadorActual, casillas)){
+                tipoCarcel.accion(jugadorActual);
+            }
         }
         else if(posicionCasilla instanceof Impuestos){
             Impuestos tipoImpuestos = (Impuestos) posicionCasilla;
@@ -329,48 +314,13 @@ public class Tablero{
             System.out.println("Avanzas " + suma + " casillas");
 
             for (int i = 0; i < suma; i++) {
-                tablero.avanzar(jugadorActual);
+                jugadorActual.avanzar(tablero.casillas);
             }
-
-            System.out.println(Arrays.toString(jugadorActual.getDadosAnteriores()));
 
             String nombreCasilla = tablero.jugadorActual().posicion.getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
 
-            tablero.realizarCasteo(jugadorActual);
-
-            /*
-            //Dependiendo la casilla realiza las operaciones correspondientes
-            switch (tablero.jugadorActual().posicion.getType()){
-                case "Propiedades":
-                    Propiedades propiedad = (Propiedades) tablero.jugadorActual().posicion;
-                    propiedad.ofrecerCompra(jugadorActual);
-                    propiedad.cobrarRenta(jugadorActual);
-                    break;
-                case "Ferrocarril":
-                    Ferrocarril ferrocarril = (Ferrocarril) tablero.jugadorActual().posicion;
-                    ferrocarril.ofrecerCompra(jugadorActual);
-                    ferrocarril.cobrarRenta(jugadorActual);
-                    break;
-                case "Servicio":
-                    Servicio servicio = (Servicio) tablero.jugadorActual().posicion;
-                    break;
-                case "Impuestos":
-                    Impuestos impuesto = (Impuestos)tablero.jugadorActual().posicion;
-                    impuesto.pagarImpuesto(jugadorActual);
-                    break;
-                case "Carcel":
-                    Carcel carcel = (Carcel) tablero.jugadorActual().posicion;
-                    jugadorActual.carcel = true;
-                    System.out.println("Usted está en la cárcel");
-                    carcel.cobrarMulta(jugadorActual);
-                    break;
-                case "ArcaOCasualidad":
-                    break;
-                case "Estacionamiento": break; //No hace nada
-                case "Adelante": break; //No hacen nada
-            }
-            */
+            tablero.realizarCasteo(jugadorActual, tablero.casillas);
 
             System.out.println("Dados anteriores:");
             tablero.jugadorActual().imprimirDadosAnteriores();
