@@ -53,11 +53,6 @@ public class Jugador {
         }
         System.out.println();
     }
-
-    public void comprar() {
-        // Lógica para comprar propiedades
-
-    }
     public void pagarRenta(double renta) {
         if (renta <= this.dinero){
             this.dinero -= renta;
@@ -75,5 +70,11 @@ public class Jugador {
     }
     public Casillas getPosicion() {
         return posicion;
+    }
+    public int[] getDadosAnteriores() {
+        return dadosAnteriores;
+    }
+    public void setDinero(double monto) {
+        this.dinero -= monto;
     }
 }

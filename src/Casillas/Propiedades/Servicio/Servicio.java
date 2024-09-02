@@ -12,6 +12,8 @@ public class Servicio extends Propiedades {
     //Métodos
     private void cobrarRenta(Jugador jugador){
         //Calcular la renta basado en los dados
+        int[] dadosAnteriores = jugador.getDadosAnteriores();
+        jugador.setDinero(4 * (dadosAnteriores[dadosAnteriores.length-1] + dadosAnteriores[dadosAnteriores.length-2]));
     }
 
     //Método abstracto y polimorfico

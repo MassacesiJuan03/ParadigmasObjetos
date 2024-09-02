@@ -8,12 +8,12 @@ import Casillas.Carcel.Carcel;
 import Casillas.Casillas;
 import Casillas.Estacionamiento.Estacionamiento;
 import Casillas.Impuestos.Impuestos;
-import Casillas.Propiedades.Ferrocarril.Ferrocarril;
 import Casillas.Propiedades.Propiedades;
 import Casillas.Propiedades.Servicio.Servicio;
 import Jugador.Jugador;
 import Piezas.PiezasDisponibles;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Tablero{
@@ -315,8 +315,6 @@ public class Tablero{
 
         boolean juegoEnCurso = true;
 
-        scanner.nextLine();
-
         while (juegoEnCurso) {
             System.out.println("\n\n--------------------");
             System.out.println("Turno de " + tablero.siguienteTurno(jugadorActual));
@@ -333,6 +331,8 @@ public class Tablero{
             for (int i = 0; i < suma; i++) {
                 tablero.avanzar(jugadorActual);
             }
+
+            System.out.println(Arrays.toString(jugadorActual.getDadosAnteriores()));
 
             String nombreCasilla = tablero.jugadorActual().posicion.getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);

@@ -1,11 +1,12 @@
 package Casillas.Propiedades;
 
 import Casillas.Casillas;
+import IAccionDinero.IAccionDinero;
 import Jugador.Jugador;
 
 import java.util.Scanner;
 
-public class Propiedades extends Casillas {
+public class Propiedades extends Casillas implements IAccionDinero{
     Scanner scanner = new Scanner(System.in);
     //atributos de instancia
     protected boolean esServicio;
@@ -38,7 +39,7 @@ public class Propiedades extends Casillas {
             String option = scanner.nextLine();
 
             if (option.equalsIgnoreCase("si")){
-                jugador.dinero -= this.costo;
+                accionDinero(jugador);
                 this.dueño = jugador;
                 System.out.println("Compra realizada, gracias.");
                 flag = false;
@@ -51,7 +52,11 @@ public class Propiedades extends Casillas {
                 System.out.println("Respuesta incorrecta, vuelva a intentar.");
             }
         }
-        scanner.close();
+    }
+
+    public double accionDinero(Jugador jugador){
+        jugador.dinero -= this.costo;
+        return jugador.dinero;
     }
 
     @Override
