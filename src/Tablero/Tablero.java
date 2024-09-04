@@ -9,7 +9,7 @@ import Casillas.Impuestos.Impuestos;
 import Casillas.Propiedades.Propiedades;
 import Casillas.Propiedades.Servicio.Servicio;
 import Jugador.Jugador;
-import Piezas.PiezasDisponibles;
+import Piezas.Pieza;
 import java.util.Scanner;
 
 public class Tablero{
@@ -91,19 +91,19 @@ public class Tablero{
             }
         } while (cantidadDeJugadores < 2 || cantidadDeJugadores > 4);
 
-        PiezasDisponibles piezas = new PiezasDisponibles();
         jugadores = new Jugador[cantidadDeJugadores];
         for (int i = 0; i < cantidadDeJugadores; i++) {
             System.out.println("Jugador " + (i + 1) + ", elige tu nombre:");
             String nombreJugador = scanner.next();
 
             System.out.println(nombreJugador + ", elige tu pieza:");
-            String piezaElegida = piezas.elegirPieza(scanner);
+            Pieza piezaElegida = Pieza.elegirPieza(scanner);
 
-            jugadores[i] = new Jugador(piezaElegida);
+            jugadores[i] = new Jugador(piezaElegida.toString());
             jugadores[i].nombre = nombreJugador;
             jugadores[i].posicion = casillas[0];
         }
+
         // Preguntar si desea utilizar el juego automático
         System.out.println("Desea utilizar el juego automático? (Si/no)");
         String respuesta;
@@ -354,6 +354,8 @@ public class Tablero{
                 jugadorActual.avanzar(tablero.casillas);
             }
 
+            tablero.imprimirTablero();
+
             String nombreCasilla = tablero.jugadorActual().posicion.getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
 
@@ -361,10 +363,6 @@ public class Tablero{
 
             System.out.println("Dados anteriores:");
             tablero.jugadorActual().imprimirDadosAnteriores();
-
-
-            tablero.imprimirTablero();
-
         
             // Actualizar el jugador actual para el siguiente turno
             jugadorActual = tablero.jugadorActual();
