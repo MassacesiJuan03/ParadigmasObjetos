@@ -15,7 +15,7 @@ public class CartaSalirCarcel extends Carta{
 
     //Métodos 
     public void usar(Jugador jugador) {
-        System.out.println("Se ha usado la carta de salir de la cárcel: " + this.descripcion);
+        System.out.println("Ha obtenido la carta de salir de la cárcel: " + this.descripcion);
         jugador.tieneCartaSalidaDeCarcel = true;
     }
 
