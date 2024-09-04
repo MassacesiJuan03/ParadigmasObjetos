@@ -9,8 +9,6 @@ import java.util.Scanner;
 public class Propiedades extends Casillas implements IAccionDinero{
     Scanner scanner = new Scanner(System.in);
     //atributos de instancia
-    protected boolean esServicio;
-    protected boolean esFerrocarril;
     protected int costo;
     protected Jugador dueño;
     protected int renta;

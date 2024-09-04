@@ -15,10 +15,12 @@ import java.util.Scanner;
 public class Tablero{
     //atributos de clase
     private static final int CANTIDAD_DE_CASILLAS = 20;
-    public Casillas[] casillas;
-    private static final int CONSOLE_WIDTH = 160;  // 1280 / 8 (assuming 8 pixels per character)
-    private static final int CONSOLE_HEIGHT = 50;  //
+    private Casillas[] casillas;
+    private static final int ANCHO_CONSOLA = 160;  // 1280 / 8 (assuming 8 pixels per character)
+    private static final int ALTO_CONSOLA = 50;  //
     //atributos de instancia
+
+    private boolean juegoAutomatico;
     //private boolean turno;
 
     public Jugador[] jugadores;
@@ -70,8 +72,24 @@ public class Tablero{
     }
 
     public void empezarPartida(Scanner scanner) {
-        System.out.print("Introduce la cantidad de jugadores: ");
-        int cantidadDeJugadores = scanner.nextInt();
+        int cantidadDeJugadores = 0;
+
+
+
+
+        // garantizar que se ingrese 2, 3 o 4
+        do {
+            System.out.print("Introduce la cantidad de jugadores (2 a 4): ");
+            if (scanner.hasNextInt()) {
+                cantidadDeJugadores = scanner.nextInt();
+                if (cantidadDeJugadores < 2 || cantidadDeJugadores > 4) {
+                    System.out.println("Número de jugadores inválido. Debe ser entre 2 y 4.");
+                }
+            } else {
+                System.out.println("Entrada inválida. Por favor, introduce un número entre 2 y 4.");
+                scanner.next(); // limpiar la entrada inválida
+            }
+        } while (cantidadDeJugadores < 2 || cantidadDeJugadores > 4);
 
         PiezasDisponibles piezas = new PiezasDisponibles();
         jugadores = new Jugador[cantidadDeJugadores];
@@ -79,16 +97,35 @@ public class Tablero{
             System.out.println("Jugador " + (i + 1) + ", elige tu nombre:");
             String nombreJugador = scanner.next();
 
-            System.out.println("Jugador " + (i + 1) + ", elige tu pieza:");
+            System.out.println(nombreJugador + ", elige tu pieza:");
             String piezaElegida = piezas.elegirPieza(scanner);
-            
+
             jugadores[i] = new Jugador(piezaElegida);
             jugadores[i].nombre = nombreJugador;
             jugadores[i].posicion = casillas[0];
         }
+        // Preguntar si desea utilizar el juego automático
+        System.out.println("Desea utilizar el juego automático? (Si/no)");
+        String respuesta;
+
+        do {
+            respuesta = scanner.next().trim().toLowerCase();
+            if (!respuesta.equals("si") && !respuesta.equals("no")) {
+                System.out.println("Entrada inválida. Por favor, responde 'Si' o 'No'.");
+            }
+        } while (!respuesta.equals("si") && !respuesta.equals("no"));
+
+        if (respuesta.equals("si")) {
+            this.juegoAutomatico = true;
+            System.out.println("Modo automático activado.");
+        } else {
+            this.juegoAutomatico = false;
+            System.out.println("Modo manual activado.");
+        }
     }
 
-    public String siguienteTurno(Jugador jugadorAnterior) {
+
+    private String siguienteTurno(Jugador jugadorAnterior) {
         // Encontrar el índice del jugador anterior
         int indiceAnterior = -1;
         for (int i = 0; i < jugadores.length; i++) {
@@ -109,7 +146,7 @@ public class Tablero{
         // Retornar la pieza del jugador cuyo turno es ahora
         return jugadores[indiceSiguiente].nombre;
     }
-    public Jugador jugadorActual() {
+    private Jugador jugadorActual() {
         for (Jugador jugador : jugadores) {
             if (jugador.turno) {
                 return jugador;
@@ -118,7 +155,7 @@ public class Tablero{
         return null;
     }
 
-    private void drawProperty(String[][] board, int row, int col, String name, String[] playerSymbols) {
+    private void dibujarPropiedad(String[][] board, int row, int col, String name, String[] nombreJugador) {
         // Define the dimensions of each cell (width and height)
         int cellWidth = 20;
         int cellHeight = 4; // Adjusted height to fit two lines of text and player symbols
@@ -160,8 +197,8 @@ public class Tablero{
 
         // Draw the player symbols
         String jugadoresEnCasilla = "";
-        if (playerSymbols.length > 1){
-            for (String playerSymbol : playerSymbols) {
+        if (nombreJugador.length > 1){
+            for (String playerSymbol : nombreJugador) {
                 if (playerSymbol.length() > 1) {
                     jugadoresEnCasilla = jugadoresEnCasilla + "|" + playerSymbol;
 
@@ -187,11 +224,11 @@ public class Tablero{
     }
 
     public void imprimirTablero() {
-        String[][] boardVisual = new String[CONSOLE_HEIGHT][CONSOLE_WIDTH];
+        String[][] boardVisual = new String[ALTO_CONSOLA][ANCHO_CONSOLA];
 
         // Initialize the board with spaces
-        for (int i = 0; i < CONSOLE_HEIGHT; i++) {
-            for (int j = 0; j < CONSOLE_WIDTH; j++) {
+        for (int i = 0; i < ALTO_CONSOLA; i++) {
+            for (int j = 0; j < ANCHO_CONSOLA; j++) {
                 boardVisual[i][j] = " ";
             }
         }
@@ -219,23 +256,23 @@ public class Tablero{
         int[] leftColumn = { 16, 17, 18, 19, 0};
 
         for (int i = 0; i < topRow.length; i++) {
-            drawProperty(boardVisual, boardTop, boardLeft + i * 20, casillas[topRow[i]].getNombre(), getJugadoresEnCasilla(topRow[i]));
+            dibujarPropiedad(boardVisual, boardTop, boardLeft + i * 20, casillas[topRow[i]].getNombre(), getJugadoresEnCasilla(topRow[i]));
         }
 
         for (int i = 0; i < rightColumn.length; i++) {
-            drawProperty(boardVisual, boardTop + i * 6, boardLeft + boardWidth - 20, casillas[rightColumn[i]].getNombre(), getJugadoresEnCasilla(rightColumn[i]));
+            dibujarPropiedad(boardVisual, boardTop + i * 6, boardLeft + boardWidth - 20, casillas[rightColumn[i]].getNombre(), getJugadoresEnCasilla(rightColumn[i]));
         }
 
         for (int i = 0; i < bottomRow.length; i++) {
-            drawProperty(boardVisual, boardTop + boardHeight - 6, boardLeft + (bottomRow.length - 1 - i) * 20, casillas[bottomRow[i]].getNombre(), getJugadoresEnCasilla(bottomRow[i]));
+            dibujarPropiedad(boardVisual, boardTop + boardHeight - 6, boardLeft + (bottomRow.length - 1 - i) * 20, casillas[bottomRow[i]].getNombre(), getJugadoresEnCasilla(bottomRow[i]));
         }
 
         for (int i = 0; i < leftColumn.length; i++) {
-            drawProperty(boardVisual, boardTop + (leftColumn.length - 1 - i) * 6, boardLeft, casillas[leftColumn[i]].getNombre(), getJugadoresEnCasilla(leftColumn[i]));
+            dibujarPropiedad(boardVisual, boardTop + (leftColumn.length - 1 - i) * 6, boardLeft, casillas[leftColumn[i]].getNombre(), getJugadoresEnCasilla(leftColumn[i]));
         }
 
-        for (int i = 0; i < CONSOLE_HEIGHT; i++) {
-            for (int j = 0; j < CONSOLE_WIDTH; j++) {
+        for (int i = 0; i < ALTO_CONSOLA; i++) {
+            for (int j = 0; j < ANCHO_CONSOLA; j++) {
                 System.out.print(boardVisual[i][j]);
             }
             System.out.println();
