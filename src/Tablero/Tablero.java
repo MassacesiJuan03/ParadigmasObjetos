@@ -225,20 +225,20 @@ public class Tablero{
 
     public void imprimirTablero() {
         String[][] boardVisual = new String[ALTO_CONSOLA][ANCHO_CONSOLA];
-
+    
         // Initialize the board with spaces
         for (int i = 0; i < ALTO_CONSOLA; i++) {
             for (int j = 0; j < ANCHO_CONSOLA; j++) {
                 boardVisual[i][j] = " ";
             }
         }
-
+    
         // Define the board dimensions
-        int boardTop = 5;
+        int boardTop = 1;
         int boardLeft = 20;
         int boardWidth = 120;
-        int boardHeight = 36;
-
+        int boardHeight = 22;
+    
         // Draw the board outline
         for (int i = boardLeft; i < boardLeft + boardWidth; i++) {
             boardVisual[boardTop][i] = "-";
@@ -248,37 +248,58 @@ public class Tablero{
             boardVisual[i][boardLeft] = "|";
             boardVisual[i][boardLeft + boardWidth - 1] = "|";
         }
-
+    
         // Define positions for drawing properties
-        int[] topRow = {0,1,2,3,4};
-        int[] rightColumn = {5, 6, 7, 8, 9};
+        int[] topRow = {0,1,2,3,4,5};
+        int[] rightColumn = {6, 7, 8, 9};
         int[] bottomRow = {10, 11, 12, 13, 14, 15};
-        int[] leftColumn = { 16, 17, 18, 19, 0};
-
+        int[] leftColumn = {16, 17, 18, 19};
+    
+        int cellHeight = 4;
+        int cellWidth = 20;
+    
+        // Draw top row
         for (int i = 0; i < topRow.length; i++) {
-            dibujarPropiedad(boardVisual, boardTop, boardLeft + i * 20, casillas[topRow[i]].getNombre(), getJugadoresEnCasilla(topRow[i]));
+            dibujarPropiedad(boardVisual, boardTop, boardLeft + i * cellWidth, casillas[topRow[i]].getNombre(), getJugadoresEnCasilla(topRow[i]));
         }
-
+    
+        // Draw right column
         for (int i = 0; i < rightColumn.length; i++) {
-            dibujarPropiedad(boardVisual, boardTop + i * 6, boardLeft + boardWidth - 20, casillas[rightColumn[i]].getNombre(), getJugadoresEnCasilla(rightColumn[i]));
+            dibujarPropiedad(boardVisual, boardTop + (i+1) * cellHeight, boardLeft + boardWidth - cellWidth, casillas[rightColumn[i]].getNombre(), getJugadoresEnCasilla(rightColumn[i]));
         }
-
+    
+        // Draw bottom row
         for (int i = 0; i < bottomRow.length; i++) {
-            dibujarPropiedad(boardVisual, boardTop + boardHeight - 6, boardLeft + (bottomRow.length - 1 - i) * 20, casillas[bottomRow[i]].getNombre(), getJugadoresEnCasilla(bottomRow[i]));
+            dibujarPropiedad(boardVisual, boardTop + boardHeight - cellHeight, boardLeft + (bottomRow.length - 1 - i) * cellWidth, casillas[bottomRow[i]].getNombre(), getJugadoresEnCasilla(bottomRow[i]));
         }
-
+    
+        // Draw left column
         for (int i = 0; i < leftColumn.length; i++) {
-            dibujarPropiedad(boardVisual, boardTop + (leftColumn.length - 1 - i) * 6, boardLeft, casillas[leftColumn[i]].getNombre(), getJugadoresEnCasilla(leftColumn[i]));
+            dibujarPropiedad(boardVisual, boardTop + (leftColumn.length - i) * cellHeight, boardLeft, casillas[leftColumn[i]].getNombre(), getJugadoresEnCasilla(leftColumn[i]));
         }
-
+    
+        // Print the board, only up to the last non-empty row
+        int lastNonEmptyRow = 0;
         for (int i = 0; i < ALTO_CONSOLA; i++) {
+            boolean rowHasContent = false;
+            for (int j = 0; j < ANCHO_CONSOLA; j++) {
+                if (!boardVisual[i][j].equals(" ")) {
+                    rowHasContent = true;
+                    break;
+                }
+            }
+            if (rowHasContent) {
+                lastNonEmptyRow = i;
+            }
+        }
+    
+        for (int i = 0; i <= lastNonEmptyRow; i++) {
             for (int j = 0; j < ANCHO_CONSOLA; j++) {
                 System.out.print(boardVisual[i][j]);
             }
             System.out.println();
         }
     }
-    
 
     // Implementar método getJugadoresEnCasilla
     public String[] getJugadoresEnCasilla(int index) {
