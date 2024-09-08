@@ -84,7 +84,7 @@ public class Carcel extends Casillas {
 
     @Override
     public String getType() {
-        return super.getType();
+        return "Carcel";
     }
 
     //Método abstracto y polimorfico

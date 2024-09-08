@@ -22,7 +22,7 @@ public class Adelante extends Casillas implements IAccionDinero{
 
     @Override
     public String getType() {
-        return super.getType();
+        return "Adelante";
     }
     
     //Método abstracto y polimorfico

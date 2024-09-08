@@ -41,7 +41,7 @@ public class ArcaOCasualidad extends Casillas {
     
     @Override
     public String getType() {
-        return super.getType();
+        return "ArcaOCasualidad";
     }
 
     //Método abstracto y polimorfico

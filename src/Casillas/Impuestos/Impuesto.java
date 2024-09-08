@@ -29,7 +29,7 @@ public class Impuesto extends Casillas implements IAccionDinero{
 
     @Override
     public String getType() {
-        return super.getType();
+        return "Impuesto";
     }
     
     //Método abstracto y polimorfico

@@ -12,7 +12,7 @@ public class Estacionamiento extends Casillas {
     //Método
     @Override
     public String getType() {
-        return super.getType();
+        return "Estacionamiento";
     }
 
     //Método abstracto y polimorfico

@@ -59,7 +59,7 @@ public class Propiedad extends Casillas implements IAccionDinero{
 
     @Override
     public String getType() {
-        return super.getType();
+        return "Propiedad";
     }
 
     //Método abstracto y polimorfico

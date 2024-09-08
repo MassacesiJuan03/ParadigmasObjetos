@@ -18,7 +18,7 @@ public class Servicio extends Propiedad {
 
     @Override
     public String getType() {
-        return super.getType();
+        return "Servicio";
     }
 
     //Método abstracto y polimorfico
