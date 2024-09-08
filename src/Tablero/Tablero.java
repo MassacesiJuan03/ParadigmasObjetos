@@ -124,7 +124,24 @@ public class Tablero{
     }
 
 
-    private Jugador siguienteTurno(Jugador jugadorAnterior) {
+    private String siguienteTurno(Jugador jugadorAnterior) {
+        // Eliminar jugadores con dinero negativo
+        for (int i = jugadores.length - 1; i >= 0; i--) {
+            if (jugadores[i].getDinero() < 0) {
+                System.out.println(jugadores[i].nombre + " ha sido eliminado del juego por quedarse sin dinero.");
+                Jugador[] newJugadores = new Jugador[jugadores.length - 1];
+                System.arraycopy(jugadores, 0, newJugadores, 0, i);
+                System.arraycopy(jugadores, i + 1, newJugadores, i, jugadores.length - i - 1);
+                jugadores = newJugadores;
+            }
+        }
+
+        // Si solo queda un jugador, terminar el juego
+        if (jugadores.length == 1) {
+            System.out.println(jugadores[0].nombre + " ha ganado el juego!");
+            return null; // Indica que el juego ha terminado
+        }
+
         // Encontrar el índice del jugador anterior
         int indiceAnterior = -1;
         for (int i = 0; i < jugadores.length; i++) {
