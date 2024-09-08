@@ -124,7 +124,7 @@ public class Tablero{
     }
 
 
-    private String siguienteTurno(Jugador jugadorAnterior) {
+    private Jugador siguienteTurno(Jugador jugadorAnterior) {
         // Eliminar jugadores con dinero negativo
         for (int i = jugadores.length - 1; i >= 0; i--) {
             if (jugadores[i].getDinero() < 0) {
