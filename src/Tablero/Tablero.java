@@ -5,11 +5,13 @@ import Casillas.ArcaOCasualidad.ArcaOCasualidad;
 import Casillas.Carcel.Carcel;
 import Casillas.Casillas;
 import Casillas.Estacionamiento.Estacionamiento;
-import Casillas.Impuestos.Impuestos;
-import Casillas.Propiedades.Propiedades;
+import Casillas.Impuestos.Impuesto;
+import Casillas.Propiedades.Propiedad;
 import Casillas.Propiedades.Servicio.Servicio;
 import Jugador.Jugador;
 import Piezas.Pieza;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Tablero{
@@ -45,28 +47,28 @@ public class Tablero{
         casillas[0] = new Adelante("Salida"); // Casilla de salida (GO)
         casillas[5] = new Estacionamiento("Estacionamiento"); // Estacionamiento gratuito
         casillas[10] = new Carcel("Ir a la cárcel"); // Ir a la cárcel
-        casillas[15] = new Propiedades("El Muelle", 400, null, 50); // El Muelle
+        casillas[15] = new Propiedad("El Muelle", 400, null, 50); // El Muelle
 
 // Propiedades
-        casillas[1] = new Propiedades("Av. Mediterráneo", 60, null, 2); // Av. Mediterráneo
+        casillas[1] = new Propiedad("Av. Mediterráneo", 60, null, 2); // Av. Mediterráneo
         casillas[2] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
-        casillas[3] = new Propiedades("Av. Báltica", 60, null, 4); // Av. Báltica
-        casillas[4] = new Impuestos("Impuestos"); // Impuesto sobre la renta
+        casillas[3] = new Propiedad("Av. Báltica", 60, null, 4); // Av. Báltica
+        casillas[4] = new Impuesto("Impuestos"); // Impuesto sobre la renta
 
-        casillas[6] = new Propiedades("Av. Oriental", 100, null, 6); // Av. Oriental
+        casillas[6] = new Propiedad("Av. Oriental", 100, null, 6); // Av. Oriental
         casillas[7] = new ArcaOCasualidad("Casualidad", false); // Casualidad
-        casillas[8] = new Propiedades("Av. Vermont", 100, null, 6); // Av. Vermont
-        casillas[9] = new Propiedades("Av. Connecticut", 120, null, 8); // Av. Connecticut
+        casillas[8] = new Propiedad("Av. Vermont", 100, null, 6); // Av. Vermont
+        casillas[9] = new Propiedad("Av. Connecticut", 120, null, 8); // Av. Connecticut
 
-        casillas[11] = new Propiedades("Plaza San Carlos", 140, null, 10); // Plaza San Carlos
+        casillas[11] = new Propiedad("Plaza San Carlos", 140, null, 10); // Plaza San Carlos
         casillas[12] = new Servicio("Electricidad", 150, null, 0); // Compañía de Electricidad
-        casillas[13] = new Propiedades("Av. los Estados", 140, null, 10); // Av. de los Estados
-        casillas[14] = new Propiedades("Av. Virginia", 160, null, 12); // Av. Virginia
+        casillas[13] = new Propiedad("Av. los Estados", 140, null, 10); // Av. de los Estados
+        casillas[14] = new Propiedad("Av. Virginia", 160, null, 12); // Av. Virginia
 
-        casillas[16] = new Propiedades("Plaza Jaime", 180, null, 14); // Plaza San Jaime
+        casillas[16] = new Propiedad("Plaza Jaime", 180, null, 14); // Plaza San Jaime
         casillas[17] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
-        casillas[18] = new Propiedades("Av. Tennessee", 180, null, 14); // Av. Tennessee
-        casillas[19] = new Propiedades("Av. Nueva York", 200, null, 16); // Av. Nueva York
+        casillas[18] = new Propiedad("Av. Tennessee", 180, null, 14); // Av. Tennessee
+        casillas[19] = new Propiedad("Av. Nueva York", 200, null, 16); // Av. Nueva York
 
         this.casillas = casillas;
     }
@@ -133,6 +135,9 @@ public class Tablero{
                 System.arraycopy(jugadores, 0, newJugadores, 0, i);
                 System.arraycopy(jugadores, i + 1, newJugadores, i, jugadores.length - i - 1);
                 jugadores = newJugadores;
+
+
+                
             }
         }
 
@@ -331,14 +336,6 @@ public class Tablero{
         return jugadoresEnCasilla;
     }
 
-    // Método para saber en que casiila esta el jugador
-    public void casillaDelJugador(String nombreCasilla){
-
-
-
-
-    } 
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Tablero tablero = new Tablero();
@@ -372,7 +369,34 @@ public class Tablero{
             String nombreCasilla = tablero.casillas[jugadorActual.posicion].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
 
-            tablero.casillaDelJugador(nombreCasilla);
+            //Dependiendo donde cae el jugador la casilla realiza la accion correspondiente
+            String ObjetoDeTipo = tablero.casillas[jugadorActual.posicion].getType();
+            switch (ObjetoDeTipo) {
+                case "Propiedad":
+                    Propiedad propiedad = (Propiedad) tablero.casillas[jugadorActual.posicion];
+                    propiedad.accion(jugadorActual);
+                    break;
+                case "Servicio":
+                    Servicio servicio = (Servicio) tablero.casillas[jugadorActual.posicion];
+                    servicio.accion(jugadorActual);
+                    break;
+                case "Impuesto":
+                    Impuesto impuesto = (Impuesto) tablero.casillas[jugadorActual.posicion];
+                    impuesto.accion(jugadorActual);
+                    break;
+                case "ArcaOCasualidad":
+                    ArcaOCasualidad arcaOcasualidad = (ArcaOCasualidad) tablero.casillas[jugadorActual.posicion];
+                    arcaOcasualidad.accion(jugadorActual);
+                    break;
+                case "Carcel":
+                    Carcel carcel = (Carcel) tablero.casillas[jugadorActual.posicion];
+                    carcel.accion(jugadorActual);
+                    break;
+                case "Estacionamiento":
+                    break;
+                case "Adelante":
+                    break;
+            }   
 
             System.out.println("Dados anteriores:");
             tablero.jugadorActual().imprimirDadosAnteriores();

@@ -13,18 +13,18 @@ public class Carcel extends Casillas {
     }
 
     //Métodos
-    public void cobrarMulta(Jugador jugador){
+    private void cobrarMulta(Jugador jugador){
         //Verificar si el jugador tiene carta de salida de cárcel y si la quiere usar
         boolean salir = usarCartaSalida(tieneCartaSalida(jugador));
 
-        if (!salir){
+        if (!salir && !tirarDobles(jugador)){
             System.out.println("¿Desea pagar una multa de $50? Si/No");
             String option = scanner.nextLine();
 
             if (option.equalsIgnoreCase("Si")){
                 jugador.dinero -= 50;
                 System.out.println("Multa cobrada, sale de la carcél");
-                salirDeLaCarcel(jugador);
+                jugador.setCarcel(true);
             }
             else{
                 if (option.equalsIgnoreCase("No")){
@@ -62,11 +62,7 @@ public class Carcel extends Casillas {
         return false;
     }
 
-    private void salirDeLaCarcel(Jugador jugador){
-        jugador.carcel = false;
-    }
-
-    public boolean tirarDobles(Jugador jugador){
+    private boolean tirarDobles(Jugador jugador){
         int dado1 = (int) (Math.random() * 6) + 1;
         int dado2 = (int) (Math.random() * 6) + 1;
 
@@ -75,7 +71,7 @@ public class Carcel extends Casillas {
 
         if (dado1 == dado2){
             System.out.println("Ha conseguido dobles!. Sale de la cárcel");
-            salirDeLaCarcel(jugador);
+            jugador.setCarcel(false);
 
             //Avanzar casillas
             for(int i=0; i < dado1+dado2; i++){
@@ -84,6 +80,11 @@ public class Carcel extends Casillas {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String getType() {
+        return super.getType();
     }
 
     //Método abstracto y polimorfico

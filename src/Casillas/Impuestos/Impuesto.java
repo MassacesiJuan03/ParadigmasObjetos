@@ -4,9 +4,9 @@ import Casillas.Casillas;
 import IAccionDinero.IAccionDinero;
 import Jugador.Jugador;
 
-public class Impuestos extends Casillas implements IAccionDinero{
+public class Impuesto extends Casillas implements IAccionDinero{
     //Constructor
-    public Impuestos(String nombre) {
+    public Impuesto(String nombre) {
         super(nombre);
     }
 
@@ -25,6 +25,11 @@ public class Impuestos extends Casillas implements IAccionDinero{
 
     public double accionDinero(Jugador jugador){
         return Math.max(200, jugador.dinero*0.10);
+    }
+
+    @Override
+    public String getType() {
+        return super.getType();
     }
     
     //Método abstracto y polimorfico

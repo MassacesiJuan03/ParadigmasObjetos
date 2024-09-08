@@ -9,6 +9,12 @@ public class Estacionamiento extends Casillas {
         super(nombre);
     }
 
+    //Método
+    @Override
+    public String getType() {
+        return super.getType();
+    }
+
     //Método abstracto y polimorfico
     public void accion(Jugador jugador){}
 }

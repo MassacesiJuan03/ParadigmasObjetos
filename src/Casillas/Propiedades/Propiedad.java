@@ -6,7 +6,7 @@ import Jugador.Jugador;
 
 import java.util.Scanner;
 
-public class Propiedades extends Casillas implements IAccionDinero{
+public class Propiedad extends Casillas implements IAccionDinero{
     Scanner scanner = new Scanner(System.in);
     //atributos de instancia
     protected int costo;
@@ -14,7 +14,7 @@ public class Propiedades extends Casillas implements IAccionDinero{
     protected int renta;
 
     //Constructor
-    public Propiedades(String nombre, int costo, Jugador dueño, int renta){
+    public Propiedad(String nombre, int costo, Jugador dueño, int renta){
         super(nombre);
         this.costo = costo;
         this.dueño = dueño;
@@ -55,6 +55,11 @@ public class Propiedades extends Casillas implements IAccionDinero{
     public double accionDinero(Jugador jugador){
         jugador.dinero -= this.costo;
         return jugador.dinero;
+    }
+
+    @Override
+    public String getType() {
+        return super.getType();
     }
 
     //Método abstracto y polimorfico

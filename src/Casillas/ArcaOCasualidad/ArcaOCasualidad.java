@@ -37,6 +37,13 @@ public class ArcaOCasualidad extends Casillas {
         carta.usar(jugador);
     }
 
+
+    
+    @Override
+    public String getType() {
+        return super.getType();
+    }
+
     //Método abstracto y polimorfico
     public void accion(Jugador jugador){
         robarCarta(jugador);

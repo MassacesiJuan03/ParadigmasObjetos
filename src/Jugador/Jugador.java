@@ -89,4 +89,7 @@ public class Jugador {
     public void setTurno(boolean turno) {
         this.turno = turno;
     }
+    public void setCarcel(boolean salida) {
+        this.carcel = salida;
+    }
 }
