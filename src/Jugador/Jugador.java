@@ -1,22 +1,20 @@
 package Jugador;
 
-import Casillas.Casillas;
-
 // Los comentarios que comienzan con "*" son dudas.
 public class Jugador {
     // Atributos de instancia
-    public Casillas posicion;
+    public int posicion;
     public String pieza;
     public String nombre;
     public boolean enBancarrota;
     public int[] dadosAnteriores; // array de 1xn
-    public double dinero;
+    public int dinero;
     public boolean turno;
     public boolean carcel;
     public boolean tieneCartaSalidaDeCarcel;
 
     public Jugador(String pieza) {
-        this.posicion = null;
+        this.posicion = 0;
         this.pieza = pieza;
         this.enBancarrota = false;
         this.dadosAnteriores = new int[0]; // Inicializar array vacío
@@ -60,19 +58,15 @@ public class Jugador {
             System.out.println("Renta pagada con éxito.");
         }
     }
-    public void avanzar(Casillas[] casillas) {
-        Casillas casillaActual = this.posicion;
-        //Casillas [] casillas = casillas;
-        int index = -1;
-        for (int i = 0; i < casillas.length; i++) {
-            if (casillas[i] == casillaActual) {
-                index = i;
-                break;
-            }
+    public void avanzar() {
+        if (this.posicion == 19){
+            this.posicion = 0;
+            System.out.println("Paso por la casilla 'Adelante', recibe $200");
+            this.dinero += 200;
         }
-        int nextIndex = (index + 1) % casillas.length;
-        this.posicion = casillas[nextIndex];
-
+        else{
+            this.posicion++;
+        }
     }
     public void recibirDinero(double monto) {
         this.dinero += monto;
@@ -83,7 +77,7 @@ public class Jugador {
     public double getDinero() {
         return dinero;
     }
-    public Casillas getPosicion() {
+    public int getPosicion() {
         return posicion;
     }
     public int[] getDadosAnteriores() {
@@ -91,5 +85,8 @@ public class Jugador {
     }
     public void setDinero(double monto) {
         this.dinero -= monto;
+    }
+    public void setTurno(boolean turno) {
+        this.turno = turno;
     }
 }

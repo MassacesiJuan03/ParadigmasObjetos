@@ -13,13 +13,7 @@ abstract public class Casillas{
         this.nombre = nombre;
     }
 
-    public Casillas(){
-    }
-
     //Métodos
-    public String getType() {
-        return null;
-    }
     public String getNombre(){
         return nombre;
     }

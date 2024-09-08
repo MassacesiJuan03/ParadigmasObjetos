@@ -66,7 +66,7 @@ public class Carcel extends Casillas {
         jugador.carcel = false;
     }
 
-    public boolean tirarDobles(Jugador jugador, Casillas[] casillas){
+    public boolean tirarDobles(Jugador jugador){
         int dado1 = (int) (Math.random() * 6) + 1;
         int dado2 = (int) (Math.random() * 6) + 1;
 
@@ -79,16 +79,11 @@ public class Carcel extends Casillas {
 
             //Avanzar casillas
             for(int i=0; i < dado1+dado2; i++){
-                jugador.avanzar(casillas);
+                jugador.avanzar();
             }
             return true;
         }
         return false;
-    }
-
-    @Override
-    public String getType(){
-        return "Carcel";
     }
 
     //Método abstracto y polimorfico

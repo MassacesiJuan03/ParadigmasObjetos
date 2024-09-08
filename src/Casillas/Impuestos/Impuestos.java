@@ -26,12 +26,7 @@ public class Impuestos extends Casillas implements IAccionDinero{
     public double accionDinero(Jugador jugador){
         return Math.max(200, jugador.dinero*0.10);
     }
-
-    @Override
-    public String getType(){
-        return "Impuestos";
-    }
-
+    
     //Método abstracto y polimorfico
     public void accion(Jugador jugador){
         cobrarImpuesto(jugador);

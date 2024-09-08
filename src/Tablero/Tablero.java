@@ -101,7 +101,6 @@ public class Tablero{
 
             jugadores[i] = new Jugador(piezaElegida.toString());
             jugadores[i].nombre = nombreJugador;
-            jugadores[i].posicion = casillas[0];
         }
 
         // Preguntar si desea utilizar el juego automático
@@ -117,7 +116,7 @@ public class Tablero{
 
         if (respuesta.equals("si")) {
             this.juegoAutomatico = true;
-            System.out.println("Modo automático activado.");
+            System.out.println("Modo auomático activado.");
         } else {
             this.juegoAutomatico = false;
             System.out.println("Modo manual activado.");
@@ -125,7 +124,7 @@ public class Tablero{
     }
 
 
-    private String siguienteTurno(Jugador jugadorAnterior) {
+    private Jugador siguienteTurno(Jugador jugadorAnterior) {
         // Encontrar el índice del jugador anterior
         int indiceAnterior = -1;
         for (int i = 0; i < jugadores.length; i++) {
@@ -140,12 +139,13 @@ public class Tablero{
 
         // Actualizar los turnos
         for (int i = 0; i < jugadores.length; i++) {
-            jugadores[i].turno = (i == indiceSiguiente);
+            jugadores[i].setTurno(i == indiceSiguiente);
         }
 
-        // Retornar la pieza del jugador cuyo turno es ahora
-        return jugadores[indiceSiguiente].nombre;
+        // Retornar el jugador siguiente
+        return jugadores[indiceSiguiente];
     }
+
     private Jugador jugadorActual() {
         for (Jugador jugador : jugadores) {
             if (jugador.turno) {
@@ -305,7 +305,7 @@ public class Tablero{
     public String[] getJugadoresEnCasilla(int index) {
         String[] jugadoresEnCasilla = new String[jugadores.length];
         for (int i = 0; i < jugadores.length; i++) {
-            if (jugadores[i].posicion == casillas[index]) {
+            if (jugadores[i].posicion == index) {
                 jugadoresEnCasilla[i] = jugadores[i].pieza;
             } else {
                 jugadoresEnCasilla[i] = "";
@@ -314,37 +314,13 @@ public class Tablero{
         return jugadoresEnCasilla;
     }
 
-    // Método para realizar el casting
-    public void realizarCasteo(Jugador jugadorActual, Casillas[] casillas){
-        Casillas posicionCasilla = jugadorActual.getPosicion();
+    // Método para saber en que casiila esta el jugador
+    public void casillaDelJugador(String nombreCasilla){
 
-        if (posicionCasilla instanceof Adelante){
-            Adelante tipoAdelante = (Adelante) posicionCasilla;
-            tipoAdelante.accion(jugadorActual);
-        }
-        else if (posicionCasilla instanceof Carcel){
-            Carcel tipoCarcel = (Carcel) posicionCasilla;
-            if (!tipoCarcel.tirarDobles(jugadorActual, casillas)){
-                tipoCarcel.accion(jugadorActual);
-            }
-        }
-        else if(posicionCasilla instanceof Impuestos){
-            Impuestos tipoImpuestos = (Impuestos) posicionCasilla;
-            tipoImpuestos.accion(jugadorActual);
-        }
-        else if (posicionCasilla instanceof Propiedades){
-            Propiedades tipoPropiedades = (Propiedades) posicionCasilla;
-            tipoPropiedades.accion(jugadorActual);
-        }
-        else if (posicionCasilla instanceof Servicio){
-            Servicio tipoServicio = (Servicio) posicionCasilla;
-            tipoServicio.accion(jugadorActual);
-        }
-        else if (posicionCasilla instanceof ArcaOCasualidad){
-            ArcaOCasualidad tipoArcaOCasualidad = (ArcaOCasualidad) posicionCasilla;
-            tipoArcaOCasualidad.accion(jugadorActual);
-        }
-    }
+
+
+
+    } 
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -354,13 +330,14 @@ public class Tablero{
         tablero.empezarPartida(scanner);
 
         Jugador jugadorActual = tablero.jugadores[0];
-        jugadorActual.turno = true;
+        jugadorActual.setTurno(true);
 
         boolean juegoEnCurso = true;
 
         while (juegoEnCurso) {
             System.out.println("\n\n--------------------");
-            System.out.println("Turno de " + tablero.siguienteTurno(jugadorActual));
+            //System.out.println("Turno de " + tablero.siguienteTurno(jugadorActual));
+            System.out.println("Turno de " + jugadorActual.getPieza());
             System.out.println("Dinero actual: $" + jugadorActual.getDinero());
             System.out.println("Presiona Enter para tirar los dados");
             scanner.nextLine();
@@ -372,21 +349,21 @@ public class Tablero{
             System.out.println("Avanzas " + suma + " casillas");
 
             for (int i = 0; i < suma; i++) {
-                jugadorActual.avanzar(tablero.casillas);
+                jugadorActual.avanzar();
             }
 
-            tablero.imprimirTablero();
-
-            String nombreCasilla = tablero.jugadorActual().posicion.getNombre();
+            String nombreCasilla = tablero.casillas[jugadorActual.posicion].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
 
-            tablero.realizarCasteo(jugadorActual, tablero.casillas);
+            tablero.casillaDelJugador(nombreCasilla);
 
             System.out.println("Dados anteriores:");
             tablero.jugadorActual().imprimirDadosAnteriores();
+
+            tablero.imprimirTablero();
         
             // Actualizar el jugador actual para el siguiente turno
-            jugadorActual = tablero.jugadorActual();
+            jugadorActual = tablero.siguienteTurno(jugadorActual);
         }
 
         // Cerrar el Scanner al finalizar toda la ejecución del programa

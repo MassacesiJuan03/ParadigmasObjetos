@@ -57,11 +57,6 @@ public class Propiedades extends Casillas implements IAccionDinero{
         return jugador.dinero;
     }
 
-    @Override
-    public String getType(){
-        return "Propiedades";
-    }
-
     //Método abstracto y polimorfico
     public void accion(Jugador jugador){
         ofrecerCompra(jugador);

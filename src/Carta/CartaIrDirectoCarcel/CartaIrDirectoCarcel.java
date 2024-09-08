@@ -17,7 +17,7 @@ public class CartaIrDirectoCarcel extends Carta{
     //Métodos 
     public void usar(Jugador jugador, Carcel carcel) {
         System.out.println("Se ha usado la carta de ir directo a la cárcel: " + this.descripcion);
-        jugador.posicion = new Carcel("Cárcel");
+        jugador.posicion = 10;
         carcel.accion(jugador);
     }
 
