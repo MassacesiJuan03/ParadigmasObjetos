@@ -1,10 +1,10 @@
 package Casillas.Adelante;
 
-import Casillas.Casillas;
+import Casillas.Casilla;
 import IAccionDinero.IAccionDinero;
 import Jugador.Jugador;
 
-public class Adelante extends Casillas implements IAccionDinero{
+public class Adelante extends Casilla implements IAccionDinero{
     //Constructores
     public Adelante(String nombre){
         super(nombre);
@@ -15,9 +15,9 @@ public class Adelante extends Casillas implements IAccionDinero{
         accionDinero(jugador);
     }
     
-    public double accionDinero(Jugador jugador){
-        jugador.dinero += 200;
-        return jugador.dinero;
+    public int accionDinero(Jugador jugador){
+        jugador.recibirDinero(200);
+        return jugador.getDinero();
     }
 
     @Override

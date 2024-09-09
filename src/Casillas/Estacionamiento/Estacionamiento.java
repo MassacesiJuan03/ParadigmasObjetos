@@ -1,9 +1,9 @@
 package Casillas.Estacionamiento;
 
-import Casillas.Casillas;
+import Casillas.Casilla;
 import Jugador.Jugador;
 
-public class Estacionamiento extends Casillas {
+public class Estacionamiento extends Casilla {
     //Constructor
     public Estacionamiento(String nombre){
         super(nombre);

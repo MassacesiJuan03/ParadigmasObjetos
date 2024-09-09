@@ -3,7 +3,7 @@ package Tablero;// Los comentarios que comienzan con "*" son dudas.
 import Casillas.Adelante.Adelante;
 import Casillas.ArcaOCasualidad.ArcaOCasualidad;
 import Casillas.Carcel.Carcel;
-import Casillas.Casillas;
+import Casillas.Casilla;
 import Casillas.Estacionamiento.Estacionamiento;
 import Casillas.Impuestos.Impuesto;
 import Casillas.Propiedades.Propiedad;
@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class Tablero{
     //atributos de clase
     private static final int CANTIDAD_DE_CASILLAS = 20;
-    private Casillas[] casillas;
+    private Casilla[] casillas;
     private static final int ANCHO_CONSOLA = 160;  // 1280 / 8 (assuming 8 pixels per character)
     private static final int ALTO_CONSOLA = 50;  //
     //atributos de instancia
@@ -29,7 +29,7 @@ public class Tablero{
     //Constructor
 
     public Tablero() {
-        this.casillas = new Casillas[CANTIDAD_DE_CASILLAS];
+        this.casillas = new Casilla[CANTIDAD_DE_CASILLAS];
     }
     /*
     private void crearCasillas(){
@@ -41,7 +41,7 @@ public class Tablero{
     }
     */
     private void especializarCasillas() {
-        Casillas[] casillas = new Casillas[CANTIDAD_DE_CASILLAS];
+        Casilla[] casillas = new Casilla[CANTIDAD_DE_CASILLAS];
 
         // Esquinas
         casillas[0] = new Adelante("Salida"); // Casilla de salida (GO)
@@ -346,22 +346,26 @@ public class Tablero{
             //System.out.println("Turno de " + tablero.siguienteTurno(jugadorActual));
             System.out.println("Turno de " + jugadorActual.getPieza());
             System.out.println("Dinero actual: $" + jugadorActual.getDinero());
-            System.out.println("Presiona Enter para tirar los dados");
-            scanner.nextLine();
 
-            int[] dados = tablero.jugadorActual().tirarDados();
-            System.out.println("Dado 1: " + dados[0]);
-            System.out.println("Dado 2: " + dados[1]);
-            int suma = dados[0] + dados[1];
-            System.out.println("Avanzas " + suma + " casillas");
+            //Si el jugador no está en la cárcel podra tirar los dados y avanzar
+            if (!jugadorActual.isCarcel()){
+                System.out.println("Presiona Enter para tirar los dados");
+                scanner.nextLine();
 
-            for (int i = 0; i < suma; i++) {
-                jugadorActual.avanzar();
+                int[] dados = jugadorActual.tirarDados();
+                System.out.println("Dado 1: " + dados[0]);
+                System.out.println("Dado 2: " + dados[1]);
+                int suma = dados[0] + dados[1];
+                System.out.println("Avanzas " + suma + " casillas");
+
+                for (int i = 0; i < suma; i++) {
+                    jugadorActual.avanzar();
+                }
             }
-
+            
             String nombreCasilla = tablero.casillas[jugadorActual.posicion].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
-            
+
             System.out.println("Dados anteriores:");
             jugadorActual.imprimirDadosAnteriores();
 
@@ -388,6 +392,7 @@ public class Tablero{
                     break;
                 case "Carcel":
                     Carcel carcel = (Carcel) tablero.casillas[jugadorActual.posicion];
+                    jugadorActual.setCarcel(true);
                     carcel.accion(jugadorActual);
                     break;
                 case "Estacionamiento":

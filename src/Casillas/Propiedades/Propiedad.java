@@ -1,12 +1,12 @@
 package Casillas.Propiedades;
 
-import Casillas.Casillas;
+import Casillas.Casilla;
 import IAccionDinero.IAccionDinero;
 import Jugador.Jugador;
 
 import java.util.Scanner;
 
-public class Propiedad extends Casillas implements IAccionDinero{
+public class Propiedad extends Casilla implements IAccionDinero{
     Scanner scanner = new Scanner(System.in);
     //atributos de instancia
     protected int costo;
@@ -23,12 +23,17 @@ public class Propiedad extends Casillas implements IAccionDinero{
 
     //Métodos
     private void cobrarRenta(Jugador jugador){
-        jugador.pagarRenta(this.renta);
-        this.dueño.recibirDinero(this.renta);
-        System.out.println("Dinero: $" + jugador.getDinero());
-
+        //Verificar si la propiedad tiene dueño
+        if (this.dueño != null){
+            if (this.dueño != jugador){
+                //Cobrar renta al jugador que cayó en una propiedad con dueño
+                jugador.pagarRenta(this.renta);
+                this.dueño.recibirDinero(this.renta);
+            }
+        }
     }
-    public void ofrecerCompra(Jugador jugador){
+
+    public boolean ofrecerCompra(Jugador jugador){
         boolean flag = true;
 
         //Verificar si la propiedad tiene dueño
@@ -37,11 +42,7 @@ public class Propiedad extends Casillas implements IAccionDinero{
             if (this.dueño == jugador){
                 System.out.println("Usted es dueño de " + this.nombre);
             }
-            //Cobrar renta al jugador que cayó en una propiedad con dueño
-            else{
-                cobrarRenta(jugador);
-            }
-            flag = false;
+            return false;
         }
 
         //Pedirle por consola al usuario comprar la propiedad si es que no tiene dueño.
@@ -53,20 +54,21 @@ public class Propiedad extends Casillas implements IAccionDinero{
                 System.out.println("Compra de " + this.nombre + " realizada");
                 this.dueño = jugador;
                 accionDinero(jugador);
-                flag = false;
+                break;
             }
             else{
                 if (option.equalsIgnoreCase("no")){
                     System.out.println("Usted ha decidido no realizar la compra de " + this.nombre);
-                    flag = false;
+                    break;
                 }else{
                     System.out.println("Respuesta incorrecta, vuelva a intentar.");
                 }
             }
         }
+        return true;
     }
 
-    public double accionDinero(Jugador jugador){
+    public int accionDinero(Jugador jugador){
         jugador.setDinero(this.costo);
         System.out.println("Dinero: $" + jugador.getDinero());
         return jugador.getDinero();
@@ -79,6 +81,8 @@ public class Propiedad extends Casillas implements IAccionDinero{
 
     //Método abstracto y polimorfico
     public void accion(Jugador jugador){
-        ofrecerCompra(jugador);
+        if (!ofrecerCompra(jugador)){
+            cobrarRenta(jugador);
+        }
     }
 }

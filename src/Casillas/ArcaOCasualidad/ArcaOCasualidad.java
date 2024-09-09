@@ -8,10 +8,10 @@ import Carta.Carta;
 import Carta.CartaDinero.CartaDinero;
 import Carta.CartaIrDirectoCarcel.CartaIrDirectoCarcel;
 import Carta.CartaSalirCarcel.CartaSalirCarcel;
-import Casillas.Casillas;
+import Casillas.Casilla;
 import Jugador.Jugador;
 
-public class ArcaOCasualidad extends Casillas {
+public class ArcaOCasualidad extends Casilla {
     //atributos de instancia
     protected boolean esArca;
     private Carta carta; // de agregación ya que Carta es abstracta y no puedo instanciar carta

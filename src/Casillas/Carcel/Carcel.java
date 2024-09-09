@@ -1,11 +1,11 @@
 package Casillas.Carcel;
 
-import Casillas.Casillas;
+import Casillas.Casilla;
 import Jugador.Jugador;
 
 import java.util.Scanner;
 
-public class Carcel extends Casillas {
+public class Carcel extends Casilla {
     Scanner scanner = new Scanner(System.in);
     //Constructor
     public Carcel(String nombre){
@@ -17,25 +17,32 @@ public class Carcel extends Casillas {
         //Verificar si el jugador tiene carta de salida de cárcel y si la quiere usar
         boolean salir = usarCartaSalida(tieneCartaSalida(jugador));
 
-        if (!salir && !tirarDobles(jugador)){
-            System.out.println("¿Desea pagar una multa de $50? Si/No");
-            String option = scanner.nextLine();
-
-            if (option.equalsIgnoreCase("Si")){
-                jugador.dinero -= 50;
-                System.out.println("Multa cobrada, sale de la carcél");
-                jugador.setCarcel(true);
-            }
-            else{
-                if (option.equalsIgnoreCase("No")){
-                    System.out.println("Decidió no pagar la multa, sigue en la carcél");
+        if (!salir){
+            if (!tirarDobles(jugador)){
+                System.out.println("¿Desea pagar una multa de $50? Si/No");
+                String option = scanner.nextLine();
+                
+                if (option.equalsIgnoreCase("Si")){
+                    jugador.dinero -= 50;
+                    System.out.println("Multa cobrada, sale de la carcél");
+                    jugador.setCarcel(false);
+                }
+                else{
+                    if (option.equalsIgnoreCase("No")){
+                        System.out.println("Decidió no pagar la multa, sigue en la carcél");
+                    }
                 }
             }
         }
+        else{
+            //El jugador usó la carta y salio de la cárcel
+            jugador.setTieneCartaSalidaDeCarcel(false);
+        }
     }
 
+
     private boolean tieneCartaSalida(Jugador jugador){
-        return jugador.tieneCartaSalidaDeCarcel;
+        return jugador.isTieneCartaSalidaDeCarcel();
     }
 
     private boolean usarCartaSalida(boolean cartaSalida){
@@ -43,16 +50,16 @@ public class Carcel extends Casillas {
             boolean flag = false;
             
             while (!flag) {
-                System.out.println("¿Desea usar su 'SalidaDeCarcel' carta para salir de la cárcel? Si/No");
+                System.out.println("¿Desea usar su carta 'SalidaDeCarcel' para salir de la cárcel? Si/No");
                 String option = scanner.nextLine();
 
                 if (option.equalsIgnoreCase("Si")){
                     System.out.println("Usted decidio usar la carta. Sale de la cárcel");
-                    return false;
+                    return true;
                 }else{
                     if (option.equalsIgnoreCase("No")){
                         System.out.println("Usted decidio no usar la carta. Sigue en la cárcel");
-                        return true;
+                        return false;
                     }else{
                         System.out.println("Respuesta incorrecta, intente de nuevo");
                     }
@@ -70,7 +77,7 @@ public class Carcel extends Casillas {
         System.out.println("Dado 2: " + dado2);
 
         if (dado1 == dado2){
-            System.out.println("Ha conseguido dobles!. Sale de la cárcel");
+            System.out.println("Ha conseguido dobles: Sale de la cárcel");
             jugador.setCarcel(false);
 
             //Avanzar casillas
@@ -79,6 +86,7 @@ public class Carcel extends Casillas {
             }
             return true;
         }
+        System.out.println("No ha conseguido dobles: Permanece en la cárcel");
         return false;
     }
 

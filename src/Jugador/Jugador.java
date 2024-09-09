@@ -10,7 +10,7 @@ public class Jugador {
     public int[] dadosAnteriores; // array de 1xn
     public int dinero;
     public boolean turno;
-    public boolean carcel;
+    public boolean enCarcel;
     public boolean tieneCartaSalidaDeCarcel;
 
     public Jugador(String pieza) {
@@ -20,7 +20,8 @@ public class Jugador {
         this.dadosAnteriores = new int[0]; // Inicializar array vacío
         this.dinero = 1500; // Monto inicial estándar en Monopoly
         this.turno = false;
-        this.carcel = false;
+        this.enCarcel = false;
+        this.tieneCartaSalidaDeCarcel = false;
     }
 
     // Métodos
@@ -55,6 +56,7 @@ public class Jugador {
         if (renta <= this.dinero){
             this.dinero -= renta;
             System.out.println("Renta pagada con éxito.");
+            System.out.println("Dinero: $" + this.dinero);
         }
     }
     public void avanzar() {
@@ -83,13 +85,22 @@ public class Jugador {
     public int[] getDadosAnteriores() {
         return dadosAnteriores;
     }
+    public boolean isCarcel() {
+        return enCarcel;
+    }
+    public boolean isTieneCartaSalidaDeCarcel() {
+        return tieneCartaSalidaDeCarcel;
+    }
     public void setDinero(int monto) {
         this.dinero -= monto;
     }
     public void setTurno(boolean turno) {
         this.turno = turno;
     }
-    public void setCarcel(boolean salida) {
-        this.carcel = salida;
+    public void setCarcel(boolean dentroDeCarcel) {
+        this.enCarcel = dentroDeCarcel;
+    }
+    public void setTieneCartaSalidaDeCarcel(boolean tieneCartaSalidaDeCarcel) {
+        this.tieneCartaSalidaDeCarcel = tieneCartaSalidaDeCarcel;
     }
 }

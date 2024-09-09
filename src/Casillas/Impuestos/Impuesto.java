@@ -1,10 +1,10 @@
 package Casillas.Impuestos;
 
-import Casillas.Casillas;
+import Casillas.Casilla;
 import IAccionDinero.IAccionDinero;
 import Jugador.Jugador;
 
-public class Impuesto extends Casillas implements IAccionDinero{
+public class Impuesto extends Casilla implements IAccionDinero{
     //Constructor
     public Impuesto(String nombre) {
         super(nombre);
@@ -13,18 +13,20 @@ public class Impuesto extends Casillas implements IAccionDinero{
     //Métodos
     private void cobrarImpuesto(Jugador jugador){
         //Disminuir el dinero del jugador
-        double montoImpuesto = accionDinero(jugador);
-        if (montoImpuesto <= jugador.dinero){
-            jugador.dinero -= montoImpuesto;
+        int montoImpuesto = accionDinero(jugador);
+        if (montoImpuesto <= jugador.getDinero()){
+            jugador.setDinero(montoImpuesto);
             System.out.println("Impuesto pagado!");
+            System.out.println("Dinero: $" + jugador.getDinero());
         }
         else{
             System.out.println("Impuesto no pagado, dinero del jugador insuficiente");
         }
     }
 
-    public double accionDinero(Jugador jugador){
-        return Math.max(200, jugador.dinero*0.10);
+    public int accionDinero(Jugador jugador){
+        int monto = (int) Math.round(jugador.getDinero()*0.10);
+        return Math.max(200, monto);
     }
 
     @Override

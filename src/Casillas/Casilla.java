@@ -2,14 +2,14 @@ package Casillas;
 
 import Jugador.Jugador;
 
-abstract public class Casillas{
+abstract public class Casilla{
     //atributo de instancia
     protected int nroDeCasilla;
 
     public String nombre;
 
     //Constructor
-    public Casillas(String nombre){
+    public Casilla(String nombre){
         this.nombre = nombre;
     }
 
