@@ -46,7 +46,6 @@ public class Jugador {
             System.out.println("No se han lanzado dados todavía.");
             return;
         }
-        System.out.print("Dados anteriores: ");
         for (int i = 0; i < dadosAnteriores.length; i += 2) {
             System.out.print("[" + dadosAnteriores[i] + ", " + dadosAnteriores[i + 1] + "] ");
         }
@@ -63,18 +62,19 @@ public class Jugador {
             this.posicion = 0;
             System.out.println("Paso por la casilla 'Adelante', recibe $200");
             this.dinero += 200;
+            System.out.println("Dinero: $" + this.dinero);
         }
         else{
             this.posicion++;
         }
     }
-    public void recibirDinero(double monto) {
+    public void recibirDinero(int monto) {
         this.dinero += monto;
     }
     public String getPieza() {
         return pieza;
     }
-    public double getDinero() {
+    public int getDinero() {
         return dinero;
     }
     public int getPosicion() {
@@ -83,7 +83,7 @@ public class Jugador {
     public int[] getDadosAnteriores() {
         return dadosAnteriores;
     }
-    public void setDinero(double monto) {
+    public void setDinero(int monto) {
         this.dinero -= monto;
     }
     public void setTurno(boolean turno) {

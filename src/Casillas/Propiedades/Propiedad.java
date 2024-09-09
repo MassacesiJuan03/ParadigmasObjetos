@@ -23,38 +23,53 @@ public class Propiedad extends Casillas implements IAccionDinero{
 
     //Métodos
     private void cobrarRenta(Jugador jugador){
-        if (this.dueño != jugador && this.dueño != null){
-            jugador.pagarRenta(this.renta);
-            this.dueño.recibirDinero(this.renta);
-        }
+        jugador.pagarRenta(this.renta);
+        this.dueño.recibirDinero(this.renta);
+        System.out.println("Dinero: $" + jugador.getDinero());
 
     }
-    private void ofrecerCompra(Jugador jugador){
+    public void ofrecerCompra(Jugador jugador){
         boolean flag = true;
-        //Pedirle por consola al usuario si quiere comprar la propiedad.
+
+        //Verificar si la propiedad tiene dueño
+        if (this.dueño != null){
+            //Verificar si el dueño es el mismo que cayó en la propiedad
+            if (this.dueño == jugador){
+                System.out.println("Usted es dueño de " + this.nombre);
+            }
+            //Cobrar renta al jugador que cayó en una propiedad con dueño
+            else{
+                cobrarRenta(jugador);
+            }
+            flag = false;
+        }
+
+        //Pedirle por consola al usuario comprar la propiedad si es que no tiene dueño.
         while (flag){
             System.out.println("¿Desea comprar la propiedad? (Si/No)");
             String option = scanner.nextLine();
 
             if (option.equalsIgnoreCase("si")){
-                accionDinero(jugador);
+                System.out.println("Compra de " + this.nombre + " realizada");
                 this.dueño = jugador;
-                System.out.println("Compra realizada, gracias.");
+                accionDinero(jugador);
                 flag = false;
             }
             else{
                 if (option.equalsIgnoreCase("no")){
-                    System.out.println("Usted ha decidido no realizar la compra, adios.");
+                    System.out.println("Usted ha decidido no realizar la compra de " + this.nombre);
                     flag = false;
+                }else{
+                    System.out.println("Respuesta incorrecta, vuelva a intentar.");
                 }
-                System.out.println("Respuesta incorrecta, vuelva a intentar.");
             }
         }
     }
 
     public double accionDinero(Jugador jugador){
-        jugador.dinero -= this.costo;
-        return jugador.dinero;
+        jugador.setDinero(this.costo);
+        System.out.println("Dinero: $" + jugador.getDinero());
+        return jugador.getDinero();
     }
 
     @Override
@@ -65,6 +80,5 @@ public class Propiedad extends Casillas implements IAccionDinero{
     //Método abstracto y polimorfico
     public void accion(Jugador jugador){
         ofrecerCompra(jugador);
-        cobrarRenta(jugador);
     }
 }

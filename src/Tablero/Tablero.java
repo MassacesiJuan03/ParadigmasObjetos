@@ -75,10 +75,6 @@ public class Tablero{
 
     public void empezarPartida(Scanner scanner) {
         int cantidadDeJugadores = 0;
-
-
-
-
         // garantizar que se ingrese 2, 3 o 4
         do {
             System.out.print("Introduce la cantidad de jugadores (2 a 4): ");
@@ -135,9 +131,6 @@ public class Tablero{
                 System.arraycopy(jugadores, 0, newJugadores, 0, i);
                 System.arraycopy(jugadores, i + 1, newJugadores, i, jugadores.length - i - 1);
                 jugadores = newJugadores;
-
-
-                
             }
         }
 
@@ -368,6 +361,11 @@ public class Tablero{
 
             String nombreCasilla = tablero.casillas[jugadorActual.posicion].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
+            
+            System.out.println("Dados anteriores:");
+            jugadorActual.imprimirDadosAnteriores();
+
+            tablero.imprimirTablero();
 
             //Dependiendo donde cae el jugador la casilla realiza la accion correspondiente
             String ObjetoDeTipo = tablero.casillas[jugadorActual.posicion].getType();
@@ -397,11 +395,6 @@ public class Tablero{
                 case "Adelante":
                     break;
             }   
-
-            System.out.println("Dados anteriores:");
-            tablero.jugadorActual().imprimirDadosAnteriores();
-
-            tablero.imprimirTablero();
         
             // Actualizar el jugador actual para el siguiente turno
             jugadorActual = tablero.siguienteTurno(jugadorActual);
