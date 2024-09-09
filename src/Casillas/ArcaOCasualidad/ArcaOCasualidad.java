@@ -14,7 +14,6 @@ import Jugador.Jugador;
 public class ArcaOCasualidad extends Casilla {
     //atributos de instancia
     protected boolean esArca;
-    private Carta carta; // de agregación ya que Carta es abstracta y no puedo instanciar carta
 
     //Constructor
     public ArcaOCasualidad(String nombre, boolean esArca){
@@ -23,22 +22,22 @@ public class ArcaOCasualidad extends Casilla {
     }
 
     //Métodos
-    public void robarCarta(Jugador jugador){
-        //Elegir una carta de la clase Cartas
-        List<Carta> cartas = new ArrayList<>();
-        cartas.add(new CartaDinero("Recibes $200", 200));
-        cartas.add(new CartaSalirCarcel("Sale de la cárcel gratis. Esta tarjeta puede usarse en cualquier momento"));
-        cartas.add(new CartaIrDirectoCarcel("Vas directamente a la cárcel. No pasas por 'Salida'. No cobras $200"));
+    public Carta sacarCarta(Mazo mazo) {
+        // Sacar la primera carta del mazo
+        Carta cartaSacada = mazo[0];
 
-        //Elegir una carta aleatoria
-        Random random = new Random();
-        int index = random.nextInt(cartas.size());
-        carta = cartas.get(index);
-        carta.usar(jugador);
+        // Mover todas las cartas una posición hacia adelante
+        for (int i = 0; i < mazo.length - 1; i++) {
+            mazo[i] = mazo[i + 1];
+        }
+
+        // Colocar la carta sacada en la última posición
+        mazo[mazo.length - 1] = cartaSacada;
+
+        // Devolver la carta sacada
+        return cartaSacada;
     }
 
-
-    
     @Override
     public String getType() {
         return "ArcaOCasualidad";
@@ -46,6 +45,6 @@ public class ArcaOCasualidad extends Casilla {
 
     //Método abstracto y polimorfico
     public void accion(Jugador jugador){
-        robarCarta(jugador);
+        sacarCarta();
     }
 }
