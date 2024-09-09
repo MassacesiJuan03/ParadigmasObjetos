@@ -38,6 +38,9 @@ public class ArcaOCasualidad extends Casilla {
         return cartaSacada;
     }
 
+    /*usar cartaSacada para indicar que tipo de carta es(dinero o carcel), implemantar un mètodo para lo anterior,
+    asi podemos usar el metodo abstracto 'usar'*/
+
     @Override
     public String getType() {
         return "ArcaOCasualidad";
