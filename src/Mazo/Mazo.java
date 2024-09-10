@@ -9,14 +9,15 @@ import java.util.Collections;
 import java.util.ArrayList;
 
 public class Mazo {
-    private Carta[] mazo;
+    private static ArrayList<Carta> mazoDeCartas = new ArrayList<>(15);
 
+    //Constructor
     public Mazo() {
-        mazo = new Carta[15];  // Inicializar con 15 cartas
-        inicializarMazo();
+        Mazo.mazoDeCartas = inicializarMazo();
     }
 
-    public void inicializarMazo() {
+    //Métodos
+    public ArrayList<Carta> inicializarMazo() {
         ArrayList<Carta> cartas = new ArrayList<>(); // Usar ArrayList para facilitar la mezcla
 
         // Inicializar las 15 cartas
@@ -40,12 +41,18 @@ public class Mazo {
         Collections.shuffle(cartas);
 
         // Pasar las cartas mezcladas al array `mazo`
-        for (int i = 0; i < mazo.length; i++) {
-            mazo[i] = cartas.get(i);
+        for (int i = 0; i < cartas.size(); i++) {
+            mazoDeCartas.add(i, cartas.get(i));
         }
+        return mazoDeCartas;
     }
 
-    public Carta sacarCarta() {
+    public ArrayList<Carta> getMazo() {
+        return mazoDeCartas;
+    }
+
+
+    /*public Carta sacarCarta() {
         // Sacar la primera carta del mazo
         Carta cartaSacada = mazo[0];
 
@@ -59,5 +66,5 @@ public class Mazo {
 
         // Devolver la carta sacada
         return cartaSacada;
-    }
+    }*/
 }

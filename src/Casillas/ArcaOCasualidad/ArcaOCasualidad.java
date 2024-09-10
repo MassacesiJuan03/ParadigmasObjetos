@@ -1,8 +1,6 @@
 package Casillas.ArcaOCasualidad;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import Carta.Carta;
 import Carta.CartaDinero.CartaDinero;
@@ -10,6 +8,7 @@ import Carta.CartaIrDirectoCarcel.CartaIrDirectoCarcel;
 import Carta.CartaSalirCarcel.CartaSalirCarcel;
 import Casillas.Casilla;
 import Jugador.Jugador;
+import Mazo.Mazo;
 
 public class ArcaOCasualidad extends Casilla {
     //atributos de instancia
@@ -22,17 +21,13 @@ public class ArcaOCasualidad extends Casilla {
     }
 
     //Métodos
-    public Carta sacarCarta(Mazo mazo) {
+    private Carta sacarCarta(Mazo mazo) {
+        ArrayList<Carta> mazoCartas = mazo.getMazo();
         // Sacar la primera carta del mazo
-        Carta cartaSacada = mazo[0];
-
-        // Mover todas las cartas una posición hacia adelante
-        for (int i = 0; i < mazo.length - 1; i++) {
-            mazo[i] = mazo[i + 1];
-        }
+        Carta cartaSacada = mazoCartas.remove(0);
 
         // Colocar la carta sacada en la última posición
-        mazo[mazo.length - 1] = cartaSacada;
+        mazoCartas.add(cartaSacada);
 
         // Devolver la carta sacada
         return cartaSacada;
@@ -40,6 +35,23 @@ public class ArcaOCasualidad extends Casilla {
 
     /*usar cartaSacada para indicar que tipo de carta es(dinero o carcel), implemantar un mètodo para lo anterior,
     asi podemos usar el metodo abstracto 'usar'*/
+    public void usarCarta(Jugador jugador){
+        Mazo mazoCarta =  new Mazo();
+        Carta cartaSacada = sacarCarta(mazoCarta);
+
+        if (cartaSacada instanceof CartaDinero){
+            CartaDinero cartaDinero = (CartaDinero) cartaSacada;
+            cartaDinero.usar(jugador); 
+        }
+        if (cartaSacada instanceof CartaSalirCarcel){
+            CartaSalirCarcel cartaSalir = (CartaSalirCarcel) cartaSacada;
+            cartaSalir.usar(jugador); 
+        }
+        if (cartaSacada instanceof CartaIrDirectoCarcel){
+            CartaIrDirectoCarcel cartaEntrar = (CartaIrDirectoCarcel) cartaSacada;
+            cartaEntrar.usar(jugador); 
+        }
+    }
 
     @Override
     public String getType() {
@@ -48,6 +60,6 @@ public class ArcaOCasualidad extends Casilla {
 
     //Método abstracto y polimorfico
     public void accion(Jugador jugador){
-        sacarCarta();
+        usarCarta(jugador);
     }
 }
