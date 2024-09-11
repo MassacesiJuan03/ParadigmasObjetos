@@ -244,7 +244,7 @@ public class Tablero{
         int boardTop = 1;
         int boardLeft = 20;
         int boardWidth = 120;
-        int boardHeight = 22;
+        int boardHeight = 23;
     
         // Draw the board outline
         for (int i = boardLeft; i < boardLeft + boardWidth; i++) {
