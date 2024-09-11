@@ -23,8 +23,9 @@ public class Carcel extends Casilla {
                 String option = scanner.nextLine();
                 
                 if (option.equalsIgnoreCase("Si")){
-                    jugador.dinero -= 50;
+                    jugador.setDinero(50);
                     System.out.println("Multa cobrada, sale de la carcél");
+                    jugador.dineroRestante();
                     jugador.setCarcel(false);
                 }
                 else{
@@ -84,15 +85,11 @@ public class Carcel extends Casilla {
             for(int i=0; i < dado1+dado2; i++){
                 jugador.avanzar();
             }
+            System.out.println("Avanzas " + (dado1+dado2) + " casillas");
             return true;
         }
         System.out.println("No ha conseguido dobles: Permanece en la cárcel");
         return false;
-    }
-
-    @Override
-    public String getType() {
-        return "Carcel";
     }
 
     //Método abstracto y polimorfico

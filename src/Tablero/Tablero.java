@@ -102,7 +102,7 @@ public class Tablero{
         }
 
         // Preguntar si desea utilizar el juego automático
-        System.out.println("Desea utilizar el juego automático? (Si/no)");
+        System.out.println("Desea utilizar el juego automático? (Si/No)");
         String respuesta;
 
         do {
@@ -363,7 +363,7 @@ public class Tablero{
                 }
             }
             
-            String nombreCasilla = tablero.casillas[jugadorActual.posicion].getNombre();
+            String nombreCasilla = tablero.casillas[jugadorActual.getPosicion()].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
 
             System.out.println("Dados anteriores:");
@@ -372,34 +372,34 @@ public class Tablero{
             tablero.imprimirTablero();
 
             //Dependiendo donde cae el jugador la casilla realiza la accion correspondiente
-            String ObjetoDeTipo = tablero.casillas[jugadorActual.posicion].getType();
-            switch (ObjetoDeTipo) {
-                case "Propiedad":
-                    Propiedad propiedad = (Propiedad) tablero.casillas[jugadorActual.posicion];
-                    propiedad.accion(jugadorActual);
-                    break;
-                case "Servicio":
-                    Servicio servicio = (Servicio) tablero.casillas[jugadorActual.posicion];
-                    servicio.accion(jugadorActual);
-                    break;
-                case "Impuesto":
-                    Impuesto impuesto = (Impuesto) tablero.casillas[jugadorActual.posicion];
-                    impuesto.accion(jugadorActual);
-                    break;
-                case "ArcaOCasualidad":
-                    ArcaOCasualidad arcaOcasualidad = (ArcaOCasualidad) tablero.casillas[jugadorActual.posicion];
-                    arcaOcasualidad.accion(jugadorActual);
-                    break;
-                case "Carcel":
-                    Carcel carcel = (Carcel) tablero.casillas[jugadorActual.posicion];
-                    jugadorActual.setCarcel(true);
-                    carcel.accion(jugadorActual);
-                    break;
-                case "Estacionamiento":
-                    break;
-                case "Adelante":
-                    break;
-            }   
+            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Propiedad){
+                Propiedad propiedad = (Propiedad) tablero.casillas[jugadorActual.getPosicion()];
+                propiedad.accion(jugadorActual);
+            }
+            
+            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Servicio){
+                Servicio servicio = (Servicio) tablero.casillas[jugadorActual.getPosicion()];
+                servicio.accion(jugadorActual);
+            }
+            
+            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Impuesto){
+                Impuesto impuesto = (Impuesto) tablero.casillas[jugadorActual.getPosicion()];
+                impuesto.accion(jugadorActual);
+            }
+            
+            if (tablero.casillas[jugadorActual.getPosicion()] instanceof ArcaOCasualidad){
+                ArcaOCasualidad arcaOcasualidad = (ArcaOCasualidad) tablero.casillas[jugadorActual.getPosicion()];
+                arcaOcasualidad.accion(jugadorActual);
+            }
+            
+            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Carcel){
+                Carcel carcel = (Carcel) tablero.casillas[jugadorActual.getPosicion()];
+                jugadorActual.setCarcel(true);
+                carcel.accion(jugadorActual);
+            }
+            
+            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Adelante){}
+            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Estacionamiento){}
         
             // Actualizar el jugador actual para el siguiente turno
             jugadorActual = tablero.siguienteTurno(jugadorActual);

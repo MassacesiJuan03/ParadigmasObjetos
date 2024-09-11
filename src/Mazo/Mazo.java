@@ -50,21 +50,4 @@ public class Mazo {
     public ArrayList<Carta> getMazo() {
         return mazoDeCartas;
     }
-
-
-    /*public Carta sacarCarta() {
-        // Sacar la primera carta del mazo
-        Carta cartaSacada = mazo[0];
-
-        // Mover todas las cartas una posición hacia adelante
-        for (int i = 0; i < mazo.length - 1; i++) {
-            mazo[i] = mazo[i + 1];
-        }
-
-        // Colocar la carta sacada en la última posición
-        mazo[mazo.length - 1] = cartaSacada;
-
-        // Devolver la carta sacada
-        return cartaSacada;
-    }*/
 }

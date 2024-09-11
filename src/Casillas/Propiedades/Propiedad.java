@@ -47,13 +47,14 @@ public class Propiedad extends Casilla implements IAccionDinero{
 
         //Pedirle por consola al usuario comprar la propiedad si es que no tiene dueño.
         while (flag){
-            System.out.println("¿Desea comprar la propiedad? (Si/No)");
+            System.out.println("¿Desea comprar " + this.nombre + " por $" + this.costo + "? (Si/No)");
             String option = scanner.nextLine();
 
             if (option.equalsIgnoreCase("si")){
                 System.out.println("Compra de " + this.nombre + " realizada");
                 this.dueño = jugador;
                 accionDinero(jugador);
+                jugador.dineroRestante();
                 break;
             }
             else{
@@ -70,15 +71,9 @@ public class Propiedad extends Casilla implements IAccionDinero{
 
     public int accionDinero(Jugador jugador){
         jugador.setDinero(this.costo);
-        System.out.println("Dinero: $" + jugador.getDinero());
         return jugador.getDinero();
     }
-
-    @Override
-    public String getType() {
-        return "Propiedad";
-    }
-
+    
     //Método abstracto y polimorfico
     public void accion(Jugador jugador){
         if (!ofrecerCompra(jugador)){

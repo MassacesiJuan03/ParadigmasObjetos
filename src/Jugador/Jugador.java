@@ -52,11 +52,11 @@ public class Jugador {
         }
         System.out.println();
     }
-    public void pagarRenta(double renta) {
+    public void pagarRenta(int renta) {
         if (renta <= this.dinero){
             this.dinero -= renta;
-            System.out.println("Renta pagada con éxito.");
-            System.out.println("Dinero: $" + this.dinero);
+            System.out.println("Renta de $" + renta + " pagada con éxito.");
+            this.dineroRestante();
         }
     }
     public void avanzar() {
@@ -64,11 +64,14 @@ public class Jugador {
             this.posicion = 0;
             System.out.println("Paso por la casilla 'Adelante', recibe $200");
             this.dinero += 200;
-            System.out.println("Dinero: $" + this.dinero);
+            this.dineroRestante();
         }
         else{
             this.posicion++;
         }
+    }
+    public void dineroRestante(){
+        System.out.println("Dinero restante: $" + this.dinero);
     }
     public void recibirDinero(int monto) {
         this.dinero += monto;
@@ -102,5 +105,8 @@ public class Jugador {
     }
     public void setTieneCartaSalidaDeCarcel(boolean tieneCartaSalidaDeCarcel) {
         this.tieneCartaSalidaDeCarcel = tieneCartaSalidaDeCarcel;
+    }
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
     }
 }

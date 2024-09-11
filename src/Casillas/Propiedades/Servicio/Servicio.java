@@ -15,16 +15,12 @@ public class Servicio extends Propiedad {
             if (this.dueño != jugador){
                 //Calcular la renta basado en los dados
                 int[] dadosAnteriores = jugador.getDadosAnteriores();
-                jugador.setDinero(4 * (dadosAnteriores[dadosAnteriores.length-1] + dadosAnteriores[dadosAnteriores.length-2]));
-                System.out.println("Renta pagada con éxito.");
-                System.out.println("Dinero: $" + jugador.getDinero());
+                int renta = 4 * (dadosAnteriores[dadosAnteriores.length-1] + dadosAnteriores[dadosAnteriores.length-2]);
+                jugador.setDinero(renta);
+                System.out.println("Renta de $" + renta + " pagada con éxito.");
+                jugador.dineroRestante();
             }
         }
-    }
-
-    @Override
-    public String getType() {
-        return "Servicio";
     }
 
     //Método abstracto y polimorfico

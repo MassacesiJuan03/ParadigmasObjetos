@@ -17,8 +17,9 @@ public class CartaDinero extends Carta {
 
     //Métodos 
     public void usar(Jugador jugador) {
-        System.out.println("Se ha usado la carta de dinero: " + this.descripcion);
+        System.out.println("Se ha usado la carta de dinero: " + getDescripcion());
         jugador.recibirDinero(this.valor);
+        jugador.dineroRestante();
     }
 
     public String getDescripcion() {
