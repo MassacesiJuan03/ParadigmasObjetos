@@ -18,10 +18,6 @@ abstract public class Casilla{
         return nombre;
     }
 
-    public String getType(){
-        return this.nombre;
-    }
-
     //Método abstracto y polimorfico
     public abstract void accion(Jugador jugador);
 }

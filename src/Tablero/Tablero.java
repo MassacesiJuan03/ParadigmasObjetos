@@ -31,15 +31,7 @@ public class Tablero{
     public Tablero() {
         this.casillas = new Casilla[CANTIDAD_DE_CASILLAS];
     }
-    /*
-    private void crearCasillas(){
-        Casillas[] casillas = new Casillas[CANTIDAD_DE_CASILLAS];
-        for (int i = 0; i < casillas.length; i++) {
-            casillas[i] = new Casillas();
-        }
-        this.casillas = casillas;
-    }
-    */
+    
     private void especializarCasillas() {
         Casilla[] casillas = new Casilla[CANTIDAD_DE_CASILLAS];
 
@@ -372,34 +364,7 @@ public class Tablero{
             tablero.imprimirTablero();
 
             //Dependiendo donde cae el jugador la casilla realiza la accion correspondiente
-            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Propiedad){
-                Propiedad propiedad = (Propiedad) tablero.casillas[jugadorActual.getPosicion()];
-                propiedad.accion(jugadorActual);
-            }
-            
-            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Servicio){
-                Servicio servicio = (Servicio) tablero.casillas[jugadorActual.getPosicion()];
-                servicio.accion(jugadorActual);
-            }
-            
-            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Impuesto){
-                Impuesto impuesto = (Impuesto) tablero.casillas[jugadorActual.getPosicion()];
-                impuesto.accion(jugadorActual);
-            }
-            
-            if (tablero.casillas[jugadorActual.getPosicion()] instanceof ArcaOCasualidad){
-                ArcaOCasualidad arcaOcasualidad = (ArcaOCasualidad) tablero.casillas[jugadorActual.getPosicion()];
-                arcaOcasualidad.accion(jugadorActual);
-            }
-            
-            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Carcel){
-                Carcel carcel = (Carcel) tablero.casillas[jugadorActual.getPosicion()];
-                jugadorActual.setCarcel(true);
-                carcel.accion(jugadorActual);
-            }
-            
-            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Adelante){}
-            if (tablero.casillas[jugadorActual.getPosicion()] instanceof Estacionamiento){}
+            tablero.casillas[jugadorActual.getPosicion()].accion(jugadorActual);
         
             // Actualizar el jugador actual para el siguiente turno
             jugadorActual = tablero.siguienteTurno(jugadorActual);

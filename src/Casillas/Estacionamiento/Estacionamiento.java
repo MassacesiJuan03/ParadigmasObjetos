@@ -10,5 +10,7 @@ public class Estacionamiento extends Casilla {
     }
 
     //Método abstracto y polimorfico
-    public void accion(Jugador jugador){}
+    public void accion(Jugador jugador){
+        System.out.println(this.nombre + " gratis: Area de descanso");
+    }
 }
