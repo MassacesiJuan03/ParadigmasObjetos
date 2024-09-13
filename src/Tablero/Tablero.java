@@ -202,21 +202,26 @@ public class Tablero{
             }
         }
 
-        // Draw the player symbols
-        String jugadoresEnCasilla = "";
-        if (nombreJugador.length > 1){
+        // Draw the player symbols if there are any players in the cell
+        if (nombreJugador.length > 0) {
+            String jugadoresEnCasilla = "";
             for (String playerSymbol : nombreJugador) {
-                if (playerSymbol.length() > 1) {
-                    jugadoresEnCasilla = jugadoresEnCasilla + "|" + playerSymbol;
-
+                if (!playerSymbol.isEmpty()) {
+                    jugadoresEnCasilla += "|" + playerSymbol;
                 }
+            }
 
+            // Place player symbols in the cell
+            int startRow = row + 1;
+            int startCol = col + 1;
+            for (int i = 0; i < jugadoresEnCasilla.length(); i++) {
+                if (startRow + 1 < board.length && startCol + i < board[0].length) {
+                    board[startRow + 1][startCol + i] = String.valueOf(jugadoresEnCasilla.charAt(i));
+                }
             }
         }
-
-        board[row + cellHeight - 2 ][col + 1] = jugadoresEnCasilla;
-
     }
+
 
     private String[] splitString(String str, int maxLength) {
         int length = str.length();
@@ -310,16 +315,36 @@ public class Tablero{
 
     // Implementar método getJugadoresEnCasilla
     public String[] getJugadoresEnCasilla(int index) {
+        // Crear un array de Strings con el mismo tamaño que el número de jugadores
         String[] jugadoresEnCasilla = new String[jugadores.length];
+
+        // Inicializar todos los valores como vacío
+        for (int i = 0; i < jugadoresEnCasilla.length; i++) {
+            jugadoresEnCasilla[i] = "";
+        }
+
+        // Contar cuántos jugadores están en la casilla
+        int count = 0;
         for (int i = 0; i < jugadores.length; i++) {
             if (jugadores[i].posicion == index) {
-                jugadoresEnCasilla[i] = jugadores[i].pieza;
-            } else {
-                jugadoresEnCasilla[i] = "";
+                count++;
             }
         }
+
+        // Recorrer nuevamente para asignar los símbolos, truncando si hay 2 o más jugadores
+        for (int i = 0; i < jugadores.length; i++) {
+            if (jugadores[i].posicion == index) {
+                String pieza = jugadores[i].pieza;
+                if (count >= 2 && pieza.length() > 3) {
+                    pieza = pieza.substring(0, 3);
+                }
+                jugadoresEnCasilla[i] = pieza;
+            }
+        }
+
         return jugadoresEnCasilla;
     }
+
 
     //Método polimorfico
     private void realizarAccion(Casilla casilla, Jugador jugador){
