@@ -7,10 +7,16 @@ abstract public class Casilla{
     protected int nroDeCasilla;
 
     public String nombre;
-
+    public Boolean juegoAutomatico;
     //Constructor
+    public Casilla(String nombre, Boolean juegoAutomatico){
+        this.nombre = nombre;
+        this.juegoAutomatico = juegoAutomatico;
+
+    }
     public Casilla(String nombre){
         this.nombre = nombre;
+
     }
     public Casilla(){}
 

@@ -7,8 +7,8 @@ import Jugador.Jugador;
 
 public class Servicio extends Propiedad {
     //Constructor
-    public Servicio(String nombre, int costo, Jugador dueño, int renta){
-        super(nombre, costo, dueño, renta);
+    public Servicio(String nombre, Boolean juegoAutomatico, int costo, Jugador dueño, int renta){
+        super(nombre,juegoAutomatico, costo, dueño, renta);
     }
 
     //Métodos

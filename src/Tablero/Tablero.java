@@ -13,6 +13,7 @@ import Piezas.Pieza;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.ByteArrayInputStream;
 
 public class Tablero{
     //atributos de clase
@@ -31,39 +32,40 @@ public class Tablero{
     public Tablero() {
         this.casillas = new Casilla[CANTIDAD_DE_CASILLAS];
     }
-    
+
     private void especializarCasillas() {
-        //Casilla[] casillas = new Casilla[CANTIDAD_DE_CASILLAS];
+        // Casilla[] casillas = new Casilla[CANTIDAD_DE_CASILLAS];
 
         // Esquinas
         this.casillas[0] = new Adelante("Salida"); // Casilla de salida (GO)
         this.casillas[5] = new Estacionamiento("Estacionamiento"); // Estacionamiento gratuito
         this.casillas[10] = new Carcel("Ir a la cárcel"); // Ir a la cárcel
-        this.casillas[15] = new Propiedad("El Muelle", 400, null, 50); // El Muelle
+        this.casillas[15] = new Propiedad("El Muelle", juegoAutomatico, 400, null, 50); // El Muelle
 
-// Propiedades
-        this.casillas[1] = new Propiedad("Av. Mediterráneo", 60, null, 2); // Av. Mediterráneo
+        // Propiedades
+        this.casillas[1] = new Propiedad("Av. Mediterráneo", juegoAutomatico, 60, null, 2); // Av. Mediterráneo
         this.casillas[2] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
-        this.casillas[3] = new Propiedad("Av. Báltica", 60, null, 4); // Av. Báltica
+        this.casillas[3] = new Propiedad("Av. Báltica", juegoAutomatico, 60, null, 4); // Av. Báltica
         this.casillas[4] = new Impuesto("Impuestos"); // Impuesto sobre la renta
 
-        this.casillas[6] = new Propiedad("Av. Oriental", 100, null, 6); // Av. Oriental
+        this.casillas[6] = new Propiedad("Av. Oriental", juegoAutomatico, 100, null, 6); // Av. Oriental
         this.casillas[7] = new ArcaOCasualidad("Casualidad", false); // Casualidad
-        this.casillas[8] = new Propiedad("Av. Vermont", 100, null, 6); // Av. Vermont
-        this.casillas[9] = new Propiedad("Av. Connecticut", 120, null, 8); // Av. Connecticut
+        this.casillas[8] = new Propiedad("Av. Vermont", juegoAutomatico, 100, null, 6); // Av. Vermont
+        this.casillas[9] = new Propiedad("Av. Connecticut", juegoAutomatico, 120, null, 8); // Av. Connecticut
 
-        this.casillas[11] = new Propiedad("Plaza San Carlos", 140, null, 10); // Plaza San Carlos
-        this.casillas[12] = new Servicio("Electricidad", 150, null, 0); // Compañía de Electricidad
-        this.casillas[13] = new Propiedad("Av. los Estados", 140, null, 10); // Av. de los Estados
-        this.casillas[14] = new Propiedad("Av. Virginia", 160, null, 12); // Av. Virginia
+        this.casillas[11] = new Propiedad("Plaza San Carlos", juegoAutomatico, 140, null, 10); // Plaza San Carlos
+        this.casillas[12] = new Servicio("Electricidad", juegoAutomatico,150, null, 0); // Compañía de Electricidad
+        this.casillas[13] = new Propiedad("Av. los Estados", juegoAutomatico, 140, null, 10); // Av. de los Estados
+        this.casillas[14] = new Propiedad("Av. Virginia", juegoAutomatico, 160, null, 12); // Av. Virginia
 
-        this.casillas[16] = new Propiedad("Plaza Jaime", 180, null, 14); // Plaza San Jaime
+        this.casillas[16] = new Propiedad("Plaza Jaime", juegoAutomatico, 180, null, 14); // Plaza San Jaime
         this.casillas[17] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
-        this.casillas[18] = new Propiedad("Av. Tennessee", 180, null, 14); // Av. Tennessee
-        this.casillas[19] = new Propiedad("Av. Nueva York", 200, null, 16); // Av. Nueva York
+        this.casillas[18] = new Propiedad("Av. Tennessee", juegoAutomatico, 180, null, 14); // Av. Tennessee
+        this.casillas[19] = new Propiedad("Av. Nueva York", juegoAutomatico, 200, null, 16); // Av. Nueva York
 
-        //this.casillas = casillas;
+        // this.casillas = casillas;
     }
+
 
     public void empezarPartida(Scanner scanner) {
         int cantidadDeJugadores = 0;
@@ -106,7 +108,13 @@ public class Tablero{
 
         if (respuesta.equals("si")) {
             this.juegoAutomatico = true;
-            System.out.println("Modo auomático activado.");
+            System.out.println("Modo automático activado.");
+
+            // Cambiar el InputStream para que siempre lea "si"
+            String inputSimulado = "si\n".repeat(1000); // Repetir "si" para cubrir futuras entradas
+            ByteArrayInputStream flujoSimulado = new ByteArrayInputStream(inputSimulado.getBytes());
+            System.setIn(flujoSimulado); // Sobrescribir el System.in
+            scanner = new Scanner(System.in); // Reconstruir el scanner para que use el nuevo InputStream
         } else {
             this.juegoAutomatico = false;
             System.out.println("Modo manual activado.");
@@ -355,8 +363,9 @@ public class Tablero{
         Scanner scanner = new Scanner(System.in);
         Tablero tablero = new Tablero();
 
-        tablero.especializarCasillas();
         tablero.empezarPartida(scanner);
+
+        tablero.especializarCasillas();
 
         Jugador jugadorActual = tablero.jugadores[0];
         jugadorActual.setTurno(true);
@@ -365,13 +374,20 @@ public class Tablero{
 
         while (juegoEnCurso) {
             System.out.println("\n\n--------------------");
+            if(jugadorActual == null){
+                return;
+            }
             System.out.println("Turno de " + jugadorActual.getPieza());
             System.out.println("Dinero actual: $" + jugadorActual.getDinero());
 
             //Si el jugador no está en la cárcel podra tirar los dados y avanzar
             if (!jugadorActual.isCarcel()){
-                System.out.println("Presiona Enter para tirar los dados");
-                scanner.nextLine();
+
+                if(tablero.juegoAutomatico == false){
+                    System.out.println("Presiona Enter para tirar los dados");
+                    scanner.nextLine();
+                }
+
 
                 int dado = jugadorActual.tirarDado();
                 System.out.println("Dado: " + dado);

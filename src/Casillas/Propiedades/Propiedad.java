@@ -6,77 +6,83 @@ import Jugador.Jugador;
 
 import java.util.Scanner;
 
-public class Propiedad extends Casilla implements IAccionDinero{
+public class Propiedad extends Casilla implements IAccionDinero {
     Scanner scanner = new Scanner(System.in);
-    //atributos de instancia
+    // atributos de instancia
     protected int costo;
     protected Jugador dueño;
     protected int renta;
 
-    //Constructor
-    public Propiedad(String nombre, int costo, Jugador dueño, int renta){
-        super(nombre);
+    // Constructor
+    public Propiedad(String nombre, Boolean juegoAutomatico, int costo, Jugador dueño, int renta) {
+        super(nombre, juegoAutomatico);
         this.costo = costo;
         this.dueño = dueño;
         this.renta = renta;
     }
 
-    //Métodos
-    private void cobrarRenta(Jugador jugador){
-        //Verificar si la propiedad tiene dueño
-        if (this.dueño != null){
-            if (this.dueño != jugador){
-                //Cobrar renta al jugador que cayó en una propiedad con dueño
+    // Métodos
+    private void cobrarRenta(Jugador jugador) {
+        // Verificar si la propiedad tiene dueño
+        if (this.dueño != null) {
+            if (this.dueño != jugador) {
+                // Cobrar renta al jugador que cayó en una propiedad con dueño
                 jugador.pagarRenta(this.renta);
                 this.dueño.recibirDinero(this.renta);
             }
         }
     }
 
-    public boolean ofrecerCompra(Jugador jugador){
-        boolean flag = true;
+    public boolean ofrecerCompra(Jugador jugador) {
+        if (juegoAutomatico) {
+            // En modo automático, se realiza la compra sin preguntar
+            System.out.println("Compra automática de " + this.nombre + " realizada.");
+            this.dueño = jugador;
+            accionDinero(jugador);
+            jugador.dineroRestante();
+            return true;
+        } else {
+            boolean flag = true;
 
-        //Verificar si la propiedad tiene dueño
-        if (this.dueño != null){
-            //Verificar si el dueño es el mismo que cayó en la propiedad
-            if (this.dueño == jugador){
-                System.out.println("Usted es dueño de " + this.nombre);
+            // Verificar si la propiedad tiene dueño
+            if (this.dueño != null) {
+                // Verificar si el dueño es el mismo que cayó en la propiedad
+                if (this.dueño == jugador) {
+                    System.out.println("Usted es dueño de " + this.nombre);
+                }
+                return false;
             }
-            return false;
-        }
 
-        //Pedirle por consola al usuario comprar la propiedad si es que no tiene dueño.
-        while (flag){
-            System.out.println("¿Desea comprar " + this.nombre + " por $" + this.costo + "? (Si/No)");
-            String option = scanner.nextLine();
+            // Pedirle por consola al usuario comprar la propiedad si es que no tiene dueño.
+            while (flag) {
+                System.out.println("¿Desea comprar " + this.nombre + " por $" + this.costo + "? (Si/No)");
+                String option = scanner.nextLine();
 
-            if (option.equalsIgnoreCase("si")){
-                System.out.println("Compra de " + this.nombre + " realizada");
-                this.dueño = jugador;
-                accionDinero(jugador);
-                jugador.dineroRestante();
-                break;
-            }
-            else{
-                if (option.equalsIgnoreCase("no")){
+                if (option.equalsIgnoreCase("si")) {
+                    System.out.println("Compra de " + this.nombre + " realizada.");
+                    this.dueño = jugador;
+                    accionDinero(jugador);
+                    jugador.dineroRestante();
+                    break;
+                } else if (option.equalsIgnoreCase("no")) {
                     System.out.println("Usted ha decidido no realizar la compra de " + this.nombre);
                     break;
-                }else{
+                } else {
                     System.out.println("Respuesta incorrecta, vuelva a intentar.");
                 }
             }
+            return true;
         }
-        return true;
     }
 
-    public int accionDinero(Jugador jugador){
+    public int accionDinero(Jugador jugador) {
         jugador.setDinero(this.costo);
         return jugador.getDinero();
     }
-    
+
     @Override
-    public void accion(Jugador jugador){
-        if (!ofrecerCompra(jugador)){
+    public void accion(Jugador jugador) {
+        if (!ofrecerCompra(jugador)) {
             cobrarRenta(jugador);
         }
     }
