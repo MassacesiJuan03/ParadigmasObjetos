@@ -53,7 +53,7 @@ public class ArcaOCasualidad extends Casilla {
         }
     }
 
-    //Método abstracto y polimorfico
+    @Override
     public void accion(Jugador jugador){
         usarCarta(jugador);
     }

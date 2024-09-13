@@ -9,7 +9,7 @@ public class Estacionamiento extends Casilla {
         super(nombre);
     }
 
-    //Método abstracto y polimorfico
+    @Override
     public void accion(Jugador jugador){
         System.out.println(this.nombre + " gratis: Area de descanso");
     }

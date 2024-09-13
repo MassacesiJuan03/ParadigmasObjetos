@@ -20,8 +20,9 @@ public class Adelante extends Casilla implements IAccionDinero{
         return jugador.getDinero();
     }
 
-    //Método abstracto y polimorfico
+    @Override
     public void accion(Jugador jugador){
         darSueldo(jugador);
     }
+    
 }

@@ -19,22 +19,17 @@ public class Carcel extends Casilla {
 
         if (!salir){
             if (!tirarDobles(jugador)){
-                System.out.println("¿Desea pagar una multa de $50? Si/No");
-                String option = scanner.nextLine();
-                
-                if (option.equalsIgnoreCase("Si")){
+                if (jugador.getDinero() >= 50){
                     jugador.setDinero(50);
                     System.out.println("Multa cobrada, sale de la carcél");
                     jugador.dineroRestante();
                     jugador.setCarcel(false);
                 }
                 else{
-                    if (option.equalsIgnoreCase("No")){
-                        System.out.println("Decidió no pagar la multa, sigue en la carcél");
+                        System.out.println("Multa no cobrada debido a saldo insuficiente, sigue en la carcél");
                     }
                 }
             }
-        }
         else{
             //El jugador usó la carta y salio de la cárcel
             jugador.setTieneCartaSalidaDeCarcel(false);
@@ -92,8 +87,9 @@ public class Carcel extends Casilla {
         return false;
     }
 
-    //Método abstracto y polimorfico
+    @Override
     public void accion(Jugador jugador){
+        System.out.println("¡Ve a la cárcel!");
         cobrarMulta(jugador);
     }
 }

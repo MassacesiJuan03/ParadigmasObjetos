@@ -1,5 +1,7 @@
 package Jugador;
 
+import java.util.ArrayList;
+
 // Los comentarios que comienzan con "*" son dudas.
 public class Jugador {
     // Atributos de instancia
@@ -7,7 +9,7 @@ public class Jugador {
     public String pieza;
     public String nombre;
     public boolean enBancarrota;
-    public int[] dadosAnteriores; // array de 1xn
+    public ArrayList<Integer> dadosAnteriores; // array de 1xn
     public int dinero;
     public boolean turno;
     public boolean enCarcel;
@@ -17,7 +19,7 @@ public class Jugador {
         this.posicion = 0;
         this.pieza = pieza;
         this.enBancarrota = false;
-        this.dadosAnteriores = new int[0]; // Inicializar array vacío
+        this.dadosAnteriores = new ArrayList<>(); // Inicializar array vacío
         this.dinero = 1500; // Monto inicial estándar en Monopoly
         this.turno = false;
         this.enCarcel = false;
@@ -25,33 +27,20 @@ public class Jugador {
     }
 
     // Métodos
-    public int[] tirarDados() {
-        int dado1 = (int) (Math.random() * 6) + 1;
-        int dado2 = (int) (Math.random() * 6) + 1;
-        int[] resultado = {dado1, dado2};
-
-        // Agregar array de resultado en dadosAnteriores
-        int[] nuevosDadosAnteriores = new int[dadosAnteriores.length + 2];
-        for (int i = 0; i < dadosAnteriores.length; i++) {
-            nuevosDadosAnteriores[i] = dadosAnteriores[i];
-        }
-        nuevosDadosAnteriores[dadosAnteriores.length] = dado1;
-        nuevosDadosAnteriores[dadosAnteriores.length + 1] = dado2;
-        this.dadosAnteriores = nuevosDadosAnteriores;
-
-        return resultado;
+    public int tirarDado() {
+        int dado = (int) (Math.random() * 6) + 1;
+        this.dadosAnteriores.add(dado);
+        return dado;
     }
 
     public void imprimirDadosAnteriores() {
-        if (dadosAnteriores.length == 0) {
+        if (dadosAnteriores.size() == 0) {
             System.out.println("No se han lanzado dados todavía.");
             return;
         }
-        for (int i = 0; i < dadosAnteriores.length; i += 2) {
-            System.out.print("[" + dadosAnteriores[i] + ", " + dadosAnteriores[i + 1] + "] ");
-        }
-        System.out.println();
+        System.out.println("Dados anteriores: " + dadosAnteriores);
     }
+    
     public void pagarRenta(int renta) {
         if (renta <= this.dinero){
             this.dinero -= renta;
@@ -85,7 +74,10 @@ public class Jugador {
     public int getPosicion() {
         return posicion;
     }
-    public int[] getDadosAnteriores() {
+    public String getNombre() {
+        return nombre;
+    }
+    public ArrayList<Integer> getDadosAnteriores() {
         return dadosAnteriores;
     }
     public boolean isCarcel() {

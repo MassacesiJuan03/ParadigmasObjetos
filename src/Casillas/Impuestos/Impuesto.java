@@ -29,7 +29,7 @@ public class Impuesto extends Casilla implements IAccionDinero{
         return Math.max(200, monto);
     }
     
-    //Método abstracto y polimorfico
+    @Override
     public void accion(Jugador jugador){
         cobrarImpuesto(jugador);
     }

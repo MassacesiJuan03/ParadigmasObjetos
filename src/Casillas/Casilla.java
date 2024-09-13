@@ -12,12 +12,13 @@ abstract public class Casilla{
     public Casilla(String nombre){
         this.nombre = nombre;
     }
+    public Casilla(){}
 
     //Métodos
     public String getNombre(){
         return nombre;
     }
 
-    //Método abstracto y polimorfico
-    public abstract void accion(Jugador jugador);
+    //Método abstracto
+    abstract public void accion(Jugador jugador);
 }

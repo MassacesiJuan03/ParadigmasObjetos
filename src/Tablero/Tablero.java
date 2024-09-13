@@ -33,36 +33,36 @@ public class Tablero{
     }
     
     private void especializarCasillas() {
-        Casilla[] casillas = new Casilla[CANTIDAD_DE_CASILLAS];
+        //Casilla[] casillas = new Casilla[CANTIDAD_DE_CASILLAS];
 
         // Esquinas
-        casillas[0] = new Adelante("Salida"); // Casilla de salida (GO)
-        casillas[5] = new Estacionamiento("Estacionamiento"); // Estacionamiento gratuito
-        casillas[10] = new Carcel("Ir a la cárcel"); // Ir a la cárcel
-        casillas[15] = new Propiedad("El Muelle", 400, null, 50); // El Muelle
+        this.casillas[0] = new Adelante("Salida"); // Casilla de salida (GO)
+        this.casillas[5] = new Estacionamiento("Estacionamiento"); // Estacionamiento gratuito
+        this.casillas[10] = new Carcel("Ir a la cárcel"); // Ir a la cárcel
+        this.casillas[15] = new Propiedad("El Muelle", 400, null, 50); // El Muelle
 
 // Propiedades
-        casillas[1] = new Propiedad("Av. Mediterráneo", 60, null, 2); // Av. Mediterráneo
-        casillas[2] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
-        casillas[3] = new Propiedad("Av. Báltica", 60, null, 4); // Av. Báltica
-        casillas[4] = new Impuesto("Impuestos"); // Impuesto sobre la renta
+        this.casillas[1] = new Propiedad("Av. Mediterráneo", 60, null, 2); // Av. Mediterráneo
+        this.casillas[2] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
+        this.casillas[3] = new Propiedad("Av. Báltica", 60, null, 4); // Av. Báltica
+        this.casillas[4] = new Impuesto("Impuestos"); // Impuesto sobre la renta
 
-        casillas[6] = new Propiedad("Av. Oriental", 100, null, 6); // Av. Oriental
-        casillas[7] = new ArcaOCasualidad("Casualidad", false); // Casualidad
-        casillas[8] = new Propiedad("Av. Vermont", 100, null, 6); // Av. Vermont
-        casillas[9] = new Propiedad("Av. Connecticut", 120, null, 8); // Av. Connecticut
+        this.casillas[6] = new Propiedad("Av. Oriental", 100, null, 6); // Av. Oriental
+        this.casillas[7] = new ArcaOCasualidad("Casualidad", false); // Casualidad
+        this.casillas[8] = new Propiedad("Av. Vermont", 100, null, 6); // Av. Vermont
+        this.casillas[9] = new Propiedad("Av. Connecticut", 120, null, 8); // Av. Connecticut
 
-        casillas[11] = new Propiedad("Plaza San Carlos", 140, null, 10); // Plaza San Carlos
-        casillas[12] = new Servicio("Electricidad", 150, null, 0); // Compañía de Electricidad
-        casillas[13] = new Propiedad("Av. los Estados", 140, null, 10); // Av. de los Estados
-        casillas[14] = new Propiedad("Av. Virginia", 160, null, 12); // Av. Virginia
+        this.casillas[11] = new Propiedad("Plaza San Carlos", 140, null, 10); // Plaza San Carlos
+        this.casillas[12] = new Servicio("Electricidad", 150, null, 0); // Compañía de Electricidad
+        this.casillas[13] = new Propiedad("Av. los Estados", 140, null, 10); // Av. de los Estados
+        this.casillas[14] = new Propiedad("Av. Virginia", 160, null, 12); // Av. Virginia
 
-        casillas[16] = new Propiedad("Plaza Jaime", 180, null, 14); // Plaza San Jaime
-        casillas[17] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
-        casillas[18] = new Propiedad("Av. Tennessee", 180, null, 14); // Av. Tennessee
-        casillas[19] = new Propiedad("Av. Nueva York", 200, null, 16); // Av. Nueva York
+        this.casillas[16] = new Propiedad("Plaza Jaime", 180, null, 14); // Plaza San Jaime
+        this.casillas[17] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
+        this.casillas[18] = new Propiedad("Av. Tennessee", 180, null, 14); // Av. Tennessee
+        this.casillas[19] = new Propiedad("Av. Nueva York", 200, null, 16); // Av. Nueva York
 
-        this.casillas = casillas;
+        //this.casillas = casillas;
     }
 
     public void empezarPartida(Scanner scanner) {
@@ -128,7 +128,7 @@ public class Tablero{
 
         // Si solo queda un jugador, terminar el juego
         if (jugadores.length == 1) {
-            System.out.println(jugadores[0].nombre + " ha ganado el juego!");
+            System.out.println(jugadores[0].getNombre() + " ha ganado el juego!");
             return null; // Indica que el juego ha terminado
         }
 
@@ -321,10 +321,15 @@ public class Tablero{
         return jugadoresEnCasilla;
     }
 
+    //Método polimorfico
+    private void realizarAccion(Casilla casilla, Jugador jugador){
+        casilla.accion(jugador);
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Tablero tablero = new Tablero();
-        //tablero.crearCasillas();
+
         tablero.especializarCasillas();
         tablero.empezarPartida(scanner);
 
@@ -335,7 +340,6 @@ public class Tablero{
 
         while (juegoEnCurso) {
             System.out.println("\n\n--------------------");
-            //System.out.println("Turno de " + tablero.siguienteTurno(jugadorActual));
             System.out.println("Turno de " + jugadorActual.getPieza());
             System.out.println("Dinero actual: $" + jugadorActual.getDinero());
 
@@ -344,27 +348,22 @@ public class Tablero{
                 System.out.println("Presiona Enter para tirar los dados");
                 scanner.nextLine();
 
-                int[] dados = jugadorActual.tirarDados();
-                System.out.println("Dado 1: " + dados[0]);
-                System.out.println("Dado 2: " + dados[1]);
-                int suma = dados[0] + dados[1];
-                System.out.println("Avanzas " + suma + " casillas");
+                int dado = jugadorActual.tirarDado();
+                System.out.println("Dado: " + dado);
+                System.out.println("Avanzas " + dado + " casillas");
 
-                for (int i = 0; i < suma; i++) {
+                for (int i = 0; i < dado; i++) {
                     jugadorActual.avanzar();
                 }
             }
-            
+
             String nombreCasilla = tablero.casillas[jugadorActual.getPosicion()].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
-
-            System.out.println("Dados anteriores:");
-            jugadorActual.imprimirDadosAnteriores();
 
             tablero.imprimirTablero();
 
             //Dependiendo donde cae el jugador la casilla realiza la accion correspondiente
-            tablero.casillas[jugadorActual.getPosicion()].accion(jugadorActual);
+            tablero.realizarAccion(tablero.casillas[jugadorActual.getPosicion()], jugadorActual);
         
             // Actualizar el jugador actual para el siguiente turno
             jugadorActual = tablero.siguienteTurno(jugadorActual);
