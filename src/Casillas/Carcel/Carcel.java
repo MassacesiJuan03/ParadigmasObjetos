@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class Carcel extends Casilla {
     Scanner scanner = new Scanner(System.in);
     //Constructor
-    public Carcel(String nombre){
-        super(nombre);
+    public Carcel(String nombre, Boolean juegoAutomatico){
+        super(nombre, juegoAutomatico);
     }
 
     //Métodos
@@ -43,8 +43,15 @@ public class Carcel extends Casilla {
 
     private boolean usarCartaSalida(boolean cartaSalida){
         if (cartaSalida){
+
             boolean flag = false;
-            
+
+            if(juegoAutomatico == true){
+                System.out.println("¿Desea usar su carta 'SalidaDeCarcel' para salir de la cárcel? Si/No");
+                System.out.println("Usted decidio usar la carta. Sale de la cárcel");
+                return true;
+            }
+
             while (!flag) {
                 System.out.println("¿Desea usar su carta 'SalidaDeCarcel' para salir de la cárcel? Si/No");
                 String option = scanner.nextLine();
