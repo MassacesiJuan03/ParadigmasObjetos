@@ -116,7 +116,7 @@ public class Tablero{
 
             jugadores.add(new Jugador(piezaElegida.toString()));
             jugadores.get(i).setNombre(nombreJugador);
-            jugadores.get(i).setPosicion(posicion);
+            jugadores.get(i).setPosicion(posicion - 1);
             
         }
 
