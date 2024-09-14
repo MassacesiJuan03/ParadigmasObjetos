@@ -21,49 +21,43 @@ public class Tablero{
     private Casilla[] casillas;
     private static final int ANCHO_CONSOLA = 160;  // 1280 / 8 (assuming 8 pixels per character)
     private static final int ALTO_CONSOLA = 50;  //
+    
     //atributos de instancia
-
     private boolean juegoAutomatico;
-    //private boolean turno;
-
     public Jugador[] jugadores;
-    //Constructor
 
+    //Constructor
     public Tablero() {
         this.casillas = new Casilla[CANTIDAD_DE_CASILLAS];
     }
 
     private void especializarCasillas() {
-        // Casilla[] casillas = new Casilla[CANTIDAD_DE_CASILLAS];
-
         // Esquinas
         this.casillas[0] = new Adelante("Salida"); // Casilla de salida (GO)
         this.casillas[5] = new Estacionamiento("Estacionamiento"); // Estacionamiento gratuito
         this.casillas[10] = new Carcel("Ir a la cárcel", juegoAutomatico); // Ir a la cárcel
-        this.casillas[15] = new Propiedad("El Muelle", juegoAutomatico, 400, null, 50); // El Muelle
+        this.casillas[15] = new Propiedad("El Muelle", juegoAutomatico, 400, null, 150); // El Muelle
 
         // Propiedades
-        this.casillas[1] = new Propiedad("Av. Mediterráneo", juegoAutomatico, 60, null, 2); // Av. Mediterráneo
+        this.casillas[1] = new Propiedad("Av. Mediterráneo", juegoAutomatico, 60, null, 30); // Av. Mediterráneo
         this.casillas[2] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
-        this.casillas[3] = new Propiedad("Av. Báltica", juegoAutomatico, 60, null, 4); // Av. Báltica
+        this.casillas[3] = new Propiedad("Av. Báltica", juegoAutomatico, 60, null, 30); // Av. Báltica
         this.casillas[4] = new Impuesto("Impuestos"); // Impuesto sobre la renta
 
-        this.casillas[6] = new Propiedad("Av. Oriental", juegoAutomatico, 100, null, 6); // Av. Oriental
+        this.casillas[6] = new Propiedad("Av. Oriental", juegoAutomatico, 100, null, 50); // Av. Oriental
         this.casillas[7] = new ArcaOCasualidad("Casualidad", false); // Casualidad
-        this.casillas[8] = new Propiedad("Av. Vermont", juegoAutomatico, 100, null, 6); // Av. Vermont
-        this.casillas[9] = new Propiedad("Av. Connecticut", juegoAutomatico, 120, null, 8); // Av. Connecticut
+        this.casillas[8] = new Propiedad("Av. Vermont", juegoAutomatico, 100, null, 50); // Av. Vermont
+        this.casillas[9] = new Propiedad("Av. Connecticut", juegoAutomatico, 120, null, 60); // Av. Connecticut
 
-        this.casillas[11] = new Propiedad("Plaza San Carlos", juegoAutomatico, 140, null, 10); // Plaza San Carlos
+        this.casillas[11] = new Propiedad("Plaza San Carlos", juegoAutomatico, 140, null, 70); // Plaza San Carlos
         this.casillas[12] = new Servicio("Electricidad", juegoAutomatico,150, null, 0); // Compañía de Electricidad
-        this.casillas[13] = new Propiedad("Av. los Estados", juegoAutomatico, 140, null, 10); // Av. de los Estados
-        this.casillas[14] = new Propiedad("Av. Virginia", juegoAutomatico, 160, null, 12); // Av. Virginia
+        this.casillas[13] = new Propiedad("Av. los Estados", juegoAutomatico, 140, null, 70); // Av. de los Estados
+        this.casillas[14] = new Propiedad("Av. Virginia", juegoAutomatico, 160, null, 60); // Av. Virginia
 
-        this.casillas[16] = new Propiedad("Plaza Jaime", juegoAutomatico, 180, null, 14); // Plaza San Jaime
+        this.casillas[16] = new Propiedad("Plaza Jaime", juegoAutomatico, 180, null, 90); // Plaza San Jaime
         this.casillas[17] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
-        this.casillas[18] = new Propiedad("Av. Tennessee", juegoAutomatico, 180, null, 14); // Av. Tennessee
-        this.casillas[19] = new Propiedad("Av. Nueva York", juegoAutomatico, 200, null, 16); // Av. Nueva York
-
-        // this.casillas = casillas;
+        this.casillas[18] = new Propiedad("Av. Tennessee", juegoAutomatico, 180, null, 90); // Av. Tennessee
+        this.casillas[19] = new Propiedad("Av. Nueva York", juegoAutomatico, 200, null, 100); // Av. Nueva York
     }
 
 
@@ -367,9 +361,11 @@ public class Tablero{
     }
 
 
-    //Método polimorfico
+    // Método polimorfico
     private void realizarAccion(Casilla casilla, Jugador jugador){
-        casilla.accion(jugador);
+        if(!(casilla instanceof Adelante)){ // No darle dos veces al jugador $200
+            casilla.accion(jugador);
+        }
     }
 
     public static void main(String[] args) {
@@ -407,6 +403,10 @@ public class Tablero{
 
                 for (int i = 0; i < dado; i++) {
                     jugadorActual.avanzar();
+                    if (tablero.casillas[jugadorActual.getPosicion()] instanceof Adelante){
+                        System.out.println("¡Has pasado por el GO y recibes $200!");
+                        tablero.casillas[jugadorActual.getPosicion()].accion(jugadorActual); // Pasó por el GO, darle $200 al jugador
+                    }
                 }
             }
 
@@ -417,7 +417,7 @@ public class Tablero{
 
             tablero.imprimirTablero();
 
-            //Dependiendo donde cae el jugador la casilla realiza la accion correspondiente
+            // Dependiendo donde cae el jugador la casilla realiza la accion correspondiente
             tablero.realizarAccion(tablero.casillas[jugadorActual.getPosicion()], jugadorActual);
         
             // Actualizar el jugador actual para el siguiente turno

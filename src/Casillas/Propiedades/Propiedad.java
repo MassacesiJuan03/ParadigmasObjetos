@@ -68,11 +68,10 @@ public class Propiedad extends Casilla implements IAccionDinero {
                         jugador.agregarPropiedad(this);
                         accionDinero(jugador);
                         jugador.dineroRestante();
-                        break;
                     }else{
                         System.out.println("Compra no realizada, debido a dinero insuficiente");
                     }
-                    
+                    break;    
                 } else if (option.equalsIgnoreCase("no")) {
                     System.out.println("Usted ha decidido no realizar la compra de " + this.nombre);
                     break;

@@ -18,7 +18,6 @@ abstract public class Casilla{
         this.nombre = nombre;
 
     }
-    public Casilla(){}
 
     //Métodos
     public String getNombre(){

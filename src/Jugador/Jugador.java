@@ -52,15 +52,12 @@ public class Jugador {
             this.dineroRestante();
             return true;
         }
-        System.out.println("Renta de $" + renta + "no pagada, dinero insuficiente");
+        System.out.println("Renta de $" + renta + " no pagada, dinero insuficiente");
         return false;
     }
     public void avanzar() {
         if (this.posicion == 19){
             this.posicion = 0;
-            System.out.println("Paso por la casilla 'Adelante', recibe $200");
-            this.dinero += 200;
-            this.dineroRestante();
         }
         else{
             this.posicion++;
@@ -122,7 +119,16 @@ public class Jugador {
     }
     public void mostrarPropiedades(){
         if (!this.propiedades.isEmpty()){
-            System.out.println("Usted es dueño de: " + this.propiedades);
+            System.out.print("Usted es dueño de: ");
+            int i = 1;
+            for (Propiedad propiedad: propiedades){
+                if (i < propiedades.size()){
+                    System.out.print(propiedad.getNombre() + ", ");
+                    i++;
+                }else{
+                    System.out.println(propiedad.getNombre());
+                }
+            }
         }
     }
     public void eliminarPropiedad(){
