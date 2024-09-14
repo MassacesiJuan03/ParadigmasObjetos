@@ -13,6 +13,7 @@ import Piezas.Pieza;
 
 import java.util.Scanner;
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 public class Tablero{
@@ -24,8 +25,8 @@ public class Tablero{
 
     //atributos de instancia
     private boolean juegoAutomatico;
-    public Jugador[] jugadores;
-
+    //public Jugador[] jugadores;
+    private ArrayList<Jugador> jugadores;
     //Constructor
     public Tablero() {
         this.casillas = new Casilla[CANTIDAD_DE_CASILLAS];
@@ -60,7 +61,6 @@ public class Tablero{
         this.casillas[19] = new Propiedad("Av. Nueva York", juegoAutomatico, 200, null, 100); // Av. Nueva York
     }
 
-
     public void empezarPartida(Scanner scanner) {
         int cantidadDeJugadores = 0;
         // garantizar que se ingrese 2, 3 o 4
@@ -77,7 +77,8 @@ public class Tablero{
             }
         } while (cantidadDeJugadores < 2 || cantidadDeJugadores > 4);
 
-        jugadores = new Jugador[cantidadDeJugadores];
+        //jugadores = new Jugador[cantidadDeJugadores];
+        jugadores = new ArrayList<>(cantidadDeJugadores);
         for (int i = 0; i < cantidadDeJugadores; i++) {
             System.out.println("Jugador " + (i + 1) + ", elige tu nombre:");
             String nombreJugador = scanner.next();
@@ -109,9 +110,14 @@ public class Tablero{
                 }
             }
 
-            jugadores[i] = new Jugador(piezaElegida.toString());
-            jugadores[i].setNombre(nombreJugador);
-            jugadores[i].setPosicion(posicion);
+            //jugadores[i] = new Jugador(piezaElegida.toString());
+            //jugadores[i].setNombre(nombreJugador);
+            //jugadores[i].setPosicion(posicion);
+
+            jugadores.add(new Jugador(piezaElegida.toString()));
+            jugadores.get(i).setNombre(nombreJugador);
+            jugadores.get(i).setPosicion(posicion);
+            
         }
 
         // Preguntar si desea utilizar el juego automático
@@ -140,42 +146,43 @@ public class Tablero{
 
     private Jugador siguienteTurno(Jugador jugadorAnterior) {
         // Eliminar jugadores en bancarrota
-        for (int i = jugadores.length - 1; i >= 0; i--) {
-            if (jugadores[i].isEnBancarrota()) {
-                System.out.println(jugadores[i].getNombre() + " ha sido eliminado del juego por declararse en bancarrota.");
+        for (int i = jugadores.size() - 1; i >= 0; i--) {
+            if (jugadores.get(i).isEnBancarrota()) {
+                System.out.println(jugadores.get(i).getNombre() + " ha sido eliminado del juego por declararse en bancarrota.");
                 jugadorAnterior.eliminarPropiedad(); // Eliminar las propiedades a nombre del jugador
-                Jugador[] newJugadores = new Jugador[jugadores.length - 1];
-                System.arraycopy(jugadores, 0, newJugadores, 0, i);
-                System.arraycopy(jugadores, i + 1, newJugadores, i, jugadores.length - i - 1);
-                jugadores = newJugadores;
+                //Jugador[] newJugadores = new Jugador[jugadores.length - 1];
+                //System.arraycopy(jugadores, 0, newJugadores, 0, i);
+                //System.arraycopy(jugadores, i + 1, newJugadores, i, jugadores.length - i - 1);
+                //jugadores = newJugadores;
+                jugadores.remove(i);
             }
         }
 
         // Si solo queda un jugador, terminar el juego
-        if (jugadores.length == 1) {
-            System.out.println(jugadores[0].getNombre() + " ha ganado el juego!");
+        if (jugadores.size() == 1) {
+            System.out.println(jugadores.get(0).getNombre() + " ha ganado el juego!");
             return null; // Indica que el juego ha terminado
         }
 
         // Encontrar el índice del jugador anterior
         int indiceAnterior = -1;
-        for (int i = 0; i < jugadores.length; i++) {
-            if (jugadores[i] == jugadorAnterior) {
+        for (int i = 0; i < jugadores.size(); i++) {
+            if (jugadores.get(i) == jugadorAnterior) {
                 indiceAnterior = i;
                 break;
             }
         }
 
         // Calcular el índice del siguiente jugador
-        int indiceSiguiente = (indiceAnterior + 1) % jugadores.length;
+        int indiceSiguiente = (indiceAnterior + 1) % jugadores.size();
 
         // Actualizar los turnos
-        for (int i = 0; i < jugadores.length; i++) {
-            jugadores[i].setTurno(i == indiceSiguiente);
+        for (int i = 0; i < jugadores.size(); i++) {
+            jugadores.get(i).setTurno(i == indiceSiguiente);
         }
 
         // Retornar el jugador siguiente
-        return jugadores[indiceSiguiente];
+        return jugadores.get(indiceSiguiente);
     }
 
     private void dibujarPropiedad(String[][] board, int row, int col, String name, String[] nombreJugador) {
@@ -332,7 +339,7 @@ public class Tablero{
     // Implementar método getJugadoresEnCasilla
     public String[] getJugadoresEnCasilla(int index) {
         // Crear un array de Strings con el mismo tamaño que el número de jugadores
-        String[] jugadoresEnCasilla = new String[jugadores.length];
+        String[] jugadoresEnCasilla = new String[jugadores.size()];
 
         // Inicializar todos los valores como vacío
         for (int i = 0; i < jugadoresEnCasilla.length; i++) {
@@ -341,16 +348,16 @@ public class Tablero{
 
         // Contar cuántos jugadores están en la casilla
         int count = 0;
-        for (int i = 0; i < jugadores.length; i++) {
-            if (jugadores[i].getPosicion()== index) {
+        for (int i = 0; i < jugadores.size(); i++) {
+            if (jugadores.get(i).getPosicion()== index) {
                 count++;
             }
         }
 
         // Recorrer nuevamente para asignar los símbolos, truncando si hay 2 o más jugadores
-        for (int i = 0; i < jugadores.length; i++) {
-            if (jugadores[i].getPosicion() == index) {
-                String pieza = jugadores[i].getPieza();
+        for (int i = 0; i < jugadores.size(); i++) {
+            if (jugadores.get(i).getPosicion() == index) {
+                String pieza = jugadores.get(i).getPieza();
                 if (count >= 2 && pieza.length() > 3) {
                     pieza = pieza.substring(0, 3);
                 }
@@ -377,7 +384,7 @@ public class Tablero{
 
         tablero.especializarCasillas();
 
-        Jugador jugadorActual = tablero.jugadores[0];
+        Jugador jugadorActual = tablero.jugadores.get(0);
         jugadorActual.setTurno(true);
 
         boolean juegoEnCurso = true;
