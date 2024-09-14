@@ -14,6 +14,7 @@ import Piezas.Pieza;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.ByteArrayInputStream;
+import java.util.InputMismatchException;
 
 public class Tablero{
     //atributos de clase
@@ -91,8 +92,33 @@ public class Tablero{
             System.out.println(nombreJugador + ", elige tu pieza:");
             Pieza piezaElegida = Pieza.elegirPieza(scanner);
 
+            int posicion = 0;
+            boolean posicionValida = false;
+
+            // Pedir la posición del jugador hasta que sea válida
+            while (!posicionValida) {
+                try {
+                    System.out.println("Jugador " + (i + 1) + ", ingresa tu posición (entre 1 y 20): ");
+                    posicion = scanner.nextInt();
+
+                    // Verificar que la posición esté dentro del rango válido
+                    if (posicion < 1 || posicion > 20) {
+                        throw new IllegalArgumentException("La posición debe estar entre 1 y 20.");
+                    }
+
+                    // Si no hay errores, la posición es válida
+                    posicionValida = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: Debes ingresar un número entero.");
+                    scanner.next(); // Limpiar la entrada inválida
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
             jugadores[i] = new Jugador(piezaElegida.toString());
             jugadores[i].nombre = nombreJugador;
+            jugadores[i].posicion = posicion;
         }
 
         // Preguntar si desea utilizar el juego automático
