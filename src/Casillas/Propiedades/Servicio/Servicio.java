@@ -13,14 +13,17 @@ public class Servicio extends Propiedad {
 
     //Métodos
     private void cobrarRenta(Jugador jugador){
-        if (this.dueño != null){
-            if (this.dueño != jugador){
-                //Calcular la renta basado en los dados
-                ArrayList<Integer> dadosAnteriores = jugador.getDadosAnteriores();
-                int renta = 4 * (dadosAnteriores.get(dadosAnteriores.size() - 1));
+        if (this.dueño != jugador){
+            //Calcular la renta basado en los dados
+            ArrayList<Integer> dadosAnteriores = jugador.getDadosAnteriores();
+            int renta = 4 * (dadosAnteriores.get(dadosAnteriores.size() - 1));
+            if (jugador.getDinero() >= renta){
                 jugador.setDinero(renta);
                 System.out.println("Renta de $" + renta + " pagada con éxito.");
                 jugador.dineroRestante();
+            }else{  
+                System.out.println("Renta de $" + renta + "no pagada, dinero insuficiente");
+                jugador.setEnBancarrota(true);
             }
         }
     }

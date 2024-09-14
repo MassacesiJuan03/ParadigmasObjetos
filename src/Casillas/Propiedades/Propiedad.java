@@ -23,12 +23,14 @@ public class Propiedad extends Casilla implements IAccionDinero {
 
     // Métodos
     private void cobrarRenta(Jugador jugador) {
-        // Verificar si la propiedad tiene dueño
-        if (this.dueño != null) {
-            if (this.dueño != jugador) {
-                // Cobrar renta al jugador que cayó en una propiedad con dueño
-                jugador.pagarRenta(this.renta);
+        // Verificar si el dueño no es el mismo jugador
+        if (this.dueño != jugador) {
+            // Cobrar renta al jugador que cayó en una propiedad con dueño
+            if (jugador.pagarRenta(this.renta)){ // Dar el dinero al dueño si el jugador paga la renta
                 this.dueño.recibirDinero(this.renta);
+            }
+            else{
+                jugador.setEnBancarrota(true);
             }
         }
     }
@@ -59,11 +61,18 @@ public class Propiedad extends Casilla implements IAccionDinero {
                 String option = scanner.nextLine();
 
                 if (option.equalsIgnoreCase("si")) {
-                    System.out.println("Compra de " + this.nombre + " realizada.");
-                    this.dueño = jugador;
-                    accionDinero(jugador);
-                    jugador.dineroRestante();
-                    break;
+                    // Verificar si el jugador tiene el dinero suficiente para comprar
+                    if (jugador.getDinero()>=this.costo){ 
+                        System.out.println("Compra de " + this.nombre + " realizada.");
+                        this.dueño = jugador;
+                        jugador.agregarPropiedad(this);
+                        accionDinero(jugador);
+                        jugador.dineroRestante();
+                        break;
+                    }else{
+                        System.out.println("Compra no realizada, debido a dinero insuficiente");
+                    }
+                    
                 } else if (option.equalsIgnoreCase("no")) {
                     System.out.println("Usted ha decidido no realizar la compra de " + this.nombre);
                     break;
@@ -80,9 +89,13 @@ public class Propiedad extends Casilla implements IAccionDinero {
         return jugador.getDinero();
     }
 
+    public void setDueño(Jugador dueño) {
+        this.dueño = dueño;
+    }
+
     @Override
     public void accion(Jugador jugador) {
-        if (!ofrecerCompra(jugador)) {
+        if (!ofrecerCompra(jugador)) { // Si la propiedad tiene dueño, se cobra una renta al otro jugador
             cobrarRenta(jugador);
         }
     }

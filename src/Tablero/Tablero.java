@@ -11,7 +11,6 @@ import Casillas.Propiedades.Servicio.Servicio;
 import Jugador.Jugador;
 import Piezas.Pieza;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.ByteArrayInputStream;
 import java.util.InputMismatchException;
@@ -117,8 +116,8 @@ public class Tablero{
             }
 
             jugadores[i] = new Jugador(piezaElegida.toString());
-            jugadores[i].nombre = nombreJugador;
-            jugadores[i].posicion = posicion;
+            jugadores[i].setNombre(nombreJugador);
+            jugadores[i].setPosicion(posicion);
         }
 
         // Preguntar si desea utilizar el juego automático
@@ -149,10 +148,10 @@ public class Tablero{
 
 
     private Jugador siguienteTurno(Jugador jugadorAnterior) {
-        // Eliminar jugadores con dinero negativo
+        // Eliminar jugadores en bancarrota
         for (int i = jugadores.length - 1; i >= 0; i--) {
-            if (jugadores[i].getDinero() < 0) {
-                System.out.println(jugadores[i].nombre + " ha sido eliminado del juego por quedarse sin dinero.");
+            if (jugadores[i].isEnBancarrota()) {
+                System.out.println(jugadores[i].getNombre() + " ha sido eliminado del juego por declararse en bancarrota.");
                 Jugador[] newJugadores = new Jugador[jugadores.length - 1];
                 System.arraycopy(jugadores, 0, newJugadores, 0, i);
                 System.arraycopy(jugadores, i + 1, newJugadores, i, jugadores.length - i - 1);
@@ -185,15 +184,6 @@ public class Tablero{
 
         // Retornar el jugador siguiente
         return jugadores[indiceSiguiente];
-    }
-
-    private Jugador jugadorActual() {
-        for (Jugador jugador : jugadores) {
-            if (jugador.turno) {
-                return jugador;
-            }
-        }
-        return null;
     }
 
     private void dibujarPropiedad(String[][] board, int row, int col, String name, String[] nombreJugador) {
@@ -360,15 +350,15 @@ public class Tablero{
         // Contar cuántos jugadores están en la casilla
         int count = 0;
         for (int i = 0; i < jugadores.length; i++) {
-            if (jugadores[i].posicion == index) {
+            if (jugadores[i].getPosicion()== index) {
                 count++;
             }
         }
 
         // Recorrer nuevamente para asignar los símbolos, truncando si hay 2 o más jugadores
         for (int i = 0; i < jugadores.length; i++) {
-            if (jugadores[i].posicion == index) {
-                String pieza = jugadores[i].pieza;
+            if (jugadores[i].getPosicion() == index) {
+                String pieza = jugadores[i].getPieza();
                 if (count >= 2 && pieza.length() > 3) {
                     pieza = pieza.substring(0, 3);
                 }
@@ -414,7 +404,6 @@ public class Tablero{
                     scanner.nextLine();
                 }
 
-
                 int dado = jugadorActual.tirarDado();
                 System.out.println("Dado: " + dado);
                 System.out.println("Avanzas " + dado + " casillas");
@@ -426,6 +415,8 @@ public class Tablero{
 
             String nombreCasilla = tablero.casillas[jugadorActual.getPosicion()].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
+
+            jugadorActual.mostrarPropiedades();
 
             tablero.imprimirTablero();
 

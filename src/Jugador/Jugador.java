@@ -2,24 +2,28 @@ package Jugador;
 
 import java.util.ArrayList;
 
+import Casillas.Propiedades.Propiedad;
+
 // Los comentarios que comienzan con "*" son dudas.
 public class Jugador {
     // Atributos de instancia
-    public int posicion;
-    public String pieza;
-    public String nombre;
-    public boolean enBancarrota;
-    public ArrayList<Integer> dadosAnteriores; // array de 1xn
-    public int dinero;
-    public boolean turno;
-    public boolean enCarcel;
-    public boolean tieneCartaSalidaDeCarcel;
+    private int posicion;
+    private String pieza;
+    private String nombre;
+    private boolean enBancarrota;
+    private ArrayList<Propiedad> propiedades;
+    private ArrayList<Integer> dadosAnteriores; // array de 1xn
+    private int dinero;
+    private boolean turno;
+    private boolean enCarcel;
+    private boolean tieneCartaSalidaDeCarcel;
 
     public Jugador(String pieza) {
         this.posicion = 0;
         this.pieza = pieza;
         this.enBancarrota = false;
         this.dadosAnteriores = new ArrayList<>(); // Inicializar array vacío
+        this.propiedades = new ArrayList<>();
         this.dinero = 1500; // Monto inicial estándar en Monopoly
         this.turno = false;
         this.enCarcel = false;
@@ -41,12 +45,15 @@ public class Jugador {
         System.out.println("Dados anteriores: " + dadosAnteriores);
     }
     
-    public void pagarRenta(int renta) {
-        if (renta <= this.dinero){
+    public boolean pagarRenta(int renta) {
+        if (this.dinero >= renta){
             this.dinero -= renta;
             System.out.println("Renta de $" + renta + " pagada con éxito.");
             this.dineroRestante();
+            return true;
         }
+        System.out.println("Renta de $" + renta + "no pagada, dinero insuficiente");
+        return false;
     }
     public void avanzar() {
         if (this.posicion == 19){
@@ -86,6 +93,9 @@ public class Jugador {
     public boolean isTieneCartaSalidaDeCarcel() {
         return tieneCartaSalidaDeCarcel;
     }
+    public boolean isEnBancarrota() {
+        return enBancarrota;
+    }
     public void setDinero(int monto) {
         this.dinero -= monto;
     }
@@ -100,5 +110,25 @@ public class Jugador {
     }
     public void setPosicion(int posicion) {
         this.posicion = posicion;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    public void setEnBancarrota(boolean enBancarrota) {
+        this.enBancarrota = enBancarrota;
+    }
+    public void agregarPropiedad(Propiedad propiedad){
+        this.propiedades.add(propiedad);
+    }
+    public void mostrarPropiedades(){
+        if (!this.propiedades.isEmpty()){
+            System.out.println("Usted es dueño de: " + this.propiedades);
+        }
+    }
+    public void eliminarPropiedad(){
+        for(Propiedad propiedad: propiedades){
+            propiedad.setDueño(null);
+        }
+        this.propiedades.clear();
     }
 }
