@@ -39,7 +39,7 @@ public class Tablero{
         // Esquinas
         this.casillas[0] = new Adelante("Salida"); // Casilla de salida (GO)
         this.casillas[5] = new Estacionamiento("Estacionamiento"); // Estacionamiento gratuito
-        this.casillas[10] = new Carcel("Ir a la cárcel"); // Ir a la cárcel
+        this.casillas[10] = new Carcel("Ir a la cárcel", juegoAutomatico); // Ir a la cárcel
         this.casillas[15] = new Propiedad("El Muelle", juegoAutomatico, 400, null, 50); // El Muelle
 
         // Propiedades
@@ -135,10 +135,7 @@ public class Tablero{
             this.juegoAutomatico = true;
             System.out.println("Modo automático activado.");
 
-            // Cambiar el InputStream para que siempre lea "si"
-            String inputSimulado = "si\n".repeat(1000); // Repetir "si" para cubrir futuras entradas
-            ByteArrayInputStream flujoSimulado = new ByteArrayInputStream(inputSimulado.getBytes());
-            System.setIn(flujoSimulado); // Sobrescribir el System.in
+
             scanner = new Scanner(System.in); // Reconstruir el scanner para que use el nuevo InputStream
         } else {
             this.juegoAutomatico = false;
