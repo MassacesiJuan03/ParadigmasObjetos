@@ -20,7 +20,6 @@ public class CartaDinero extends Carta {
         System.out.println("Se ha usado la carta de dinero: " + getDescripcion());
         if (this.valor < 0){
             if (jugador.getDinero() >= -this.valor){
-                System.out.println(jugador.getDinero());
                 System.out.println(this.descripcion + ". Pagada con éxito!");
                 jugador.recibirDinero(this.valor);
                 jugador.dineroRestante();
