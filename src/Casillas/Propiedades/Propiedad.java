@@ -10,7 +10,7 @@ public class Propiedad extends Casilla implements IAccionDinero {
     Scanner scanner = new Scanner(System.in);
     // atributos de instancia
     protected int costo;
-    protected Jugador dueño;
+    public Jugador dueño;
     protected int renta;
 
     // Constructor
@@ -21,6 +21,10 @@ public class Propiedad extends Casilla implements IAccionDinero {
         this.renta = renta;
     }
 
+    public Jugador getDueño(){
+        return this.dueño;
+    }
+
     // Métodos
     private void cobrarRenta(Jugador jugador) {
         // Verificar si el dueño no es el mismo jugador
@@ -28,6 +32,7 @@ public class Propiedad extends Casilla implements IAccionDinero {
             // Cobrar renta al jugador que cayó en una propiedad con dueño
             if (jugador.pagarRenta(this.renta)){ // Dar el dinero al dueño si el jugador paga la renta
                 this.dueño.recibirDinero(this.renta);
+                System.out.println(this.dueño.getNombre() + " Ha recibido: " + this.renta );
             }
             else{
                 jugador.setEnBancarrota(true);
