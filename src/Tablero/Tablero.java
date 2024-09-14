@@ -21,7 +21,7 @@ public class Tablero{
     private Casilla[] casillas;
     private static final int ANCHO_CONSOLA = 160;  // 1280 / 8 (assuming 8 pixels per character)
     private static final int ALTO_CONSOLA = 50;  //
-    
+
     //atributos de instancia
     private boolean juegoAutomatico;
     public Jugador[] jugadores;
@@ -143,6 +143,7 @@ public class Tablero{
         for (int i = jugadores.length - 1; i >= 0; i--) {
             if (jugadores[i].isEnBancarrota()) {
                 System.out.println(jugadores[i].getNombre() + " ha sido eliminado del juego por declararse en bancarrota.");
+                jugadorAnterior.eliminarPropiedad(); // Eliminar las propiedades a nombre del jugador
                 Jugador[] newJugadores = new Jugador[jugadores.length - 1];
                 System.arraycopy(jugadores, 0, newJugadores, 0, i);
                 System.arraycopy(jugadores, i + 1, newJugadores, i, jugadores.length - i - 1);
@@ -388,6 +389,9 @@ public class Tablero{
             }
             System.out.println("Turno de " + jugadorActual.getPieza());
             System.out.println("Dinero actual: $" + jugadorActual.getDinero());
+            if (jugadorActual.isTieneCartaSalidaDeCarcel()){
+                System.out.println(jugadorActual.getPieza() + ": tiene carta para salir de la cárcel");
+            }
 
             //Si el jugador no está en la cárcel podra tirar los dados y avanzar
             if (!jugadorActual.isCarcel()){

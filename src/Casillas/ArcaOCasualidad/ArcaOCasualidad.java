@@ -3,9 +3,6 @@ package Casillas.ArcaOCasualidad;
 import java.util.ArrayList;
 
 import Carta.Carta;
-import Carta.CartaDinero.CartaDinero;
-import Carta.CartaIrDirectoCarcel.CartaIrDirectoCarcel;
-import Carta.CartaSalirCarcel.CartaSalirCarcel;
 import Casillas.Casilla;
 import Jugador.Jugador;
 import Mazo.Mazo;
@@ -13,6 +10,7 @@ import Mazo.Mazo;
 public class ArcaOCasualidad extends Casilla {
     //atributos de instancia
     protected boolean esArca;
+    private Mazo mazo = new Mazo();
 
     //Constructor
     public ArcaOCasualidad(String nombre, boolean esArca){
@@ -21,8 +19,8 @@ public class ArcaOCasualidad extends Casilla {
     }
 
     //Métodos
-    private Carta sacarCarta(Mazo mazo) {
-        ArrayList<Carta> mazoCartas = mazo.getMazo();
+    private Carta sacarCarta() {
+        ArrayList<Carta> mazoCartas = this.mazo.getMazo();
         // Sacar la primera carta del mazo
         Carta cartaSacada = mazoCartas.remove(0);
 
@@ -33,24 +31,9 @@ public class ArcaOCasualidad extends Casilla {
         return cartaSacada;
     }
 
-    /*usar cartaSacada para indicar que tipo de carta es(dinero o carcel), implemantar un mètodo para lo anterior,
-    asi podemos usar el metodo abstracto 'usar'*/
     public void usarCarta(Jugador jugador){
-        Mazo mazoCarta =  new Mazo();
-        Carta cartaSacada = sacarCarta(mazoCarta);
-
-        if (cartaSacada instanceof CartaDinero){
-            CartaDinero cartaDinero = (CartaDinero) cartaSacada;
-            cartaDinero.usar(jugador); 
-        }
-        if (cartaSacada instanceof CartaSalirCarcel){
-            CartaSalirCarcel cartaSalir = (CartaSalirCarcel) cartaSacada;
-            cartaSalir.usar(jugador); 
-        }
-        if (cartaSacada instanceof CartaIrDirectoCarcel){
-            CartaIrDirectoCarcel cartaEntrar = (CartaIrDirectoCarcel) cartaSacada;
-            cartaEntrar.usar(jugador); 
-        }
+        Carta cartaSacada = sacarCarta();
+        cartaSacada.usar(jugador);
     }
 
     @Override

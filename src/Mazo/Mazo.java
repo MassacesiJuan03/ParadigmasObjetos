@@ -9,11 +9,12 @@ import java.util.Collections;
 import java.util.ArrayList;
 
 public class Mazo {
-    private static ArrayList<Carta> mazoDeCartas = new ArrayList<>(15);
+    //atributos de instancia
+    private ArrayList<Carta> mazoDeCartas = new ArrayList<>(5);
 
     //Constructor
     public Mazo() {
-        Mazo.mazoDeCartas = inicializarMazo();
+        this.mazoDeCartas = inicializarMazo();
     }
 
     //Métodos

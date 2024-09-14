@@ -16,7 +16,7 @@ public class Servicio extends Propiedad {
         if (this.dueño != jugador){
             //Calcular la renta basado en los dados
             ArrayList<Integer> dadosAnteriores = jugador.getDadosAnteriores();
-            int renta = 4 * (dadosAnteriores.get(dadosAnteriores.size() - 1));
+            int renta = 20 * (dadosAnteriores.get(dadosAnteriores.size() - 1));
             if (jugador.getDinero() >= renta){
                 jugador.setDinero(renta);
                 System.out.println("Renta de $" + renta + " pagada con éxito.");

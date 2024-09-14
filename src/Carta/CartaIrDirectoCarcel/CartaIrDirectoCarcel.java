@@ -6,7 +6,8 @@ import Jugador.Jugador;
 
 public class CartaIrDirectoCarcel extends Carta{
     //atributos de instancia
-    public String descripcion;
+    private String descripcion;
+    private Carcel carcel = new Carcel("Cárcel", false);
 
     //Constructor
     public CartaIrDirectoCarcel(String descripcion) {
@@ -15,7 +16,7 @@ public class CartaIrDirectoCarcel extends Carta{
     }
 
     //Métodos 
-    public void usar(Jugador jugador, Carcel carcel) {
+    public void usar(Jugador jugador) {
         System.out.println("Se ha usado la carta de ir directo a la cárcel: " + getDescripcion());
         jugador.setPosicion(10);
         carcel.accion(jugador);

@@ -36,6 +36,4 @@ public class CartaDinero extends Carta {
     public String getDescripcion() {
         return this.descripcion;
     }
-    
-    
 }
