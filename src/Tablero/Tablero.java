@@ -40,9 +40,9 @@ public class Tablero{
         this.casillas[15] = new Propiedad("El Muelle", juegoAutomatico, 400, null, 150); // El Muelle
 
         // Propiedades
-        this.casillas[1] = new Propiedad("Av. Mediterráneo", juegoAutomatico, 60, null, 30); // Av. Mediterráneo
+        this.casillas[1] = new Propiedad("Av. Mediterráneo", juegoAutomatico, 90, null, 45); // Av. Mediterráneo
         this.casillas[2] = new ArcaOCasualidad("Arca Comunal", true); // Arca Comunal
-        this.casillas[3] = new Propiedad("Av. Báltica", juegoAutomatico, 60, null, 30); // Av. Báltica
+        this.casillas[3] = new Propiedad("Av. Báltica", juegoAutomatico, 90, null, 45); // Av. Báltica
         this.casillas[4] = new Impuesto("Impuestos"); // Impuesto sobre la renta
 
         this.casillas[6] = new Propiedad("Av. Oriental", juegoAutomatico, 100, null, 50); // Av. Oriental
@@ -415,7 +415,7 @@ public class Tablero{
                 for (int i = 0; i < dado; i++) {
                     jugadorActual.avanzar();
                     if (tablero.casillas[jugadorActual.getPosicion()] instanceof Adelante){
-                        System.out.println("¡Has pasado por el GO y recibes $200!");
+                        System.out.println("¡Has pasado por el GO y recibes $100!");
                         tablero.casillas[jugadorActual.getPosicion()].accion(jugadorActual); // Pasó por el GO, darle $200 al jugador
                     }
                 }

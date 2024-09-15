@@ -23,15 +23,15 @@ public class Mazo {
 
         // Inicializar las 15 cartas
         cartas.add(new CartaDinero("Felicitaciones, ganaste la lotería, toma $100", 100));
-        cartas.add(new CartaDinero("Paga tu seguro de automóvil, pierde $50", -50));
+        cartas.add(new CartaDinero("Paga tu seguro de automóvil, pierde $100", -100));
         cartas.add(new CartaDinero("Recibes un reembolso de impuestos, toma $200", 200));
-        cartas.add(new CartaDinero("Paga tus facturas médicas, pierde $100", -100));
+        cartas.add(new CartaDinero("Paga tus facturas médicas, pierde $150", -150));
         cartas.add(new CartaDinero("Recibes un regalo de un amigo, toma $50", 50));
-        cartas.add(new CartaDinero("Paga una multa de tráfico, pierde $20", -20));
+        cartas.add(new CartaDinero("Paga una multa de tráfico, pierde $120", -120));
         cartas.add(new CartaDinero("Vendiste acciones y ganaste $150", 150));
-        cartas.add(new CartaDinero("Paga la reparación de tu coche, pierde $75", -75));
+        cartas.add(new CartaDinero("Paga la reparación de tu coche, pierde $175", -175));
         cartas.add(new CartaDinero("Recibes herencia, toma $300", 300));
-        cartas.add(new CartaDinero("Pagas una cuota de membresía, pierde $100", -100));
+        cartas.add(new CartaDinero("Pagas una cuota de membresía, pierde $120", -120));
         cartas.add(new CartaSalirCarcel("Esta carta te permite salir de la cárcel."));
         cartas.add(new CartaIrDirectoCarcel("Ve directo a la cárcel."));
         cartas.add(new CartaDinero("Paga la matrícula escolar, pierde $150", -150));

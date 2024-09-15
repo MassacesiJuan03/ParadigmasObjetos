@@ -26,7 +26,7 @@ public class Carcel extends Casilla {
                     jugador.setCarcel(false);
                 }
                 else{
-                        System.out.println("Multa no cobrada debido a saldo insuficiente, sigue en la carcél");
+                    System.out.println("Multa no cobrada debido a saldo insuficiente, sigue en la carcél");
                     }
                 }
             }
@@ -53,19 +53,23 @@ public class Carcel extends Casilla {
             }
 
             while (!flag) {
-                System.out.println("¿Desea usar su carta 'SalidaDeCarcel' para salir de la cárcel? Si/No");
-                String option = scanner.nextLine();
-
-                if (option.equalsIgnoreCase("Si")){
-                    System.out.println("Usted decidio usar la carta. Sale de la cárcel");
-                    return true;
-                }else{
-                    if (option.equalsIgnoreCase("No")){
-                        System.out.println("Usted decidio no usar la carta. Sigue en la cárcel");
-                        return false;
+                try{
+                    System.out.println("¿Desea usar su carta 'SalidaDeCarcel' para salir de la cárcel? Si/No");
+                    String option = scanner.nextLine();
+    
+                    if (option.equalsIgnoreCase("Si")){
+                        System.out.println("Usted decidio usar la carta. Sale de la cárcel");
+                        return true;
                     }else{
-                        System.out.println("Respuesta incorrecta, intente de nuevo");
+                        if (option.equalsIgnoreCase("No")){
+                            System.out.println("Usted decidio no usar la carta. Sigue en la cárcel");
+                            return false;
+                        }else{
+                            throw new IllegalArgumentException("Respuesta incorrecta, vuelva a intentar.");
+                        }
                     }
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }

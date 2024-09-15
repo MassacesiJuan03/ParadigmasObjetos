@@ -24,7 +24,7 @@ public class Jugador {
         this.enBancarrota = false;
         this.dadosAnteriores = new ArrayList<>(); // Inicializar array vacío
         this.propiedades = new ArrayList<>();
-        this.dinero = 400; // Monto inicial estándar en Monopoly
+        this.dinero = 1000; // Monto inicial estándar en Monopoly
         this.turno = false;
         this.enCarcel = false;
         this.tieneCartaSalidaDeCarcel = false;

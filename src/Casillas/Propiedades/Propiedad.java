@@ -62,26 +62,30 @@ public class Propiedad extends Casilla implements IAccionDinero {
 
             // Pedirle por consola al usuario comprar la propiedad si es que no tiene dueño.
             while (flag) {
-                System.out.println("¿Desea comprar " + this.nombre + " por $" + this.costo + "? (Si/No)");
-                String option = scanner.nextLine();
-
-                if (option.equalsIgnoreCase("si")) {
-                    // Verificar si el jugador tiene el dinero suficiente para comprar
-                    if (jugador.getDinero()>=this.costo){ 
-                        System.out.println("Compra de " + this.nombre + " realizada.");
-                        this.dueño = jugador;
-                        jugador.agregarPropiedad(this);
-                        accionDinero(jugador);
-                        jugador.dineroRestante();
-                    }else{
-                        System.out.println("Compra no realizada, debido a dinero insuficiente");
+                try{
+                    System.out.println("¿Desea comprar " + this.nombre + " por $" + this.costo + "? (Si/No)");
+                    String option = scanner.nextLine();
+    
+                    if (option.equalsIgnoreCase("si")) {
+                        // Verificar si el jugador tiene el dinero suficiente para comprar
+                        if (jugador.getDinero()>=this.costo){ 
+                            System.out.println("Compra de " + this.nombre + " realizada.");
+                            this.dueño = jugador;
+                            jugador.agregarPropiedad(this);
+                            accionDinero(jugador);
+                            jugador.dineroRestante();
+                        }else{
+                            System.out.println("Compra no realizada, debido a dinero insuficiente");
+                        }
+                        break;    
+                    } else if (option.equalsIgnoreCase("no")) {
+                        System.out.println("Usted ha decidido no realizar la compra de " + this.nombre);
+                        break;
+                    } else {
+                        throw new IllegalArgumentException("Respuesta incorrecta, vuelva a intentar.");
                     }
-                    break;    
-                } else if (option.equalsIgnoreCase("no")) {
-                    System.out.println("Usted ha decidido no realizar la compra de " + this.nombre);
-                    break;
-                } else {
-                    System.out.println("Respuesta incorrecta, vuelva a intentar.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
                 }
             }
             return true;

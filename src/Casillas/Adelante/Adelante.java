@@ -16,7 +16,7 @@ public class Adelante extends Casilla implements IAccionDinero{
     }
     
     public int accionDinero(Jugador jugador){
-        jugador.recibirDinero(40);
+        jugador.recibirDinero(100);
         return jugador.getDinero();
     }
 
