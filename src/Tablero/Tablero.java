@@ -12,7 +12,6 @@ import Jugador.Jugador;
 import Piezas.Pieza;
 
 import java.util.Scanner;
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
@@ -25,8 +24,8 @@ public class Tablero{
 
     //atributos de instancia
     private boolean juegoAutomatico;
-    //public Jugador[] jugadores;
     private ArrayList<Jugador> jugadores;
+
     //Constructor
     public Tablero() {
         this.casillas = new Casilla[CANTIDAD_DE_CASILLAS];
@@ -77,7 +76,6 @@ public class Tablero{
             }
         } while (cantidadDeJugadores < 2 || cantidadDeJugadores > 4);
 
-        //jugadores = new Jugador[cantidadDeJugadores];
         jugadores = new ArrayList<>(cantidadDeJugadores);
         for (int i = 0; i < cantidadDeJugadores; i++) {
             System.out.println("Jugador " + (i + 1) + ", elige tu nombre:");
@@ -109,10 +107,6 @@ public class Tablero{
                     System.out.println(e.getMessage());
                 }
             }
-
-            //jugadores[i] = new Jugador(piezaElegida.toString());
-            //jugadores[i].setNombre(nombreJugador);
-            //jugadores[i].setPosicion(posicion);
 
             jugadores.add(new Jugador(piezaElegida.toString()));
             jugadores.get(i).setNombre(nombreJugador);
@@ -150,16 +144,13 @@ public class Tablero{
             if (jugadores.get(i).isEnBancarrota()) {
                 System.out.println(jugadores.get(i).getNombre() + " ha sido eliminado del juego por declararse en bancarrota.");
                 jugadorAnterior.eliminarPropiedad(); // Eliminar las propiedades a nombre del jugador
-                //Jugador[] newJugadores = new Jugador[jugadores.length - 1];
-                //System.arraycopy(jugadores, 0, newJugadores, 0, i);
-                //System.arraycopy(jugadores, i + 1, newJugadores, i, jugadores.length - i - 1);
-                //jugadores = newJugadores;
-                jugadores.remove(i);
+                jugadores.remove(i); // Eliminar al jugador del juego
             }
         }
 
         // Si solo queda un jugador, terminar el juego
         if (jugadores.size() == 1) {
+            System.out.println("");
             System.out.println(jugadores.get(0).getNombre() + " ha ganado el juego!");
             return null; // Indica que el juego ha terminado
         }
@@ -364,10 +355,8 @@ public class Tablero{
                 jugadoresEnCasilla[i] = pieza;
             }
         }
-
         return jugadoresEnCasilla;
     }
-
 
     // Método polimorfico
     private void realizarAccion(Casilla casilla, Jugador jugador){
@@ -397,14 +386,14 @@ public class Tablero{
             System.out.println("Turno de " + jugadorActual.getPieza());
             System.out.println("Dinero actual: $" + jugadorActual.getDinero());
             if (jugadorActual.isTieneCartaSalidaDeCarcel()){
-                System.out.println(jugadorActual.getPieza() + ": tiene carta para salir de la cárcel");
+                System.out.println(jugadorActual.getPieza() + ": tiene carta para salir de la cárcel.");
             }
 
             //Si el jugador no está en la cárcel podra tirar los dados y avanzar
             if (!jugadorActual.isCarcel()){
 
                 if(tablero.juegoAutomatico == false){
-                    System.out.println("Presiona Enter para tirar los dados");
+                    System.out.println("Presiona Enter para tirar los dados.");
                     scanner.nextLine();
                 }
 

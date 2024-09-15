@@ -10,7 +10,7 @@ import Mazo.Mazo;
 public class ArcaOCasualidad extends Casilla {
     //atributos de instancia
     protected boolean esArca;
-    private Mazo mazo = new Mazo();
+    protected static Mazo mazo = new Mazo();
 
     //Constructor
     public ArcaOCasualidad(String nombre, boolean esArca){
@@ -19,8 +19,8 @@ public class ArcaOCasualidad extends Casilla {
     }
 
     //Métodos
-    private Carta sacarCarta() {
-        ArrayList<Carta> mazoCartas = this.mazo.getMazo();
+    private Carta sacarCarta() {;
+        ArrayList<Carta> mazoCartas = mazo.getMazo();
         // Sacar la primera carta del mazo
         Carta cartaSacada = mazoCartas.remove(0);
 

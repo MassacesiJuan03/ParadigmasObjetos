@@ -48,11 +48,8 @@ public class Jugador {
     public boolean pagarRenta(int renta) {
         if (this.dinero >= renta){
             this.dinero -= renta;
-            System.out.println("Renta de $" + renta + " pagada con éxito.");
-            this.dineroRestante();
             return true;
         }
-        System.out.println("Renta de $" + renta + " no pagada, dinero insuficiente");
         return false;
     }
     public void avanzar() {

@@ -31,65 +31,72 @@ public class Propiedad extends Casilla implements IAccionDinero {
         if (this.dueño != jugador) {
             // Cobrar renta al jugador que cayó en una propiedad con dueño
             if (jugador.pagarRenta(this.renta)){ // Dar el dinero al dueño si el jugador paga la renta
+                System.out.println("Renta de $" + renta + " pagada con éxito.");
+                jugador.dineroRestante();
                 this.dueño.recibirDinero(this.renta);
-                System.out.println(this.dueño.getNombre() + " Ha recibido: " + this.renta );
+                System.out.println(this.dueño.getNombre() + " Ha recibido: $" + this.renta );
             }
-            else{
+            else{    
+            System.out.println("Renta obligatoria de $" + renta + " no pagada, dinero insuficiente.");
                 jugador.setEnBancarrota(true);
             }
         }
     }
 
-    public boolean ofrecerCompra(Jugador jugador) {
-        if (juegoAutomatico) {
-            // En modo automático, se realiza la compra sin preguntar
-            System.out.println("Compra automática de " + this.nombre + " realizada.");
-            this.dueño = jugador;
-            accionDinero(jugador);
-            jugador.dineroRestante();
-            return true;
-        } else {
-            boolean flag = true;
-
-            // Verificar si la propiedad tiene dueño
-            if (this.dueño != null) {
-                // Verificar si el dueño es el mismo que cayó en la propiedad
-                if (this.dueño == jugador) {
-                    System.out.println("Usted es dueño de " + this.nombre);
-                }
-                return false;
+    public boolean ofrecerCompra(Jugador jugador) {   
+        boolean flag = true;
+        // Verificar si la propiedad tiene dueño
+        if (this.dueño != null) {
+            // Verificar si el dueño es el mismo que cayó en la propiedad
+            if (this.dueño == jugador) {
+                System.out.println("Usted es dueño de " + this.nombre + ".");
             }
-
-            // Pedirle por consola al usuario comprar la propiedad si es que no tiene dueño.
-            while (flag) {
-                try{
-                    System.out.println("¿Desea comprar " + this.nombre + " por $" + this.costo + "? (Si/No)");
-                    String option = scanner.nextLine();
-    
-                    if (option.equalsIgnoreCase("si")) {
-                        // Verificar si el jugador tiene el dinero suficiente para comprar
-                        if (jugador.getDinero()>=this.costo){ 
-                            System.out.println("Compra de " + this.nombre + " realizada.");
-                            this.dueño = jugador;
-                            jugador.agregarPropiedad(this);
-                            accionDinero(jugador);
-                            jugador.dineroRestante();
-                        }else{
-                            System.out.println("Compra no realizada, debido a dinero insuficiente");
-                        }
-                        break;    
-                    } else if (option.equalsIgnoreCase("no")) {
-                        System.out.println("Usted ha decidido no realizar la compra de " + this.nombre);
-                        break;
-                    } else {
-                        throw new IllegalArgumentException("Respuesta incorrecta, vuelva a intentar.");
-                    }
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
+            return false;
+        }else{
+            if (juegoAutomatico) {
+                // En modo automático, se realiza la compra sin preguntar
+                if (jugador.getDinero() >= this.costo){
+                    System.out.println("Compra automática de " + this.nombre + " realizada.");
+                    this.dueño = jugador;
+                    jugador.agregarPropiedad(this);
+                    accionDinero(jugador);
+                    jugador.dineroRestante();
+                }else{
+                    System.out.println("Dinero insuficiente para realizar la compra de " + this.nombre + ".");
                 }
-            }
-            return true;
+                return true;
+            } 
         }
+
+        // Pedirle por consola al usuario comprar la propiedad si es que no tiene dueño.
+        while (flag) {
+            try{
+                System.out.println("¿Desea comprar " + this.nombre + " por $" + this.costo + "? (Si/No)");
+                String option = scanner.nextLine();
+    
+                if (option.equalsIgnoreCase("si")) {
+                    // Verificar si el jugador tiene el dinero suficiente para comprar
+                    if (jugador.getDinero()>=this.costo){ 
+                        System.out.println("Compra de " + this.nombre + " realizada.");
+                        this.dueño = jugador;
+                        jugador.agregarPropiedad(this);
+                        accionDinero(jugador);
+                        jugador.dineroRestante();
+                    }else{
+                        System.out.println("Compra no realizada, debido a dinero insuficiente.");
+                    }
+                        break;    
+                } else if (option.equalsIgnoreCase("no")) {
+                    System.out.println("Usted ha decidido no realizar la compra de " + this.nombre + ".");
+                    break;
+                } else {
+                    throw new IllegalArgumentException("Respuesta incorrecta, vuelva a intentar.");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return true;
     }
 
     public int accionDinero(Jugador jugador) {

@@ -1,9 +1,9 @@
 package Piezas;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public enum Pieza {
     SOMBRERO, AUTO, PERRO, DEDAL, BOTA, BARCO, PLANCHA, CARRETILLA;
@@ -24,7 +24,7 @@ public enum Pieza {
         while (!inputValido) {
             System.out.print("Introduce el número de la pieza que deseas elegir: ");
             try {
-                eleccion = Integer.parseInt(scanner.nextLine());
+                eleccion = scanner.nextInt();
                 if (eleccion >= 1 && eleccion <= piezasDisponibles.size()) {
                     inputValido = true;
                 } else {
@@ -32,6 +32,9 @@ public enum Pieza {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Por favor, introduce un número válido.");
+            } catch (InputMismatchException e){
+                System.out.println("Error: Debes ingresar un número entero.");
+                scanner.next(); // Limpiar la entrada inválida
             }
         }
 

@@ -18,16 +18,14 @@ public class Carcel extends Casilla {
         boolean salir = usarCartaSalida(tieneCartaSalida(jugador));
 
         if (!salir){
-            if (!tirarDobles(jugador)){
-                if (jugador.getDinero() >= 50){
-                    jugador.setDinero(50);
-                    System.out.println("Multa cobrada, sale de la carcél");
-                    jugador.dineroRestante();
-                    jugador.setCarcel(false);
-                }
-                else{
-                    System.out.println("Multa no cobrada debido a saldo insuficiente, sigue en la carcél");
-                    }
+            if (jugador.getDinero() >= 50){
+                jugador.setDinero(50);
+                System.out.println("Multa cobrada, sale de la carcél");
+                jugador.dineroRestante();
+                jugador.setCarcel(false);
+            }
+            else{
+                System.out.println("Multa no cobrada debido a saldo insuficiente, sigue en la carcél");
                 }
             }
         else{
@@ -47,22 +45,22 @@ public class Carcel extends Casilla {
             boolean flag = false;
 
             if(juegoAutomatico == true){
-                System.out.println("¿Desea usar su carta 'SalidaDeCarcel' para salir de la cárcel? Si/No");
-                System.out.println("Usted decidio usar la carta. Sale de la cárcel");
+                System.out.println("¿Desea usar su carta 'SalidaDeCarcel' para salir de la cárcel? (Si/No)");
+                System.out.println("Usted decidio usar la carta. Sale de la cárcel.");
                 return true;
             }
 
             while (!flag) {
                 try{
-                    System.out.println("¿Desea usar su carta 'SalidaDeCarcel' para salir de la cárcel? Si/No");
+                    System.out.println("¿Desea usar su carta 'SalidaDeCarcel' para salir de la cárcel? (Si/No)");
                     String option = scanner.nextLine();
     
                     if (option.equalsIgnoreCase("Si")){
-                        System.out.println("Usted decidio usar la carta. Sale de la cárcel");
+                        System.out.println("Usted decidio usar la carta. Sale de la cárcel.");
                         return true;
                     }else{
                         if (option.equalsIgnoreCase("No")){
-                            System.out.println("Usted decidio no usar la carta. Sigue en la cárcel");
+                            System.out.println("Usted decidio no usar la carta. Sigue en la cárcel.");
                             return false;
                         }else{
                             throw new IllegalArgumentException("Respuesta incorrecta, vuelva a intentar.");
@@ -73,28 +71,6 @@ public class Carcel extends Casilla {
                 }
             }
         }
-        return false;
-    }
-
-    private boolean tirarDobles(Jugador jugador){
-        int dado1 = (int) (Math.random() * 6) + 1;
-        int dado2 = (int) (Math.random() * 6) + 1;
-
-        System.out.println("Dado 1: " + dado1);
-        System.out.println("Dado 2: " + dado2);
-
-        if (dado1 == dado2){
-            System.out.println("Ha conseguido dobles: Sale de la cárcel");
-            jugador.setCarcel(false);
-
-            //Avanzar casillas
-            for(int i=0; i < dado1+dado2; i++){
-                jugador.avanzar();
-            }
-            System.out.println("Avanzas " + (dado1+dado2) + " casillas");
-            return true;
-        }
-        System.out.println("No ha conseguido dobles: Permanece en la cárcel");
         return false;
     }
 

@@ -22,7 +22,7 @@ public class Servicio extends Propiedad {
                 System.out.println("Renta de $" + renta + " pagada con éxito.");
                 jugador.dineroRestante();
             }else{  
-                System.out.println("Renta de $" + renta + "no pagada, dinero insuficiente");
+                System.out.println("Renta obigatoria de $" + renta + "no pagada, dinero insuficiente.");
                 jugador.setEnBancarrota(true);
             }
         }

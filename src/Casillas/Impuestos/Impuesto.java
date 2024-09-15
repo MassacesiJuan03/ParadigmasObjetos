@@ -20,7 +20,7 @@ public class Impuesto extends Casilla implements IAccionDinero{
             jugador.dineroRestante();
         }
         else{
-            System.out.println("Impuesto no pagado, dinero del jugador insuficiente");
+            System.out.println("Impuesto de $" + montoImpuesto + " no pagado, dinero del jugador insuficiente.");
             jugador.setEnBancarrota(true);
         }
     }

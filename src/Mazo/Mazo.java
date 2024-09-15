@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class Mazo {
     //atributos de instancia
-    private ArrayList<Carta> mazoDeCartas = new ArrayList<>(5);
+    private static ArrayList<Carta> mazoDeCartas = new ArrayList<>(15);
 
     //Constructor
     public Mazo() {
-        this.mazoDeCartas = inicializarMazo();
+        mazoDeCartas = inicializarMazo();
     }
 
     //Métodos
