@@ -256,7 +256,7 @@ public class Jugador {
      */
     public void mostrarPropiedades(){
         if (!this.propiedades.isEmpty()){
-            System.out.print("Usted es dueño de: ");
+            System.out.print("Usted es propietario de: ");
             int i = 1;
             for (Propiedad propiedad: propiedades){
                 if (i < propiedades.size()){
@@ -270,7 +270,7 @@ public class Jugador {
     }
 
     /**
-     * Elimina todas las propiedades del jugador y las establece sin dueño.
+     * Elimina todas las propiedades del jugador y las establece sin propietario.
      */
     public void eliminarPropiedad(){
         for(Propiedad propiedad: propiedades){

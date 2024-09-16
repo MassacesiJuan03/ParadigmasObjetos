@@ -16,16 +16,16 @@ import Jugador.Jugador;
 public class Servicio extends Propiedad {
     //Constructor
     /**
-     * Crea una nueva instancia de un servicio con el nombre, el costo, el dueño y la renta especificados.
+     * Crea una nueva instancia de un servicio con el nombre, el costo, el propietario y la renta especificados.
      *
      * @param nombre El nombre del servicio.
      * @param juegoAutomatico Indica si el juego se realiza en modo automático.
      * @param costo El costo del servicio.
-     * @param dueño El jugador que es el dueño del servicio. Puede ser {@code null} si no hay dueño.
+     * @param propietario El jugador que es el propietario del servicio. Puede ser {@code null} si no hay propietario.
      * @param renta La cantidad de renta que se cobra al caer en el servicio.
      */
-    public Servicio(String nombre, Boolean juegoAutomatico, int costo, Jugador dueño, int renta){
-        super(nombre,juegoAutomatico, costo, dueño, renta);
+    public Servicio(String nombre, Boolean juegoAutomatico, int costo, Jugador propietario, int renta){
+        super(nombre,juegoAutomatico, costo, propietario, renta);
     }
 
     //Métodos
@@ -37,7 +37,7 @@ public class Servicio extends Propiedad {
      * @param jugador El jugador que ha caído en la casilla de servicio.
      */
     private void cobrarRenta(Jugador jugador){
-        if (this.dueño != jugador){
+        if (this.propietario != jugador){
             //Calcular la renta basado en el dado
             ArrayList<Integer> dadosAnteriores = jugador.getDadosAnteriores();
             int renta = 20 * (dadosAnteriores.get(dadosAnteriores.size() - 1));
@@ -54,8 +54,8 @@ public class Servicio extends Propiedad {
 
     /**
      * Realiza la acción correspondiente cuando un jugador cae en la casilla de servicio.
-     *  Si la propiedad no tiene dueño,
-     * se le ofrece la opción de compra al jugador. Si la propiedad tiene dueño, 
+     *  Si la propiedad no tiene propietario,
+     * se le ofrece la opción de compra al jugador. Si la propiedad tiene propietario,
      * se cobra la renta basada en el valor del dado.
      * 
      * @param jugador El jugador que ha caído en la casilla de servicio.

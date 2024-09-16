@@ -1,4 +1,4 @@
-package Tablero;// Los comentarios que comienzan con "*" son dudas.
+package Tablero;
 
 import Casillas.Adelante.Adelante;
 import Casillas.ArcaOCasualidad.ArcaOCasualidad;
@@ -23,7 +23,7 @@ import java.util.InputMismatchException;
 public class Tablero{
     //atributos de clase
     private static final int CANTIDAD_DE_CASILLAS = 20;
-    private Casilla[] casillas;
+    private final Casilla[] casillas;
     private static final int ANCHO_CONSOLA = 160;  // Ancho en caracteres de la consola
     private static final int ALTO_CONSOLA = 50;  // Alto en caracteres de la consola
 

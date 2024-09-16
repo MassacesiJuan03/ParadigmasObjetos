@@ -12,15 +12,15 @@ import Jugador.Jugador;
 public class Ferrocarril extends Propiedad {
     //Constructor
     /**
-     * Crea una nueva instancia de un ferrocarril con el nombre, el costo, el dueño y la renta especificados.
+     * Crea una nueva instancia de un ferrocarril con el nombre, el costo, el propietario y la renta especificados.
      *
      * @param nombre El nombre del ferrocarril.
      * @param juegoAutomatico Indica si el juego se realiza en modo automático.
      * @param costo El costo del ferrocarril.
-     * @param dueño El jugador que es el dueño del ferrocarril. Puede ser {@code null} si no hay dueño.
+     * @param propietario El jugador que es el propietario del ferrocarril. Puede ser {@code null} si no hay propietario.
      * @param renta La cantidad de renta que se cobra al caer en el ferrocarril.
      */
-    public Ferrocarril(String nombre,boolean juegoAutomatico, int costo, Jugador dueño, int renta){
-        super(nombre,juegoAutomatico, costo, dueño, renta);
+    public Ferrocarril(String nombre,boolean juegoAutomatico, int costo, Jugador propietario, int renta){
+        super(nombre,juegoAutomatico, costo, propietario, renta);
     }
 }
