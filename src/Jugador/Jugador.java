@@ -17,7 +17,7 @@ public class Jugador {
     private String nombre;
     private boolean enBancarrota;
     private ArrayList<Propiedad> propiedades;
-    private ArrayList<Integer> dadosAnteriores; 
+    private ArrayList<Integer> dadosAnteriores;
     private int dinero;
     private boolean turno;
     private boolean enCarcel;
@@ -56,7 +56,7 @@ public class Jugador {
      * Imprime los valores de los dados lanzados anteriormente.
      */
     public void imprimirDadosAnteriores() {
-        if (dadosAnteriores.size() == 0) {
+        if (dadosAnteriores.isEmpty()) {
             System.out.println("No se han lanzado dados todavía.");
             return;
         }
@@ -118,7 +118,7 @@ public class Jugador {
     /**
      * Obtiene la cantidad de dinero del jugador.
      *
-     * @return El de dinero del jugador.
+     * @return El dinero del jugador.
      */
     public int getDinero() {
         return dinero;
@@ -274,7 +274,7 @@ public class Jugador {
      */
     public void eliminarPropiedad(){
         for(Propiedad propiedad: propiedades){
-            propiedad.setDueño(null);
+            propiedad.setPropietario(null);
         }
         this.propiedades.clear();
     }

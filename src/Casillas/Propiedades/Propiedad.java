@@ -42,7 +42,7 @@ public class Propiedad extends Casilla implements IAccionDinero {
      *
      * @return El jugador que es el propietario de la propiedad.
      */
-    public Jugador getDueño(){
+    public Jugador getPropietario(){
         return this.propietario;
     }
 
@@ -152,7 +152,7 @@ public class Propiedad extends Casilla implements IAccionDinero {
      *
      * @param propietario El nuevo propietario de la propiedad.
      */
-    public void setDueño(Jugador propietario) {
+    public void setPropietario(Jugador propietario) {
         this.propietario = propietario;
     }
 
