@@ -23,11 +23,11 @@ import java.util.InputMismatchException;
 public class Tablero{
     //atributos de clase
     private static final int CANTIDAD_DE_CASILLAS = 20;
-    private final Casilla[] casillas;
     private static final int ANCHO_CONSOLA = 160;  // Ancho en caracteres de la consola
     private static final int ALTO_CONSOLA = 50;  // Alto en caracteres de la consola
 
     //atributos de instancia
+    private final Casilla[] casillas;
     private boolean juegoAutomatico;
     private ArrayList<Jugador> jugadores;
 
@@ -81,8 +81,9 @@ public class Tablero{
     public void empezarPartida(Scanner scanner) {
         int cantidadDeJugadores = 0;
         // Garantizar que se ingrese 2, 3 o 4
+        System.out.println("¡Bienvenido a Monopoly!");
         do {
-            System.out.print("Introduce la cantidad de jugadores (2 a 4): ");
+            System.out.print("Introduzca la cantidad de jugadores (2 a 4): ");
             if (scanner.hasNextInt()) {
                 cantidadDeJugadores = scanner.nextInt();
                 if (cantidadDeJugadores < 2 || cantidadDeJugadores > 4) {
@@ -109,7 +110,7 @@ public class Tablero{
             // Pedir la posición del jugador hasta que sea válida
             while (!posicionValida) {
                 try {
-                    System.out.println("Jugador " + (i + 1) + ", ingresa tu posición (entre 1 y 20): ");
+                    System.out.print("Jugador " + (i + 1) + ", ingresa tu posición (entre 1 y 20): ");
                     posicion = scanner.nextInt();
 
                     // Verificar que la posición esté dentro del rango válido
