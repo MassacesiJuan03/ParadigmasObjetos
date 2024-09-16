@@ -8,16 +8,32 @@ import Carta.CartaIrDirectoCarcel.CartaIrDirectoCarcel;
 import java.util.Collections;
 import java.util.ArrayList;
 
+/**
+ * Representa un mazo de cartas en el juego.
+ * El mazo contiene cartas que pueden tener diferentes efectos en el juego, como dinero, salida de cárcel o 
+ * movimientos directos a la cárcel.
+ * @author Forni Diego, Massacesi Juan Ignacio
+ */
 public class Mazo {
     //atributos de instancia
     private static ArrayList<Carta> mazoDeCartas = new ArrayList<>(15);
 
     //Constructor
+    /**
+     * Crea una nueva instancia del mazo de cartas e inicializa el mazo con cartas predefinidas.
+     */
     public Mazo() {
         mazoDeCartas = inicializarMazo();
     }
 
     //Métodos
+    /**
+     * Inicializa el mazo de cartas con una serie de cartas predefinidas.
+     * Las cartas incluyen cartas de dinero, cartas para salir de la cárcel, y cartas para ir directo a la cárcel.
+     * Después de inicializar las cartas, se mezclan para asignarles una posición aleatoria en el mazo.
+     *
+     * @return Una lista de cartas que representa el mazo de cartas mezclado.
+     */
     public ArrayList<Carta> inicializarMazo() {
         ArrayList<Carta> cartas = new ArrayList<>(); // Usar ArrayList para facilitar la mezcla
 
@@ -48,6 +64,11 @@ public class Mazo {
         return mazoDeCartas;
     }
 
+    /**
+     * Obtiene el mazo de cartas.
+     *
+     * @return La lista de cartas en el mazo.
+     */
     public ArrayList<Carta> getMazo() {
         return mazoDeCartas;
     }

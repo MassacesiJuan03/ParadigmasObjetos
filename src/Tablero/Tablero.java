@@ -15,22 +15,34 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
+/**
+ * La clase {@code Tablero} representa el tablero de un juego de mesa. 
+ * Maneja la inicialización de casillas, la gestión de jugadores, y la ejecución de turnos.
+ * @author Forni Diego, Massacesi Juan Ignacio
+*/
 public class Tablero{
     //atributos de clase
     private static final int CANTIDAD_DE_CASILLAS = 20;
     private Casilla[] casillas;
-    private static final int ANCHO_CONSOLA = 160;  // 1280 / 8 (assuming 8 pixels per character)
-    private static final int ALTO_CONSOLA = 50;  //
+    private static final int ANCHO_CONSOLA = 160;  // Ancho en caracteres de la consola
+    private static final int ALTO_CONSOLA = 50;  // Alto en caracteres de la consola
 
     //atributos de instancia
     private boolean juegoAutomatico;
     private ArrayList<Jugador> jugadores;
 
     //Constructor
+    /**
+     * Constructor de la clase {@code Tablero}. 
+     * Crea una instancia de un tablero e inicializa el array de casillas con la cantidad definida.
+     */
     public Tablero() {
         this.casillas = new Casilla[CANTIDAD_DE_CASILLAS];
     }
 
+    /**
+     * Especializa las casillas del tablero con instancias de diferentes tipos de casillas.
+     */
     private void especializarCasillas() {
         // Esquinas
         this.casillas[0] = new Adelante("Salida"); // Casilla de salida (GO)
@@ -60,9 +72,15 @@ public class Tablero{
         this.casillas[19] = new Propiedad("Av. Nueva York", juegoAutomatico, 200, null, 100); // Av. Nueva York
     }
 
+    /**
+     * Inicializa la partida solicitando la cantidad de jugadores, sus nombres, piezas y posiciones.
+     * Además, pregunta si se desea utilizar el modo automático o manual.
+     * 
+     * @param scanner Un objeto scanner para leer la entrada del usuario.
+     */
     public void empezarPartida(Scanner scanner) {
         int cantidadDeJugadores = 0;
-        // garantizar que se ingrese 2, 3 o 4
+        // Garantizar que se ingrese 2, 3 o 4
         do {
             System.out.print("Introduce la cantidad de jugadores (2 a 4): ");
             if (scanner.hasNextInt()) {
@@ -76,7 +94,8 @@ public class Tablero{
             }
         } while (cantidadDeJugadores < 2 || cantidadDeJugadores > 4);
 
-        jugadores = new ArrayList<>(cantidadDeJugadores);
+        jugadores = new ArrayList<>(cantidadDeJugadores); // ArrayList de jugadores
+
         for (int i = 0; i < cantidadDeJugadores; i++) {
             System.out.println("Jugador " + (i + 1) + ", elige tu nombre:");
             String nombreJugador = scanner.next();
@@ -137,7 +156,12 @@ public class Tablero{
         }
     }
 
-
+    /**
+     * Actualiza el turno del siguiente jugador y elimina jugadores en bancarrota.
+     * 
+     * @param jugadorAnterior El jugador que terminó su turno.
+     * @return El siguiente jugador en turno. Si solo queda un jugador, el juego termina.
+     */
     private Jugador siguienteTurno(Jugador jugadorAnterior) {
         // Eliminar jugadores en bancarrota
         for (int i = jugadores.size() - 1; i >= 0; i--) {
@@ -176,6 +200,20 @@ public class Tablero{
         return jugadores.get(indiceSiguiente);
     }
 
+    /**
+     * Dibuja una propiedad en el tablero, representada por una celda de texto con un borde y 
+     * una posible lista de jugadores.
+     *
+     * @param board Una matriz bidimensional de cadenas que representa el tablero de juego.
+     * Cada celda del tablero se representa con un carácter o una cadena de caracteres.
+     * @param row La fila en la que se dibuja la propiedad en el tablero.
+     * @param col La columna en la que se dibuja la propiedad en el tablero.
+     * @param name El nombre de la propiedad que se va a dibujar en la celda.
+     * Si el nombre es más largo que el ancho de la celda, se dividirá en múltiples líneas.
+     * @param nombreJugador Un array de cadenas que representa los jugadores que están en la celda.
+     * Cada elemento del array es un símbolo o nombre de jugador. Los jugadores se dibujan dentro de la celda.
+     * Si el array está vacío o solo contiene cadenas vacías, no se dibujarán jugadores en la celda.
+    */
     private void dibujarPropiedad(String[][] board, int row, int col, String name, String[] nombreJugador) {
         // Define the dimensions of each cell (width and height)
         int cellWidth = 20;
@@ -236,7 +274,13 @@ public class Tablero{
         }
     }
 
-
+    /**
+     * Divide una cadena de texto en múltiples líneas, cada una con una longitud máxima especificada.
+     *
+     * @param str La cadena de texto que se desea dividir. No debe ser {@code null}.
+     * @param maxLength La longitud máxima de cada línea. Debe ser un número positivo.
+     * @return Un array de cadenas, donde cada elemento es una línea de la cadena original.
+    */
     private String[] splitString(String str, int maxLength) {
         int length = str.length();
         int numLines = (length + maxLength - 1) / maxLength;
@@ -249,6 +293,9 @@ public class Tablero{
         return lines;
     }
 
+    /**
+     * Imprime la representación del tablero en la consola.
+     */
     public void imprimirTablero() {
         String[][] boardVisual = new String[ALTO_CONSOLA][ANCHO_CONSOLA];
     
@@ -328,6 +375,23 @@ public class Tablero{
     }
 
     // Implementar método getJugadoresEnCasilla
+    /**
+     * Obtiene los símbolos de los jugadores que están en una casilla específica del tablero.
+     *
+     * Este método recorre la lista de jugadores y verifica cuáles están en la casilla con el índice especificado.
+     * Luego, devuelve un array de cadenas que contiene los símbolos de los jugadores en esa casilla. 
+     * Si hay más de dos jugadores
+     * en la misma casilla, los símbolos se truncarán a un máximo de tres caracteres para evitar 
+     * la superposición en la representación del tablero.
+     *
+     * @param index El índice de la casilla en el tablero para la cual se desea obtener los jugadores.
+     * Debe ser un valor válido que represente una casilla existente en el tablero.
+     * 
+     * @return Un array de cadenas que representa los símbolos de los jugadores en la casilla especificada.
+     * Cada elemento del array corresponde a un jugador en la casilla, y los valores pueden ser vacíos si no 
+     * hay jugadores en la casilla.
+     * La longitud del array es igual al número total de jugadores.
+    */
     public String[] getJugadoresEnCasilla(int index) {
         // Crear un array de Strings con el mismo tamaño que el número de jugadores
         String[] jugadoresEnCasilla = new String[jugadores.size()];
@@ -359,12 +423,27 @@ public class Tablero{
     }
 
     // Método polimorfico
+    /**
+     * Ejecuta la acción asociada a una casilla cuando un jugador cae en ella.
+     * 
+     * Este método verifica si la casilla en cuestión es una instancia de la clase {@code Adelante}.
+     * Si no lo es, llama al método {@code accion} de la casilla para realizar la acción correspondiente para 
+     * el jugador. En caso de que la casilla sea de tipo {@code Adelante}, no se realiza ninguna acción para evitar 
+     * que el jugador reciba el dinero más de una vez.
+     *
+     * @param casilla La casilla sobre la que se debe ejecutar la acción. Debe ser una instancia de una clase que
+     * extienda {@code Casilla} y tenga implementado el método {@code accion}.
+     * @param jugador El jugador que está ejecutando la acción en la casilla.
+    */
     private void realizarAccion(Casilla casilla, Jugador jugador){
         if(!(casilla instanceof Adelante)){ // No darle dos veces al jugador $200
             casilla.accion(jugador);
         }
     }
 
+    /**
+     * Método principal para ejecutar el juego.
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Tablero tablero = new Tablero();
@@ -383,13 +462,15 @@ public class Tablero{
             if(jugadorActual == null){
                 return;
             }
+            
             System.out.println("Turno de " + jugadorActual.getPieza());
             System.out.println("Dinero actual: $" + jugadorActual.getDinero());
+
             if (jugadorActual.isTieneCartaSalidaDeCarcel()){
                 System.out.println(jugadorActual.getPieza() + ": tiene carta para salir de la cárcel.");
             }
 
-            //Si el jugador no está en la cárcel podra tirar los dados y avanzar
+            //Si el jugador no está en la cárcel podra tirar los dados y avanzar.
             if (!jugadorActual.isCarcel()){
 
                 if(tablero.juegoAutomatico == false){
@@ -410,21 +491,22 @@ public class Tablero{
                 }
             }
 
+            // Mostrar el nómbre de la casilla actual donde está el jugador.
             String nombreCasilla = tablero.casillas[jugadorActual.getPosicion()].getNombre();
             System.out.println("Casilla actual: " + nombreCasilla);
 
-            jugadorActual.mostrarPropiedades();
+            jugadorActual.mostrarPropiedades(); // Mostrar propiedades del jugador.
 
-            tablero.imprimirTablero();
+            tablero.imprimirTablero(); // Imprimir el tablero
 
-            // Dependiendo donde cae el jugador la casilla realiza la accion correspondiente
+            // Dependiendo donde cae el jugador la casilla realiza la accion correspondiente.
             tablero.realizarAccion(tablero.casillas[jugadorActual.getPosicion()], jugadorActual);
         
-            // Actualizar el jugador actual para el siguiente turno
+            // Actualizar el jugador actual para el siguiente turno.
             jugadorActual = tablero.siguienteTurno(jugadorActual);
         }
 
-        // Cerrar el Scanner al finalizar toda la ejecución del programa
+        // Cerrar el Scanner al finalizar toda la ejecución del programa.
         scanner.close();
     }
 }
